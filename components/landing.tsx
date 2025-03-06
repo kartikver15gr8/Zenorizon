@@ -4,6 +4,8 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { TextAnimate } from "./magicui/text-animate";
+import { BlurFade } from "./magicui/blur-fade";
 
 const emailSchema = z.string().email({ message: "Invalid email address" });
 
@@ -33,18 +35,36 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen">
-      <div className="h-96 flex justify-center items-center">
-        <div className="w-[90%] ">
-          <p className="text-6xl">Streamline your workflow,</p>
-          <div className="flex">
-            <p className="text-6xl mr-3">Amplify your impact with </p>
-            <span className="text-6xl text-transparent bg-gradient-to-b from-gray-600 via-gray-400 to-white bg-clip-text mb-5 font-bold">
+      <div className=" h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
+        <div className=" flex flex-col items-center font-bold">
+          <BlurFade
+            delay={0.5}
+            inView
+            className="mb-2 text-2xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl"
+          >
+            Streamline your workflow,
+          </BlurFade>
+          <BlurFade
+            delay={0.75}
+            inView
+            className="text-2xl sm:text-4xl flex-wrap justify-center md:text-4xl lg:text-5xl xl:text-6xl flex gap-x-1 xl:gap-x-3"
+          >
+            Amplify your impact with
+            <p className="mt-1 sm:mt-0 text-transparent bg-gradient-to-b from-gray-600 via-gray-400 to-white bg-clip-text mb-5  text-4xl md:text-4xl lg:text-5xl xl:text-6xl">
               Zenorizon
-            </span>
+            </p>
+          </BlurFade>
+          <div className="flex font-extralight flex-col items-center text-sm md:text-lg xl:text-xl  text-[#AEAEAE]">
+            <TextAnimate animate="blurIn" as="h1">
+              Introducing the system for modern software development.
+            </TextAnimate>
+            <TextAnimate animate="blurIn" as="h1">
+              Organize issues, projects, and product roadmaps.
+            </TextAnimate>
           </div>
 
-          <div className=" mt-5 flex gap-x-2">
-            <div className="border border-[#565555] h-12 w-96 rounded-md bg-[#121212]">
+          <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">
+            <div className="border border-[#565555] h-10 md:h-12 w-60 sm:w-64 md:w-96 rounded-md bg-[#121212]">
               <input
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -55,11 +75,11 @@ export default function Landing() {
             </div>
             <button
               onClick={waitListCall}
-              className="h-12 px-4 rounded-md text-black bg-white"
+              className="h-10 md:h-12 px-4 text-sm font-extralight md:text-lg rounded-md text-black bg-white"
             >
               Join waitlist
             </button>
-          </div>
+          </BlurFade>
         </div>
       </div>
     </div>
