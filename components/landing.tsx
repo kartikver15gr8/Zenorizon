@@ -6,6 +6,9 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { TextAnimate } from "./magicui/text-animate";
 import { BlurFade } from "./magicui/blur-fade";
+import Image from "next/image";
+import homebannerImg from "@/public/banner/homebanner.png";
+import { HyperText } from "./magicui/hyper-text";
 
 const emailSchema = z.string().email({ message: "Invalid email address" });
 
@@ -40,7 +43,7 @@ export default function Landing() {
           <BlurFade
             delay={0.5}
             inView
-            className="mb-2 text-2xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl"
+            className="md:mb-2 text-2xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl"
           >
             Streamline your workflow,
           </BlurFade>
@@ -55,12 +58,13 @@ export default function Landing() {
             </p>
           </BlurFade>
           <div className="flex font-extralight flex-col items-center text-sm md:text-lg xl:text-xl  text-[#AEAEAE]">
-            <TextAnimate animate="blurIn" as="h1">
+            <HyperText className="text-[10px] sm:text-xs md:text-sm">
               Introducing the system for modern software development.
-            </TextAnimate>
-            <TextAnimate animate="blurIn" as="h1">
+            </HyperText>
+
+            <HyperText className="text-[10px] sm:text-xs md:text-sm">
               Organize issues, projects, and product roadmaps.
-            </TextAnimate>
+            </HyperText>
           </div>
 
           <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">
@@ -75,13 +79,32 @@ export default function Landing() {
             </div>
             <button
               onClick={waitListCall}
-              className="h-10 md:h-12 px-4 text-sm font-extralight md:text-lg rounded-md text-black bg-white"
+              className="h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-white"
             >
               Join waitlist
             </button>
           </BlurFade>
         </div>
       </div>
+      <HomeBanner />
     </div>
   );
 }
+
+const HomeBanner = () => {
+  return (
+    <BlurFade
+      delay={1}
+      inView
+      className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28"
+    >
+      <div className=" bg-black flex justify-center border-4 md:border-[8px] border-[#363635] rounded-xl ">
+        <Image
+          className="rounded-lg md:rounded-md"
+          src={homebannerImg}
+          alt="img"
+        />
+      </div>
+    </BlurFade>
+  );
+};
