@@ -9,6 +9,7 @@ import { BlurFade } from "./magicui/blur-fade";
 import Image from "next/image";
 import homebannerImg from "@/public/banner/homebanner.png";
 import { HyperText } from "./magicui/hyper-text";
+import grid from "@/public/assets/bg/grid.svg";
 
 const emailSchema = z.string().email({ message: "Invalid email address" });
 
@@ -38,7 +39,8 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen">
-      <div className=" h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
+      <div className="relative h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
+        <Image className="absolute opacity-20" src={grid} alt="" />
         <div className=" flex flex-col items-center font-bold">
           <BlurFade
             delay={0.5}
@@ -79,6 +81,7 @@ export default function Landing() {
             </div>
             <button
               onClick={waitListCall}
+              disabled={email.length == 0 ? true : false}
               className="h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-white"
             >
               Join waitlist
