@@ -40,7 +40,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen">
       <div className="relative h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
-        <Image className="absolute opacity-20" src={grid} alt="" />
+        <Image className="absolute opacity-20 z-0" src={grid} alt="" />
         <div className=" flex flex-col items-center font-bold">
           <BlurFade
             delay={0.5}

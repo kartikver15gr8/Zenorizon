@@ -63,7 +63,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28">
+      <div className="py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 ">
         <div className=" h-[55px] border border-[#565555] w-full rounded-lg flex items-center justify-between px-3 bg-[#121212]">
           <Image
             className="w-8"
@@ -72,7 +72,7 @@ export default function Navbar() {
             width={200}
             height={200}
           />
-          <div className="hidden md:flex gap-x-5">
+          <div className="hidden md:flex gap-x-5 z-10">
             {navListArr.map((elem, key) => {
               return (
                 <NavListElement
