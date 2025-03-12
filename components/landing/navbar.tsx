@@ -5,6 +5,9 @@ import Link from "next/link";
 import appIcon from "@/public/assets/icons/appIconTwo.svg";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useSession, signIn, signOut } from "@/utils/auth";
+import spinner from "@/public/assets/loader/spinner.svg";
+import { toast } from "sonner";
 
 const navListArr = [
   { title: "Product", redirectHref: "" },
@@ -56,9 +59,36 @@ const iconVariants = {
 };
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+  const [signupLoading, setSignupLoading] = useState(false);
+
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignup = () => {
+    try {
+      setSignupLoading(true);
+      signIn("github");
+    } catch (error) {
+      toast.error(`Got an error while signing up: ${error}`);
+    } finally {
+      setSignupLoading(false);
+      toast.info("Logged in successfully🎉");
+    }
+  };
+
+  const handleSignout = () => {
+    try {
+      setSignupLoading(true);
+      signOut();
+    } catch (error) {
+      toast.error(`Got an error while signing out: ${error}`);
+    } finally {
+      setSignupLoading(false);
+      toast.info("Logged out successfully🎉");
+    }
   };
 
   return (
@@ -87,8 +117,11 @@ export default function Navbar() {
             <button className="px-4 h-9 rounded hover:bg-[#4f4e4e] transition-all duration-300 cursor-pointer">
               Log in
             </button>
-            <button className="border px-4 h-9 rounded text-black bg-white cursor-pointer">
-              Signup
+            <button
+              onClick={session?.user.name ? handleSignout : handleSignup}
+              className="border px-4 h-9 rounded text-black bg-white cursor-pointer"
+            >
+              {session?.user ? "Log out" : "Sign up"}
             </button>
           </div>
           <div className="md:hidden w-fit flex ml-4">

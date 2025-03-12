@@ -4,11 +4,11 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { TextAnimate } from "./magicui/text-animate";
-import { BlurFade } from "./magicui/blur-fade";
+import { TextAnimate } from "../magicui/text-animate";
+import { BlurFade } from "../magicui/blur-fade";
 import Image from "next/image";
 import homebannerImg from "@/public/banner/homebanner.png";
-import { HyperText } from "./magicui/hyper-text";
+import { HyperText } from "../magicui/hyper-text";
 import grid from "@/public/assets/bg/grid.svg";
 import spinner from "@/public/assets/loader/spinner.svg";
 
@@ -20,7 +20,7 @@ const active =
 const disable =
   "h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-black bg-opacity-50 border border-white";
 
-export default function Landing() {
+export default function Hero() {
   const [email, setEmail] = useState("");
   const [loading, setIsLoading] = useState(false);
 
@@ -48,7 +48,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="">
       <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
         <Image className="absolute opacity-20 z-0" src={grid} alt="" />
         <div className=" flex flex-col items-center md:font-bold ">
