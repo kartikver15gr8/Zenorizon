@@ -10,14 +10,23 @@ import Image from "next/image";
 import homebannerImg from "@/public/banner/homebanner.png";
 import { HyperText } from "./magicui/hyper-text";
 import grid from "@/public/assets/bg/grid.svg";
+import spinner from "@/public/assets/loader/spinner.svg";
 
 const emailSchema = z.string().email({ message: "Invalid email address" });
 
+const active =
+  "h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-white";
+
+const disable =
+  "h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-black bg-opacity-50 border border-white";
+
 export default function Landing() {
   const [email, setEmail] = useState("");
+  const [loading, setIsLoading] = useState(false);
 
   const waitListCall = async () => {
     try {
+      setIsLoading(true);
       const emailcheck = emailSchema.safeParse(email.trim());
       if (emailcheck.success) {
         const response = await axios.post("/api/waitlist", {
@@ -34,14 +43,15 @@ export default function Landing() {
       toast.info(`${error}`);
     } finally {
       setEmail("");
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen">
-      <div className="relative h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
+      <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
         <Image className="absolute opacity-20 z-0" src={grid} alt="" />
-        <div className=" flex flex-col items-center font-bold">
+        <div className=" flex flex-col items-center md:font-bold ">
           <BlurFade
             delay={0.5}
             inView
@@ -55,7 +65,7 @@ export default function Landing() {
             className="text-2xl sm:text-4xl flex-wrap justify-center md:text-4xl lg:text-5xl xl:text-6xl flex gap-x-1 xl:gap-x-3"
           >
             Amplify your impact with
-            <p className="mt-1 sm:mt-0 text-transparent bg-gradient-to-b from-gray-600 via-gray-400 to-white bg-clip-text mb-5  text-4xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <p className="mt-1 sm:mt-0 text-transparent bg-gradient-to-b from-gray-600 via-gray-400 to-white bg-clip-text mb-5  text-5xl sm:text-4xl lg:text-5xl xl:text-6xl">
               Zenorizon
             </p>
           </BlurFade>
@@ -77,14 +87,15 @@ export default function Landing() {
                 }}
                 className="rounded-md h-full w-full bg-transparent px-3 outline-none font-extralight"
                 placeholder="you@example.com"
+                value={email}
               ></input>
             </div>
             <button
               onClick={waitListCall}
-              disabled={email.length == 0 ? true : false}
-              className="h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-white"
+              disabled={(email.length == 0 ? true : false) || loading}
+              className={loading ? disable : active}
             >
-              Join waitlist
+              {!loading ? "Join waitlist" : <Image src={spinner} alt="" />}
             </button>
           </BlurFade>
         </div>
