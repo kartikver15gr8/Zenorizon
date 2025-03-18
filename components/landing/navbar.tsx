@@ -6,8 +6,8 @@ import appIcon from "@/public/assets/icons/appIconTwo.svg";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useSession, signIn, signOut } from "@/utils/auth";
-import spinner from "@/public/assets/loader/spinner.svg";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 const navListArr = [
   { title: "Product", redirectHref: "" },
@@ -61,6 +61,7 @@ const iconVariants = {
 export default function Navbar() {
   const { data: session, status } = useSession();
   const [signupLoading, setSignupLoading] = useState(false);
+  const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
@@ -93,15 +94,17 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 ">
+      <div className="absolute w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 z-50">
         <div className=" h-[55px] border border-[#565555] w-full rounded-lg flex items-center justify-between px-3 bg-[#121212]">
-          <Image
-            className="w-8"
-            src={appIcon}
-            alt=""
-            width={200}
-            height={200}
-          />
+          <Link href="/">
+            <Image
+              className="w-8"
+              src={appIcon}
+              alt=""
+              width={200}
+              height={200}
+            />
+          </Link>
           <div className="hidden md:flex gap-x-5 z-10">
             {navListArr.map((elem, key) => {
               return (
@@ -114,15 +117,32 @@ export default function Navbar() {
             })}
           </div>
           <div className="hidden md:flex items-center gap-x-2">
-            <button className="px-4 h-9 rounded hover:bg-[#4f4e4e] transition-all duration-300 cursor-pointer">
-              Log in
-            </button>
-            <button
-              onClick={session?.user.name ? handleSignout : handleSignup}
-              className="border px-4 h-9 rounded text-black bg-white cursor-pointer"
-            >
-              {session?.user ? "Log out" : "Sign up"}
-            </button>
+            {!session?.user.email &&
+              pathname !== "/login" &&
+              pathname !== "/signup" && (
+                <button className="px-4 h-9 rounded hover:bg-[#4f4e4e] transition-all duration-300 cursor-pointer">
+                  Log in
+                </button>
+              )}
+            {!session?.user?.id &&
+              pathname !== "/login" &&
+              pathname !== "/signup" && (
+                <Link
+                  href={"/signup"}
+                  className="border flex items-center px-4 h-9 rounded text-black bg-white cursor-pointer"
+                >
+                  Sign up
+                </Link>
+              )}
+
+            {session?.user.email && (
+              <button
+                onClick={handleSignout}
+                className="border px-4 h-9 rounded text-black bg-white cursor-pointer"
+              >
+                Log out
+              </button>
+            )}
           </div>
           <div className="md:hidden w-fit flex ml-4">
             <motion.button
