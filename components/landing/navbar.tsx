@@ -94,7 +94,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="absolute w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 z-50">
+      <div className="top-0 fixed w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 z-50">
         <div className=" h-[55px] border border-[#565555] w-full rounded-lg flex items-center justify-between px-3 bg-[#121212]">
           <Link href="/">
             <Image
