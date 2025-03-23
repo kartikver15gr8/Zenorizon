@@ -23,6 +23,8 @@ export default function UserProfile() {
   return (
     <div>
       <p>Signed in as {session?.user?.name}</p>
+      <p>Signed in as {session?.user?.email}</p>
+      <p>Signed in as {session?.user?.id}</p>
       <button onClick={() => signOut()}>Sign out</button>
     </div>
   );

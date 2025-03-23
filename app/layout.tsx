@@ -5,6 +5,7 @@ import Navbar from "@/components/landing/navbar";
 import { Toaster } from "sonner";
 import { siteConfig } from "@/config/site-config";
 import { Providers } from "./providers";
+import { Bricolage_Grotesque } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,10 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
 });
 
@@ -25,9 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={bricolage_grotesque.className}>
         <Providers>
           <Navbar />
           {children}
