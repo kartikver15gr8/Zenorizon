@@ -13,11 +13,11 @@ export default function Footer() {
             height={100}
             width={100}
           />
-          <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
             Zenorizon
           </p>
         </div>
-        <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
           Organise better, ship it better.
         </p>
       </div>
