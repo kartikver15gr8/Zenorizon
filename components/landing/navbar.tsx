@@ -170,7 +170,7 @@ export default function Navbar() {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute mt-1 rounded px-4 w-full">
+        <div className="fixed mt-[70px] rounded px-4 w-full z-50">
           <motion.div
             className=" z-50 relative w-full border border-[#565555] bg-[#121212] shadow-lg rounded"
             initial="closed"
