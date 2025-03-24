@@ -7,17 +7,17 @@ export default function Footer() {
       <div className="flex items-center justify-between  border-b-[0.5px] border-[#565555] h-24 md:h-40">
         <div className="flex items-center gap-x-2 lg:gap-x-4">
           <Image
-            className="w-6 md:w-8 lg:w-10 xl:w-12"
+            className="w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12"
             src={applogotwo}
             alt=""
             height={100}
             width={100}
           />
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+          <p className="text-[16px] sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
             Zenorizon
           </p>
         </div>
-        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
+        <p className="text-[16px] sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl ">
           Organise better, ship it better.
         </p>
       </div>
