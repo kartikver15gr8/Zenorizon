@@ -31,10 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={bricolage_grotesque.className}>
-        <Providers>
-          <Navbar />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>
