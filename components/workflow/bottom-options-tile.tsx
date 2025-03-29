@@ -1,9 +1,39 @@
 "use client";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
+import Link from "next/link";
+import { title } from "process";
 import { useState } from "react";
 
 const icons = RAW_ICONS;
+
+const optionsArr = [
+  {
+    title: "Search for help…",
+    svg: icons.Search,
+    redirectHref: "",
+    openToNewPage: false,
+  },
+  {
+    title: "Shortcuts",
+    svg: icons.Keyboard,
+    redirectHref: "",
+    openToNewPage: false,
+  },
+  { title: "Docs", svg: icons.Docs, redirectHref: "", openToNewPage: true },
+  {
+    title: "Contact us",
+    svg: icons.ContactUs,
+    redirectHref: "",
+    openToNewPage: false,
+  },
+  {
+    title: "Community",
+    svg: icons.Community,
+    redirectHref: "",
+    openToNewPage: true,
+  },
+];
 
 export const BottomOptionsTile = () => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -12,7 +42,7 @@ export const BottomOptionsTile = () => {
     <>
       {/* Options Button */}
       <div
-        className="flex border w-8 h-8 items-center justify-center rounded-full absolute bottom-4 left-4 border-[#414141] hover:bg-[#23252A] transition-all duration-300"
+        className="flex border w-8 h-8 items-center justify-center rounded-full absolute bottom-2 md:bottom-4 left-4 border-[#414141] hover:bg-[#23252A] transition-all duration-300"
         onClick={() => setOptionsOpen(!optionsOpen)} // Toggle popup visibility
       >
         <SVGIcon className="flex w-5" svgString={icons.Gliter} />
@@ -20,14 +50,50 @@ export const BottomOptionsTile = () => {
 
       {/* Popup */}
       <div
-        className={`absolute bottom-16 left-4 w-60 h-96 bg-[#23252A] border border-[#414141] rounded-lg shadow-lg p-4 transition-all duration-300 ${
+        className={`absolute bottom-16 left-4 w-52 h-72 bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300 ${
           optionsOpen
             ? "opacity-100 scale-100"
             : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <p className="text-white">This is the popup content.</p>
+        {optionsArr.map((elem, key) => {
+          return (
+            <BottomOptionLabel
+              key={key}
+              svg={elem.svg}
+              title={elem.title}
+              redirectHref={elem.redirectHref}
+              openToNewPage={elem.openToNewPage}
+            />
+          );
+        })}
       </div>
     </>
+  );
+};
+
+const BottomOptionLabel = ({
+  title,
+  svg,
+  redirectHref,
+  openToNewPage,
+}: {
+  title: string;
+  svg: string;
+  redirectHref: string;
+  openToNewPage: boolean;
+}) => {
+  return (
+    <Link
+      href={redirectHref}
+      target={openToNewPage ? "_blank" : "_self"}
+      className="rounded-lg flex items-center h-9 px-2 gap-x-2 hover:bg-[#1f1f22] transition-all duration-300  border border-transparent hover:border-[#4b4b4b] "
+    >
+      <SVGIcon className="flex w-4" svgString={svg} />
+      <p>{title}</p>
+      {openToNewPage && (
+        <SVGIcon className="flex w-4" svgString={icons.Arrow45} />
+      )}
+    </Link>
   );
 };

@@ -5,6 +5,7 @@ import SVGIcon from "@/lib/svg-icon";
 import applogotwo from "@/public/assets/icons/appIconTwo.svg";
 import { useState } from "react";
 import OptionLabel from "./option-label";
+import { BottomOptionsTile } from "./bottom-options-tile";
 
 const icons = RAW_ICONS;
 
