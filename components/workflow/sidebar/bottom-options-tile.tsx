@@ -42,7 +42,7 @@ export const BottomOptionsTile = () => {
     <>
       {/* Options Button */}
       <div
-        className="flex border w-8 h-8 items-center justify-center rounded-full absolute bottom-2 md:bottom-4 left-4 border-[#414141] hover:bg-[#23252A] transition-all duration-300"
+        className="flex border w-8 h-8 items-center justify-center cursor-pointer rounded-full absolute bottom-2 md:bottom-4 left-4 border-[#414141] hover:bg-[#23252A] transition-all duration-300"
         onClick={() => setOptionsOpen(!optionsOpen)} // Toggle popup visibility
       >
         <SVGIcon className="flex w-5" svgString={icons.Gliter} />

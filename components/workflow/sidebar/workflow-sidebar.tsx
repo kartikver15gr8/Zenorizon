@@ -37,7 +37,7 @@ export default function WorkflowSidebar() {
   };
 
   return (
-    <div className="border-r border-[#23252A] w-72 min-h-screen hidden md:block">
+    <div className=" w-72 min-h-screen hidden md:block font-extralight">
       <WorkflowTab />
       <div className="px-1 mt-2">
         <OptionLabel svg={icons.Inbox} optName="Inbox" />
@@ -128,7 +128,10 @@ export default function WorkflowSidebar() {
         </div>
       </div>
       <div className="px-1 mt-4">
-        <div onClick={toggleFeatureCollapse} className="flex px-4 mb-2">
+        <div
+          onClick={toggleFeatureCollapse}
+          className="flex px-4 mb-2 cursor-pointer"
+        >
           <p className="text-sm">Features</p>
           <SVGIcon
             className={`flex w-4 transition-transform duration-300 ${

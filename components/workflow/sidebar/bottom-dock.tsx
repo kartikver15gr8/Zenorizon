@@ -2,10 +2,7 @@
 
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
-import applogotwo from "@/public/assets/icons/appIconTwo.svg";
 import { useState } from "react";
-import OptionLabel from "./option-label";
-import { BottomOptionsTile } from "./bottom-options-tile";
 
 const icons = RAW_ICONS;
 
@@ -79,7 +76,7 @@ export default function BottomDock() {
 
       {/* Popup Windows */}
       {activePopup == "profile" && (
-        <div className=" w-full fixed bottom-16 flex justify-center md:pointer-events-none md:hidden ">
+        <div className=" w-full  fixed bottom-16 flex justify-center md:pointer-events-none md:hidden ">
           <ProfileWindow setClose={setActivePopup} />
         </div>
       )}

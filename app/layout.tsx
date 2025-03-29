@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={bricolage_grotesque.className}>
+      <body className={`${bricolage_grotesque.className} font-light`}>
         <Providers>{children}</Providers>
         <Toaster />
       </body>
