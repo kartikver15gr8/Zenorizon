@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,7 +6,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 
 model Account {
   id                String  @id @default(cuid())
@@ -37,16 +35,18 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Add your custom user fields here
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  Project         Project?  @relation(fields: [projectId], references: [id])
+  projectId       String?
+  createdProjects Project[] @relation("ProjectCreator")
 }
 
 model VerificationToken {
@@ -56,7 +56,36 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
 model WaitListEmails {
-  id String @id @default(uuid())
+  id    String @id @default(uuid())
   email String @unique
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  title       String    @unique
+  description String?
+  content     String?
+  health      String?
+  priority    String?
+  lead        String?
+  targetDate  DateTime?
+  status      String?
+  member      User[]
+  issues      Issue[]
+  creator     User      @relation("ProjectCreator", fields: [createdBy], references: [id])
+  createdBy   String
+}
+
+model Issue {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      String?
+  priority    String?
+  assign      String?
+  labels      String?
+  Project     Project? @relation(fields: [projectId], references: [id])
+  projectId   String?
 }

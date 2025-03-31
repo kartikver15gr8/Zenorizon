@@ -65,7 +65,7 @@ export default function WorkflowSidebar() {
           }`}
         >
           <div className="space-y-1">
-            <OptionLabel svg={icons.Cube} optName="Projects" />
+            <OptionLabel svg={icons.RubiksCube} optName="Projects" />
             <OptionLabel svg={icons.Members} optName="Members" />
             <OptionLabel svg={icons.Team} optName="Teams" />
           </div>
@@ -121,7 +121,7 @@ export default function WorkflowSidebar() {
           >
             <div className="pl-5">
               <OptionLabel svg={icons.Target} optName="Issues" />
-              <OptionLabel svg={icons.Cube} optName="Projects" />
+              <OptionLabel svg={icons.RubiksCube} optName="Projects" />
               <OptionLabel svg={icons.Eye} optName="Views" />
             </div>
           </div>
