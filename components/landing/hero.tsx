@@ -22,28 +22,44 @@ const disable =
 
 export default function Hero() {
   const [email, setEmail] = useState("");
-  const [loading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const waitListCall = async () => {
+  const waitListCall = async (): Promise<void> => {
     try {
       setIsLoading(true);
       const emailcheck = emailSchema.safeParse(email.trim());
-      if (emailcheck.success) {
-        const response = await axios.post("/api/waitlist", {
-          userEmail: email.trim(),
-        });
-        if (response.data) {
-          toast.info(response.data.message);
-        }
-        return response.data;
-      } else {
-        toast.warning("Invalid email body");
+
+      if (!emailcheck.success) {
+        toast.warning("Invalid email format");
+        return;
+      }
+
+      const response = await axios.post<{ message: string }>("/api/waitlist", {
+        userEmail: email.trim(),
+      });
+
+      if (response.data) {
+        toast.info(response.data.message);
       }
     } catch (error) {
-      toast.info(`${error}`);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "An error occurred");
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Unknown error occurred");
+      }
     } finally {
       setEmail("");
       setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    if (event.key === "Enter" && !isLoading) {
+      waitListCall();
     }
   };
 
@@ -88,14 +104,16 @@ export default function Hero() {
                 className="rounded-md h-full w-full bg-transparent px-3 outline-none font-extralight"
                 placeholder="you@example.com"
                 value={email}
+                disabled={isLoading}
+                onKeyDown={handleKeyPress}
               ></input>
             </div>
             <button
               onClick={waitListCall}
-              disabled={(email.length == 0 ? true : false) || loading}
-              className={loading ? disable : active}
+              disabled={(email.length == 0 ? true : false) || isLoading}
+              className={isLoading ? disable : active}
             >
-              {!loading ? "Join waitlist" : <Image src={spinner} alt="" />}
+              {!isLoading ? "Join waitlist" : <Image src={spinner} alt="" />}
             </button>
           </BlurFade>
         </div>

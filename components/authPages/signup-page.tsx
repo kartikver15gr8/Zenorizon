@@ -17,7 +17,7 @@ export default function SignupPage() {
     if (session?.user.email) {
       router.push("/");
     }
-  }, [session?.user]);
+  }, [session?.user.email, router]);
 
   const signUpWithGitHub = async () => {
     try {

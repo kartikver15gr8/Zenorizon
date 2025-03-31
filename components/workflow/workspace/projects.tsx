@@ -1,9 +1,21 @@
+"use client";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const icons = RAW_ICONS;
 
 export default function Projects() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (!session?.user.email) {
+      router.push("/");
+    }
+  }, [router, session?.user.email]);
   return (
     <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
       <div className="flex justify-center items-center gap-x-1 h-10 md:h-12">
