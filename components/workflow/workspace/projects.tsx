@@ -1,6 +1,8 @@
 "use client";
+import { BlurFade } from "@/components/magicui/blur-fade";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
+import { ProjectBody } from "@/utils/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -9,9 +11,38 @@ import { toast } from "sonner";
 
 const icons = RAW_ICONS;
 
+type ProjectStatusType =
+  | "Completed"
+  | "Backlog"
+  | "In Progress"
+  | "Cancelled"
+  | "Planned";
+
+type ProjectPriorityType = "No Priority" | "Urgent" | "High" | "Medium" | "Low";
+
 export default function Projects() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const [createWindowOpen, setCreateWindowOpen] = useState(false);
+  const [projects, setProjects] = useState<ProjectBody[]>();
+  const [projStatus, setProjStatus] = useState<ProjectStatusType>("Backlog");
+
+  const [projPriority, setProjPriority] =
+    useState<ProjectPriorityType>("No Priority");
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get("/api/project/getprojects");
+      setProjects(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     if (!session?.user.email) {
@@ -36,16 +67,27 @@ export default function Projects() {
               </div>
             </div>
             <div className="flex gap-x-2 md:gap-x-4 ">
-              <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
+              <div
+                onClick={() => setCreateWindowOpen(true)}
+                className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
+              >
                 <SVGIcon className="flex w-3" svgString={icons.Add} />
                 <p>Create project</p>
               </div>
             </div>
           </div>
           <ProjectTopTile />
+
+          <div className="">
+            {projects?.map((elem, key) => {
+              return <ProjectLabel key={key} title={elem.title} />;
+            })}
+          </div>
         </div>
       </div>
-      <CreateProjectWindow />
+      {createWindowOpen && (
+        <CreateProjectWindow setClose={setCreateWindowOpen} />
+      )}
     </>
   );
 }
@@ -63,7 +105,38 @@ const ProjectTopTile = () => {
   );
 };
 
-const CreateProjectWindow = () => {
+const ProjectLabel = ({
+  title,
+  health,
+  priority,
+  lead,
+  targetDate,
+  status,
+}: {
+  title: string;
+  health?: string;
+  priority?: string;
+  lead?: string;
+  targetDate?: string;
+  status?: string;
+}) => {
+  return (
+    <div className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300">
+      <p className="col-span-5 text-lg">{title}</p>
+      <p className="col-span-2">{health}</p>
+      <p className="col-span-1">{priority}</p>
+      <p className="col-span-1">{lead}</p>
+      <p className="col-span-2">{targetDate}</p>
+      <p className="col-span-1">{status}</p>
+    </div>
+  );
+};
+
+const CreateProjectWindow = ({
+  setClose,
+}: {
+  setClose: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [projTitle, setProjTitle] = useState("");
   const [projDescription, setProjDescription] = useState("");
   const [projContent, setProjContent] = useState("");
@@ -82,6 +155,8 @@ const CreateProjectWindow = () => {
       toast.info(response.data.message);
     } catch (error) {
       toast.info("Error occured while creating project");
+    } finally {
+      setClose(false);
     }
   };
 
@@ -96,10 +171,12 @@ const CreateProjectWindow = () => {
             <SVGIcon className="flex w-t" svgString={icons.ArrowRight} />
             <p>New Project</p>
           </div>
-          <SVGIcon className="flex w-5" svgString={icons.Close} />
+          <div onClick={() => setClose(false)} className="w-fit cursor-pointer">
+            <SVGIcon className="flex w-5" svgString={icons.Close} />
+          </div>
         </div>
 
-        <div className="mt-5">
+        <div id="title" className="mt-5">
           <input
             className=" text-3xl w-full outline-none"
             placeholder="Project name"
@@ -109,6 +186,7 @@ const CreateProjectWindow = () => {
             }}
           />
           <input
+            id="description"
             className=" text-lg w-full outline-none mt-3"
             placeholder="Add some description…"
             value={projDescription}
@@ -118,7 +196,29 @@ const CreateProjectWindow = () => {
           />
         </div>
 
-        <div className="flex-grow mt-10 font-extralight">
+        <div className="my-2 h-10 gap-x-2 flex items-center">
+          <button className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300">
+            status
+          </button>
+          <button className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300">
+            health
+          </button>
+          <button className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300">
+            lead
+          </button>
+          <button className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300">
+            members
+          </button>
+          <button className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300">
+            start date
+          </button>
+          <button className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300">
+            target date
+          </button>
+        </div>
+
+        <div className="border-t border-[#525353] mt-3"></div>
+        <div id="content" className="flex-grow mt-10 font-extralight">
           <textarea
             className="text-lg w-full outline-none h-full resize-none"
             placeholder="Add project brief, long description, collect ideas and resources…"
@@ -130,12 +230,15 @@ const CreateProjectWindow = () => {
         </div>
 
         <div className="border-t border-[#393B42] w-full h-20 flex items-center justify-end gap-x-3">
-          <button className="px-2 border border-[#393B42] rounded-md h-9">
+          <button
+            onClick={() => setClose(false)}
+            className="px-2 border border-[#393B42] rounded-md h-9 hover:bg-[#23252A] transition-all duration-300"
+          >
             Cancel
           </button>
           <button
             onClick={createProject}
-            className="px-2 border border-[#6D78E7] bg-[#5E6AD2] rounded-md h-9"
+            className="px-2 border border-[#6D78E7] bg-[#5E6AD2] rounded-md h-9 hover:bg-[#6D78E7] transition-all duration-300"
           >
             Create project
           </button>
