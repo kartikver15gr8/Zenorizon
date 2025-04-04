@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
-  const { projTitle, projDescription, projContent } = await request.json();
+  const { projTitle, projDescription, projContent, priority, status } =
+    await request.json();
 
   const session = await getServerSession(authOptions);
 
@@ -19,6 +20,8 @@ export async function POST(request: NextRequest) {
         description: projDescription,
         createdBy: session.user.id,
         content: projContent,
+        priority: priority,
+        status: status,
       },
     });
     if (response) {
