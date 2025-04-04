@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 
 const navListArr = [
-  { title: "Workflow", redirectHref: "/workflow" },
+  { title: "Workflow", redirectHref: "/workflow/project" },
   { title: "Resources", redirectHref: "" },
   { title: "Pricing", redirectHref: "" },
   { title: "Contact", redirectHref: "" },

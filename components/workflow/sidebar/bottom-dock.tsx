@@ -44,7 +44,7 @@ export default function BottomDock() {
               setActivePopup("workflow");
             }}
           >
-            <SVGIcon className="flex w-4" svgString={icons.Cube} />
+            <SVGIcon className="flex w-4" svgString={icons.RubiksCube} />
             <p className="text-xs">Workflow</p>
           </div>
 
@@ -133,7 +133,7 @@ const WorkflowWindow = ({
       {/* Popup Content */}
       <p className="text-white ">Workflow</p>
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-2">
-        <DockOptions svg={icons.Cube} optName="Projects" />
+        <DockOptions svg={icons.RubiksCube} optName="Projects" />
         <DockOptions svg={icons.Members} optName="Members" />
         <DockOptions svg={icons.Team} optName="Teams" />
       </div>
@@ -185,7 +185,7 @@ const TeamsWindow = ({
 
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-2">
         <DockOptions svg={icons.Target} optName="Issues" />
-        <DockOptions svg={icons.Cube} optName="Project" />
+        <DockOptions svg={icons.RubiksCube} optName="Project" />
         <DockOptions svg={icons.Eye} optName="Views" />
       </div>
       {/* Close Button */}

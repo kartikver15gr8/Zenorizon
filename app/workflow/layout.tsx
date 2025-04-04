@@ -15,13 +15,6 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div className="flex h-8 items-center bg-gradient-to-r from-[#8168CE] via-[#CA3B8F] to-[#5C7FD3] w-full justify-center ">
-        <p className="">
-          Zenorizon is under development, add yourself in the waitlist to keep
-          yourself updated. we&apos;ll ship the app soon 🎉
-        </p>
-      </div>
-
       <div className="flex">
         <WorkflowSidebar />
         {children}

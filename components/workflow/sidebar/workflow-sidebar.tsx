@@ -7,8 +7,11 @@ import OptionLabel from "./option-label";
 import { BottomOptionsTile } from "./bottom-options-tile";
 import { WorkflowTab } from "./workflow-tab";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const icons = RAW_ICONS;
+
+const TabActive = "rounded  bg-[#0F1111] border border-[#4b4b4b] ";
 
 interface CollapsedState {
   teams: boolean;
@@ -18,6 +21,8 @@ interface CollapsedState {
 export default function WorkflowSidebar() {
   const [workspaceCollapsed, setWorkspaceCollapsed] = useState(false);
   const [featuresCollapsed, setFeaturesCollapsed] = useState(false);
+
+  const pathname = usePathname();
 
   const toggleWorkspaceCollapse = () => {
     setWorkspaceCollapsed(!workspaceCollapsed);
@@ -65,7 +70,13 @@ export default function WorkflowSidebar() {
           }`}
         >
           <div className="space-y-1">
-            <OptionLabel svg={icons.Cube} optName="Projects" />
+            <OptionLabel
+              className={
+                pathname.includes("/workflow/project") ? TabActive : ""
+              }
+              svg={icons.RubiksCube}
+              optName="Projects"
+            />
             <OptionLabel svg={icons.Members} optName="Members" />
             <OptionLabel svg={icons.Team} optName="Teams" />
           </div>
@@ -121,7 +132,7 @@ export default function WorkflowSidebar() {
           >
             <div className="pl-5">
               <OptionLabel svg={icons.Target} optName="Issues" />
-              <OptionLabel svg={icons.Cube} optName="Projects" />
+              <OptionLabel svg={icons.RubiksCube} optName="Projects" />
               <OptionLabel svg={icons.Eye} optName="Views" />
             </div>
           </div>
