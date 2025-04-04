@@ -189,6 +189,29 @@ export default function Navbar() {
                   />
                 );
               })}
+              <motion.div variants={itemVariants}>
+                {session?.user.email ? (
+                  <div
+                    className="h-16 flex items-center hover:bg-[#3e3d3d] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#565555]"
+                    onClick={() => {
+                      handleSignout();
+                      setIsOpen(!isOpen);
+                    }}
+                  >
+                    Log out
+                  </div>
+                ) : (
+                  <Link
+                    href={session?.user.email ? "" : "/signup"}
+                    className="h-16 flex items-center hover:bg-[#3e3d3d] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#565555]"
+                    onClick={() => {
+                      setIsOpen(!isOpen);
+                    }}
+                  >
+                    Sign in
+                  </Link>
+                )}
+              </motion.div>
             </div>
           </motion.div>
         </div>
