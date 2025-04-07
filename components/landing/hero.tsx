@@ -24,22 +24,56 @@ export default function Hero() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // const waitListCall = async (): Promise<void> => {
+  //   try {
+  //     setIsLoading(true);
+  //     const emailcheck = emailSchema.safeParse(email.trim());
+
+  //     if (!emailcheck.success) {
+  //       toast.warning("Invalid email format");
+  //       return;
+  //     }
+
+  //     const response = await axios.post<{ message: string }>("/api/waitlist", {
+  //       userEmail: email.trim(),
+  //     });
+
+  //     if (response.data) {
+  //       toast.info(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     if (axios.isAxiosError(error)) {
+  //       toast.error(error.response?.data?.message || "An error occurred");
+  //     } else if (error instanceof Error) {
+  //       toast.error(error.message);
+  //     } else {
+  //       toast.error("Unknown error occurred");
+  //     }
+  //   } finally {
+  //     setEmail("");
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const waitListCall = async (): Promise<void> => {
     try {
       setIsLoading(true);
-      const emailcheck = emailSchema.safeParse(email.trim());
 
-      if (!emailcheck.success) {
+      // Basic client-side validation
+      if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
         toast.warning("Invalid email format");
         return;
       }
 
-      const response = await axios.post<{ message: string }>("/api/waitlist", {
-        userEmail: email.trim(),
-      });
+      const response = await axios.post<{ message: string; emailId?: string }>(
+        "/api/waitlist",
+        {
+          userEmail: email.trim(),
+        }
+      );
 
       if (response.data) {
-        toast.info(response.data.message);
+        toast.success(response.data.message);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -59,7 +93,7 @@ export default function Hero() {
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
     if (event.key === "Enter" && !isLoading) {
-      waitListCall();
+      // waitListCall();
     }
   };
 
