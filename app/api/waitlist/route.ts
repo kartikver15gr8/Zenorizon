@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email using Resend
     const { data, error } = await resend.emails.send({
-      from: "Waitlist <onboarding@resend.dev>", // Use your verified domain
+      from: "Waitlist <onboarding@zenorizon.com>", 
       to: userEmail,
       subject: "Welcome to Our Waitlist! ✨",
       react: React.createElement(WaitlistEmail, { userEmail }),
