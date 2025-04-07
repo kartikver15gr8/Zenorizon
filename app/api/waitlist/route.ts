@@ -1,31 +1,4 @@
-// import { NextRequest } from "next/server";
-// import { prisma } from "@/db";
-
-// export async function POST(request: NextRequest) {
-//   const { userEmail } = await request.json();
-
-//   const emailExists = await prisma.waitListEmails.findFirst({
-//     where: { email: userEmail },
-//   });
-
-//   if (emailExists) {
-//     return Response.json({ message: "Email already exists in the waitlist!" });
-//   } else {
-//     const response = await prisma.waitListEmails.create({
-//       data: {
-//         email: userEmail,
-//       },
-//     });
-//     if (response) {
-//       return Response.json({
-//         message: "Hurrahh🎉 you're added to the waitlist!",
-//       });
-//     }
-//   }
-
-//   return Response.json({ message: "Error occured!" });
-// }
-
+import { prisma } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { WaitlistEmail } from "@/components/waitlist/waitlist-email";
@@ -53,13 +26,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Save email to your database/storage
+    // checking if email already exists
+    const emailExists = await prisma.waitListEmails.findFirst({
+      where: { email: userEmail },
+    });
 
-    // Send confirmation email using Resend
+    if (emailExists) {
+      return NextResponse.json(
+        { message: "Email already exists in the waitlist!" },
+        { status: 409 }
+      );
+    }
+
+    const dbResponse = await prisma.waitListEmails.create({
+      data: {
+        email: userEmail,
+      },
+    });
+
+    if (!dbResponse) {
+      return NextResponse.json(
+        { message: "Failed to add email to waitlist" },
+        { status: 500 }
+      );
+    }
+
+    // Send confirmation email
     const { data, error } = await resend.emails.send({
-      from: "Waitlist <onboarding@zenorizon.com>", 
+      from: "Welcome to Zenorizon <onboarding@zenorizon.com>",
       to: userEmail,
-      subject: "Welcome to Our Waitlist! ✨",
+      subject: "Welcome to Zenorizon! ✨",
       react: React.createElement(WaitlistEmail, { userEmail }),
     });
 
