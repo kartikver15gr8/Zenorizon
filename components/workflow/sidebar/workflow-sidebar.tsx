@@ -42,13 +42,13 @@ export default function WorkflowSidebar() {
   };
 
   return (
-    <div className=" w-72 min-h-screen hidden md:block font-extralight">
+    <div className=" w-72 min-h-screen hidden md:block font-extralight px-2">
       <WorkflowTab />
       <div className="px-1 mt-2">
         <OptionLabel svg={icons.Inbox} optName="Inbox" />
         <OptionLabel svg={icons.Target} optName="My Issues" />
       </div>
-      <div className="px-1 mt-4">
+      <div className=" mt-4">
         <div
           className="flex px-4 mb-2 cursor-pointer"
           onClick={toggleWorkspaceCollapse}
@@ -83,7 +83,7 @@ export default function WorkflowSidebar() {
         </div>
       </div>
 
-      <div className="px-1 mt-4">
+      <div className=" mt-4">
         <div className="cursor-pointer" onClick={() => toggleSection("teams")}>
           <div className="flex px-4 mb-2">
             <p className="text-sm">Teams</p>
@@ -138,7 +138,7 @@ export default function WorkflowSidebar() {
           </div>
         </div>
       </div>
-      <div className="px-1 mt-4">
+      <div className=" mt-4">
         <div
           onClick={toggleFeatureCollapse}
           className="flex px-4 mb-2 cursor-pointer"

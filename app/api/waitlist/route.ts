@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     const dbResponse = await prisma.waitListEmails.create({
       data: {
-        email: userEmail,
+        email: userEmail.toLowerCase(),
       },
     });
 

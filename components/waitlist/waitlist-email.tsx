@@ -40,8 +40,9 @@ export const WaitlistEmail: React.FC<WaitlistEmailProps> = ({ userEmail }) => (
       >
         <p>Hello there,</p>
         <p>
-          Thank you for joining our waitlist with <strong>{userEmail}</strong>!
-          We&apos;re thrilled to have you as part of our Zenorizon community.
+          Thank you for joining our waitlist with{" "}
+          <strong>{userEmail.toLowerCase()}</strong>! We&apos;re thrilled to
+          have you as part of our Zenorizon community.
         </p>
         <p>
           We&apos;re working hard to launch our product soon and you&apos;ll be
