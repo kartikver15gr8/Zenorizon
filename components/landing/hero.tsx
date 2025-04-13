@@ -120,13 +120,21 @@ export default function Hero() {
             </p>
           </BlurFade>
           <div className="flex font-extralight flex-col items-center text-sm md:text-lg xl:text-xl  text-[#AEAEAE]">
-            <HyperText className="text-[10px] sm:text-xs md:text-sm">
+            <BlurFade
+              delay={1}
+              inView
+              className="text-[10px] sm:text-xs md:text-sm"
+            >
               Introducing the system for modern software development.
-            </HyperText>
+            </BlurFade>
 
-            <HyperText className="text-[10px] sm:text-xs md:text-sm">
+            <BlurFade
+              delay={1}
+              inView
+              className="text-[10px] sm:text-xs md:text-sm"
+            >
               Organize issues, projects, and product roadmaps.
-            </HyperText>
+            </BlurFade>
           </div>
 
           <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">

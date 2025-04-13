@@ -5,6 +5,7 @@ import SVGIcon from "@/lib/svg-icon";
 import { ProjectBody } from "@/utils/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -35,7 +36,7 @@ export default function Projects() {
   const fetchProjects = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get("/api/project/getprojects");
+      const response = await axios.get("/api/workflow/getprojects");
       setProjects(response.data);
       console.log(response.data);
     } catch (error) {
@@ -187,7 +188,7 @@ const ProjectLabel = ({
 
     setShowOptionsDropdown(false);
     try {
-      const response = await axios.patch("/api/project/updateproject", {
+      const response = await axios.patch("/api/workflow/updateproject", {
         projectId: projectID,
         status: option,
       });
@@ -206,7 +207,7 @@ const ProjectLabel = ({
     setSelectedPriorityOption(option);
     setShowOptionsDropdown(false);
     try {
-      const response = await axios.patch("/api/project/updateproject", {
+      const response = await axios.patch("/api/workflow/updateproject", {
         projectId: projectID,
         priority: option,
       });
@@ -222,8 +223,11 @@ const ProjectLabel = ({
   };
 
   return (
-    <div className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px]">
-      <p className="col-span-4 lg:text-lg">{title}</p>
+    <Link
+      href={`/workflow/project/${projectID}`}
+      className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px]"
+    >
+      <p className="col-span-4 text-sm lg:text-lg">{title}</p>
       <div className="col-span-2 relative">
         <div
           className="w-fit flex items-center px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
@@ -271,7 +275,7 @@ const ProjectLabel = ({
       </div>
       <p className="col-span-2">{targetDate}</p>
       <p className="col-span-1">{status}</p>
-    </div>
+    </Link>
   );
 };
 
@@ -310,7 +314,7 @@ const CreateProjectWindow = ({
 
   const createProject = async () => {
     try {
-      const response = await axios.post("/api/project/createproject", {
+      const response = await axios.post("/api/workflow/createproject", {
         projTitle: projTitle,
         projDescription: projDescription,
         projContent: projContent,
