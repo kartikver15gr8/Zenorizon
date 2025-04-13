@@ -69,18 +69,27 @@ export default function Project({
                   Projects
                 </Link>
                 <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
-                  <SVGIcon className="flex w-3" svgString={icons.Cube} />
+                  <SVGIcon className="flex w-4" svgString={icons.Cube} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     {project ? project.title : "Loading…"}
                   </p>
                 </div>
+                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
+                  <SVGIcon className="flex w-4" svgString={icons.Docs} />
+                  <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+                    Overview
+                  </p>
+                </div>
+                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
+                  <SVGIcon className="flex w-4" svgString={icons.Issue} />
+                  <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+                    Issues
+                  </p>
+                </div>
               </div>
               <div className="flex gap-x-2 md:gap-x-4 ">
-                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
-                  <SVGIcon className="flex w-3" svgString={icons.Add} />
-                  <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                    Create project
-                  </p>
+                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
+                  <SVGIcon className="flex w-5" svgString={icons.SideBar} />
                 </div>
               </div>
             </div>
@@ -94,12 +103,22 @@ export default function Project({
                   <p className="my-3 text-[#858687]">{project.description}</p>
                 </div>
 
-                <div className="flex gap-x-2 my-5">
-                  <p>In progress</p>
-                  <p>High</p>
-                  <p>Jadu</p>
-                  <p>Lead</p>
-                  <p>Target Date</p>
+                <div className="flex gap-x-2 my-5 text-xs md:text-sm ">
+                  <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                    In progress
+                  </p>
+                  <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                    High
+                  </p>
+                  <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                    Jadu
+                  </p>
+                  <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                    Lead
+                  </p>
+                  <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                    Target Date
+                  </p>
                 </div>
 
                 <div className="my-5">
