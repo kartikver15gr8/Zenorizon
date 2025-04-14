@@ -1,20 +1,22 @@
-import list from "@/public/assets/illustrations/cropped.png";
+import lifecycl from "@/public/assets/illustrations/lifecycl.png";
+import stack from "@/public/assets/illustrations/stack.png";
+import realtimeupdates from "@/public/assets/illustrations/iphonenoti.png";
 
 export const FeaturesArray = [
   {
-    img: list,
+    img: stack,
     heading: "Collaborate seamlessly",
     description:
       "Connect your GitHub, invite your team, manage multiple projects, assign tasks, issues tracking, maintain in real-time.",
   },
   {
-    img: list,
-    heading: "Easy to use",
+    img: realtimeupdates,
+    heading: "Real-time updates",
     description:
-      "Designed for efficiency, providing you with a hassle-free experience.",
+      "Designed for efficiency, get real-time updates, sync across platforms",
   },
   {
-    img: list,
+    img: lifecycl,
     heading: "Roadmaps",
     description:
       "Craft your roadmaps and visualize the overall production processes, showcasing progress insights and potential delays to facilitate better decisions.",

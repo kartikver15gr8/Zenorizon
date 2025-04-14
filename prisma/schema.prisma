@@ -47,6 +47,7 @@ model User {
   Project         Project?  @relation(fields: [projectId], references: [id])
   projectId       String?
   createdProjects Project[] @relation("ProjectCreator")
+  Issue           Issue[]
 }
 
 model VerificationToken {
@@ -79,13 +80,14 @@ model Project {
 }
 
 model Issue {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  status      String?
-  priority    String?
-  assign      String?
-  labels      String?
-  Project     Project? @relation(fields: [projectId], references: [id])
-  projectId   String?
+  id           String  @id @default(uuid())
+  title        String
+  description  String?
+  status       String?
+  priority     String?
+  User         User?   @relation(fields: [assignedUser], references: [id])
+  assignedUser String?
+  labels       String?
+  Project      Project @relation(fields: [projectId], references: [id])
+  projectId    String
 }

@@ -8,17 +8,17 @@ export default function Features() {
   return (
     <section className="min-h-screen relative flex flex-col justify-center bg-gradient-to-b from-[#0A0A0A] via-[#131516] to-[#0A0A0A] mt-5 px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 gap-y-3 sm:gap-y-4 md:gap-y-5 xl:gap-y-6">
       {/* Coming Soon Mask */}
-      <div className="absolute  inset-0 flex items-center justify-center z-10">
+      {/* <div className="absolute  inset-0 flex items-center justify-center z-10">
         <div className="bg-bg-[rgba(0,0,0,0.1)] backdrop-blur-lg bg-opacity-70 w-full h-full absolute"></div>
         <div className="relative z-20">
           <h2 className="text-4xl md:text-6xl font-bold text-white text-center">
             Coming Soon!
           </h2>
         </div>
-      </div>
+      </div> */}
 
       {/* Original Content (Blurred) */}
-      <div className="relative filter blur-sm">
+      <div className="relative ">
         <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-7xl font-bold">
           Everything you need
         </h2>
@@ -41,7 +41,7 @@ export default function Features() {
           </div>
 
           {/* Tablet and Desktop view: grid layout */}
-          <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-[430px]">
+          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6 h-[430px]">
             {featuresData.map((feature, index) => (
               <FeatureCard
                 key={index}
