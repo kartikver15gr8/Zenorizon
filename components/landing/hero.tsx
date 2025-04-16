@@ -24,37 +24,6 @@ export default function Hero() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // const waitListCall = async (): Promise<void> => {
-  //   try {
-  //     setIsLoading(true);
-  //     const emailcheck = emailSchema.safeParse(email.trim());
-
-  //     if (!emailcheck.success) {
-  //       toast.warning("Invalid email format");
-  //       return;
-  //     }
-
-  //     const response = await axios.post<{ message: string }>("/api/waitlist", {
-  //       userEmail: email.trim(),
-  //     });
-
-  //     if (response.data) {
-  //       toast.info(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     if (axios.isAxiosError(error)) {
-  //       toast.error(error.response?.data?.message || "An error occurred");
-  //     } else if (error instanceof Error) {
-  //       toast.error(error.message);
-  //     } else {
-  //       toast.error("Unknown error occurred");
-  //     }
-  //   } finally {
-  //     setEmail("");
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const waitListCall = async (): Promise<void> => {
     try {
       setIsLoading(true);
@@ -123,7 +92,7 @@ export default function Hero() {
             <BlurFade
               delay={1}
               inView
-              className="text-[10px] sm:text-xs md:text-sm"
+              className="text-[10px] sm:text-xs md:text-sm lg:text-[16px]"
             >
               Introducing the system for modern software development.
             </BlurFade>
@@ -131,7 +100,7 @@ export default function Hero() {
             <BlurFade
               delay={1}
               inView
-              className="text-[10px] sm:text-xs md:text-sm"
+              className="text-[10px] sm:text-xs md:text-sm lg:text-[16px]"
             >
               Organize issues, projects, and product roadmaps.
             </BlurFade>
