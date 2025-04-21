@@ -10,3 +10,12 @@ export type ProjectBody = {
   status: string;
   targetDate: any;
 };
+
+export type IssueBody = {
+  id: string;
+  title: string;
+  description?: string;
+  status?: string;
+  priority?: string;
+  projectId: string;
+};

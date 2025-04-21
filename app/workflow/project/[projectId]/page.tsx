@@ -7,14 +7,22 @@ import SVGIcon from "@/lib/svg-icon";
 import { RAW_ICONS } from "@/lib/icons";
 import Link from "next/link";
 import ProjectLoadingScreen from "@/components/workflow/workspace/project-loading";
+import { usePathname } from "next/navigation";
 
 const icons = RAW_ICONS;
+
+const activeTab =
+  "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
+const inactiveTab =
+  "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded  bg-[#0F1111] hover:bg-[#1C1D21] transition-all duration-300";
 
 export default function Project({
   params,
 }: {
   params: Promise<{ projectId: string }>;
 }) {
+  const path = usePathname();
+
   const [project_id, setProjectID] = useState<string | null>(null);
   const [project, setProject] = useState<ProjectBody | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +31,7 @@ export default function Project({
     const fetchParams = async () => {
       const resolvedParams = await params;
       setProjectID(resolvedParams.projectId);
+      localStorage.setItem("ZENO_PROJECT_ID", resolvedParams.projectId);
     };
     fetchParams();
   }, [params]);
@@ -74,18 +83,23 @@ export default function Project({
                     {project ? project.title : "Loading…"}
                   </p>
                 </div>
-                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
+                <div
+                  className={path.includes("/issues") ? inactiveTab : activeTab}
+                >
                   <SVGIcon className="flex w-4" svgString={icons.Docs} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     Overview
                   </p>
                 </div>
-                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
+                <Link
+                  href={`/workflow/project/${project_id}/issues`}
+                  className={path.includes("/issues") ? activeTab : inactiveTab}
+                >
                   <SVGIcon className="flex w-4" svgString={icons.Issue} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     Issues
                   </p>
-                </div>
+                </Link>
               </div>
               <div className="flex gap-x-2 md:gap-x-4 ">
                 <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
