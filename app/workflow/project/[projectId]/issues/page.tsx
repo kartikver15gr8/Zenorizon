@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 
-const icons = RAW_ICONS;
-
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
 const inactiveTab =
@@ -69,7 +67,7 @@ export default function Issue() {
     <>
       <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
         <div className="flex justify-center items-center gap-x-1 h-10 md:h-12">
-          <SVGIcon className="flex w-3 sm:w-4" svgString={icons.Issue} />
+          <SVGIcon className="flex w-3 sm:w-4" svgString={RAW_ICONS.Issue} />
           <p className="text-[13px] sm:text-[15px]">Issues</p>
         </div>
         <div className="flex flex-col flex-grow border border-[#414141] bg-[#0F1111] rounded-lg ml-2 md:ml-0 mr-2 mb-2 p-1">
@@ -85,7 +83,7 @@ export default function Issue() {
                 href={`/workflow/project/${project_id}`}
                 className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300"
               >
-                <SVGIcon className="flex w-4" svgString={icons.Cube} />
+                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   project
                 </p>
@@ -93,7 +91,7 @@ export default function Issue() {
               <div
                 className={path.includes("/issues") ? inactiveTab : activeTab}
               >
-                <SVGIcon className="flex w-4" svgString={icons.Docs} />
+                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Docs} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   Overview
                 </p>
@@ -102,7 +100,7 @@ export default function Issue() {
                 href={`/workflow/project/${project_id}/issues`}
                 className={path.includes("/issues") ? activeTab : inactiveTab}
               >
-                <SVGIcon className="flex w-4" svgString={icons.Issue} />
+                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Issue} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   Issues
                 </p>
@@ -110,7 +108,7 @@ export default function Issue() {
             </div>
             <div className="flex gap-x-2 md:gap-x-4 ">
               <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
-                <SVGIcon className="flex w-5" svgString={icons.SideBar} />
+                <SVGIcon className="flex w-5" svgString={RAW_ICONS.SideBar} />
               </div>
             </div>
           </div>
@@ -145,15 +143,21 @@ export default function Issue() {
 const renderPrioritySvg = (priority: string) => {
   switch (priority.split(" ").join().toLowerCase()) {
     case "urgent":
-      return <SVGIcon className="flex w-5" svgString={icons.UrgentPriority} />;
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
+      );
     case "high":
-      return <SVGIcon className="flex w-5" svgString={icons.HighPriority} />;
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
+      );
     case "medium":
-      return <SVGIcon className="flex w-5" svgString={icons.MediumPriority} />;
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
+      );
     case "low":
-      return <SVGIcon className="flex w-5" svgString={icons.LowPriority} />;
+      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
     default:
-      return <SVGIcon className="flex w-5" svgString={icons.NoPriority} />;
+      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
   }
 };
 
@@ -282,7 +286,7 @@ const IssuesLabel = ({
         )}
       </div>
       <div className="col-span-1 h-8 w-8 flex items-center justify-center rounded hover:bg-[#212227] transition-all duration-300">
-        <SVGIcon className="flex w-4 " svgString={icons.Account} />
+        <SVGIcon className="flex w-4 " svgString={RAW_ICONS.Account} />
       </div>
       <p className="col-span-2">{targetDate}</p>
       <p className="col-span-1">{status}</p>

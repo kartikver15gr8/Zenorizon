@@ -19,3 +19,17 @@ export type IssueBody = {
   priority?: string;
   projectId: string;
 };
+
+export type User = {
+  id: string;
+  name?: string;
+  email: string;
+  emailVerified: Date;
+  image?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  Project: ProjectBody;
+  projectId: string;
+  createdProjects: ProjectBody[];
+  Issue: IssueBody[];
+};

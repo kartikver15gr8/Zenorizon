@@ -5,10 +5,6 @@ import { features, product, resources } from "@/utils/footer-list-options";
 import SVGIcon from "@/lib/svg-icon";
 import { RAW_ICONS } from "@/lib/icons";
 
-const featuresOpt = features;
-const resourcesOpt = resources;
-const productOpt = product;
-
 export default function Footer() {
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 border-t-[0.5px] border-[#565555]">
@@ -36,7 +32,7 @@ export default function Footer() {
             Features
           </p>
           <ul className="flex flex-col mt-8 gap-y-4 text-[14px] lg:text-[16px] text-[#c9c9cc]">
-            {featuresOpt.map((elem, key) => {
+            {features.map((elem, key) => {
               return (
                 <FooterLabel
                   key={key}
@@ -55,7 +51,7 @@ export default function Footer() {
           </p>
 
           <ul className="flex flex-col mt-8 gap-y-4 text-[14px] lg:text-[16px] text-[#c9c9cc]">
-            {productOpt.map((elem, key) => {
+            {product.map((elem, key) => {
               return (
                 <FooterLabel
                   key={key}
@@ -73,7 +69,7 @@ export default function Footer() {
           </p>
 
           <ul className="flex flex-col mt-8 gap-y-4 text-[14px] lg:text-[16px] text-[#c9c9cc]">
-            {resourcesOpt.map((elem, key) => {
+            {resources.map((elem, key) => {
               return (
                 <FooterLabel
                   key={key}

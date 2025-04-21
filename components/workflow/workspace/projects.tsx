@@ -10,8 +10,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const icons = RAW_ICONS;
-
 type ProjectStatusType =
   | "Completed"
   | "Backlog"
@@ -59,7 +57,10 @@ export default function Projects() {
     <>
       <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
         <div className="flex justify-center items-center gap-x-1 h-10 md:h-12">
-          <SVGIcon className="flex w-3 sm:w-4" svgString={icons.RubiksCube} />
+          <SVGIcon
+            className="flex w-3 sm:w-4"
+            svgString={RAW_ICONS.RubiksCube}
+          />
           <p className="text-[13px] sm:text-[15px]">Projects</p>
         </div>
 
@@ -70,7 +71,7 @@ export default function Projects() {
                 Projects
               </p>
               <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
-                <SVGIcon className="flex w-3" svgString={icons.Cube} />
+                <SVGIcon className="flex w-3" svgString={RAW_ICONS.Cube} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   All projects
                 </p>
@@ -81,7 +82,7 @@ export default function Projects() {
                 onClick={() => setCreateWindowOpen(true)}
                 className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
               >
-                <SVGIcon className="flex w-3" svgString={icons.Add} />
+                <SVGIcon className="flex w-3" svgString={RAW_ICONS.Add} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   Create project
                 </p>
@@ -92,7 +93,10 @@ export default function Projects() {
 
           {isLoading && (
             <div className="h-20 flex items-center justify-center">
-              <SVGIcon className="flex w-10 md:w-20" svgString={icons.Loader} />
+              <SVGIcon
+                className="flex w-10 md:w-20"
+                svgString={RAW_ICONS.Loader}
+              />
             </div>
           )}
 
@@ -136,15 +140,21 @@ const ProjectTopTile = () => {
 const renderPrioritySvg = (priority: string) => {
   switch (priority.split(" ").join().toLowerCase()) {
     case "urgent":
-      return <SVGIcon className="flex w-5" svgString={icons.UrgentPriority} />;
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
+      );
     case "high":
-      return <SVGIcon className="flex w-5" svgString={icons.HighPriority} />;
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
+      );
     case "medium":
-      return <SVGIcon className="flex w-5" svgString={icons.MediumPriority} />;
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
+      );
     case "low":
-      return <SVGIcon className="flex w-5" svgString={icons.LowPriority} />;
+      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
     default:
-      return <SVGIcon className="flex w-5" svgString={icons.NoPriority} />;
+      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
   }
 };
 
@@ -271,7 +281,7 @@ const ProjectLabel = ({
         )}
       </div>
       <div className="col-span-1 h-8 w-8 flex items-center justify-center rounded hover:bg-[#212227] transition-all duration-300">
-        <SVGIcon className="flex w-4 " svgString={icons.Account} />
+        <SVGIcon className="flex w-4 " svgString={RAW_ICONS.Account} />
       </div>
       <p className="col-span-2">{targetDate}</p>
       <p className="col-span-1">{status}</p>
@@ -339,13 +349,13 @@ const CreateProjectWindow = ({
             <div className="border border-[#2E3035] bg-[#1C1D21] rounded h-7 md:h-9 w-16 md:w-20 flex justify-center items-center">
               <p className="text-[12px] md:text-[14px] xl:text-[16px]">Team</p>
             </div>
-            <SVGIcon className="flex w-t" svgString={icons.ArrowRight} />
+            <SVGIcon className="flex w-t" svgString={RAW_ICONS.ArrowRight} />
             <p className="text-[12px] md:text-[14px] xl:text-[16px]">
               New Project
             </p>
           </div>
           <div onClick={() => setClose(false)} className="w-fit cursor-pointer">
-            <SVGIcon className="flex w-3 md:w-5" svgString={icons.Close} />
+            <SVGIcon className="flex w-3 md:w-5" svgString={RAW_ICONS.Close} />
           </div>
         </div>
 

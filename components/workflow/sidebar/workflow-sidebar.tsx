@@ -9,7 +9,7 @@ import { WorkflowTab } from "./workflow-tab";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-const icons = RAW_ICONS;
+
 
 const TabActive = "rounded  bg-[#0F1111] border border-[#4b4b4b] ";
 
@@ -45,8 +45,8 @@ export default function WorkflowSidebar() {
     <div className=" w-72 min-h-screen hidden md:block font-extralight px-2">
       <WorkflowTab />
       <div className="px-1 mt-2">
-        <OptionLabel svg={icons.Inbox} optName="Inbox" />
-        <OptionLabel svg={icons.Target} optName="My Issues" />
+        <OptionLabel svg={RAW_ICONS.Inbox} optName="Inbox" />
+        <OptionLabel svg={RAW_ICONS.Target} optName="My Issues" />
       </div>
       <div className=" mt-4">
         <div
@@ -58,7 +58,7 @@ export default function WorkflowSidebar() {
             className={`flex w-4 transition-transform duration-300 ${
               workspaceCollapsed ? "rotate-180" : "rotate-0"
             }`}
-            svgString={icons.ArrowDown}
+            svgString={RAW_ICONS.ArrowDown}
           />
         </div>
         {/* Workspace Content */}
@@ -74,11 +74,11 @@ export default function WorkflowSidebar() {
               className={
                 pathname.includes("/workflow/project") ? TabActive : ""
               }
-              svg={icons.RubiksCube}
+              svg={RAW_ICONS.RubiksCube}
               optName="Projects"
             />
-            <OptionLabel svg={icons.Members} optName="Members" />
-            <OptionLabel svg={icons.Team} optName="Teams" />
+            <OptionLabel svg={RAW_ICONS.Members} optName="Members" />
+            <OptionLabel svg={RAW_ICONS.Team} optName="Teams" />
           </div>
         </div>
       </div>
@@ -91,7 +91,7 @@ export default function WorkflowSidebar() {
               className={`flex w-4 transition-transform duration-300 ${
                 collapsed.teams ? "rotate-180" : "rotate-0"
               }`}
-              svgString={icons.ArrowDown}
+              svgString={RAW_ICONS.ArrowDown}
             />
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function WorkflowSidebar() {
               className={`flex w-4 transition-transform duration-300 ${
                 collapsed.workspace ? "rotate-180" : "rotate-0"
               }`}
-              svgString={icons.ArrowDown}
+              svgString={RAW_ICONS.ArrowDown}
             />
           </div>
 
@@ -131,9 +131,9 @@ export default function WorkflowSidebar() {
             }`}
           >
             <div className="pl-5">
-              <OptionLabel svg={icons.Target} optName="Issues" />
-              <OptionLabel svg={icons.RubiksCube} optName="Projects" />
-              <OptionLabel svg={icons.Eye} optName="Views" />
+              <OptionLabel svg={RAW_ICONS.Target} optName="Issues" />
+              <OptionLabel svg={RAW_ICONS.RubiksCube} optName="Projects" />
+              <OptionLabel svg={RAW_ICONS.Eye} optName="Views" />
             </div>
           </div>
         </div>
@@ -148,7 +148,7 @@ export default function WorkflowSidebar() {
             className={`flex w-4 transition-transform duration-300 ${
               featuresCollapsed ? "rotate-180" : "rotate-0"
             }`}
-            svgString={icons.ArrowDown}
+            svgString={RAW_ICONS.ArrowDown}
           />
         </div>
         <div
@@ -159,9 +159,9 @@ export default function WorkflowSidebar() {
           }`}
         >
           <div className="space-y-1">
-            <OptionLabel svg={icons.GitHub} optName="GitHub" />
-            <OptionLabel svg={icons.Target} optName="Import Issues" />
-            <OptionLabel svg={icons.Members} optName="Invite People" />
+            <OptionLabel svg={RAW_ICONS.GitHub} optName="GitHub" />
+            <OptionLabel svg={RAW_ICONS.Target} optName="Import Issues" />
+            <OptionLabel svg={RAW_ICONS.Members} optName="Invite People" />
           </div>
         </div>
       </div>

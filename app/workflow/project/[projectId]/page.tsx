@@ -4,12 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import type { ProjectBody } from "@/utils/types";
 import SVGIcon from "@/lib/svg-icon";
-import { RAW_ICONS } from "@/lib/icons";
 import Link from "next/link";
 import ProjectLoadingScreen from "@/components/workflow/workspace/project-loading";
 import { usePathname } from "next/navigation";
-
-const icons = RAW_ICONS;
+import { RAW_ICONS } from "@/lib/icons";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -63,7 +61,10 @@ export default function Project({
       ) : (
         <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
           <div className="flex justify-center items-center gap-x-1 h-10 md:h-12">
-            <SVGIcon className="flex w-3 sm:w-4" svgString={icons.RubiksCube} />
+            <SVGIcon
+              className="flex w-3 sm:w-4"
+              svgString={RAW_ICONS.RubiksCube}
+            />
             <p className="text-[13px] sm:text-[15px]">
               {project ? project.title : "Loading…"}
             </p>
@@ -78,7 +79,7 @@ export default function Project({
                   Projects
                 </Link>
                 <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
-                  <SVGIcon className="flex w-4" svgString={icons.Cube} />
+                  <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     {project ? project.title : "Loading…"}
                   </p>
@@ -86,7 +87,7 @@ export default function Project({
                 <div
                   className={path.includes("/issues") ? inactiveTab : activeTab}
                 >
-                  <SVGIcon className="flex w-4" svgString={icons.Docs} />
+                  <SVGIcon className="flex w-4" svgString={RAW_ICONS.Docs} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     Overview
                   </p>
@@ -95,7 +96,7 @@ export default function Project({
                   href={`/workflow/project/${project_id}/issues`}
                   className={path.includes("/issues") ? activeTab : inactiveTab}
                 >
-                  <SVGIcon className="flex w-4" svgString={icons.Issue} />
+                  <SVGIcon className="flex w-4" svgString={RAW_ICONS.Issue} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     Issues
                   </p>
@@ -103,7 +104,7 @@ export default function Project({
               </div>
               <div className="flex gap-x-2 md:gap-x-4 ">
                 <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
-                  <SVGIcon className="flex w-5" svgString={icons.SideBar} />
+                  <SVGIcon className="flex w-5" svgString={RAW_ICONS.SideBar} />
                 </div>
               </div>
             </div>

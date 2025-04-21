@@ -4,8 +4,6 @@ import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
 import { useState } from "react";
 
-const icons = RAW_ICONS;
-
 type activePopupProp = "profile" | "workflow" | "features" | "teams" | "none";
 
 const dockOptionActive =
@@ -31,7 +29,7 @@ export default function BottomDock() {
               setActivePopup("profile");
             }}
           >
-            <SVGIcon className="flex w-4" svgString={icons.ZenorizonLogo} />
+            <SVGIcon className="flex w-4" svgString={RAW_ICONS.ZenorizonLogo} />
             <p className="text-xs">Profile</p>
           </div>
 
@@ -44,7 +42,7 @@ export default function BottomDock() {
               setActivePopup("workflow");
             }}
           >
-            <SVGIcon className="flex w-4" svgString={icons.RubiksCube} />
+            <SVGIcon className="flex w-4" svgString={RAW_ICONS.RubiksCube} />
             <p className="text-xs">Workflow</p>
           </div>
 
@@ -57,7 +55,7 @@ export default function BottomDock() {
               setActivePopup("teams");
             }}
           >
-            <SVGIcon className="flex w-4" svgString={icons.Members} />
+            <SVGIcon className="flex w-4" svgString={RAW_ICONS.Members} />
             <p className="text-xs">Teams</p>
           </div>
 
@@ -68,7 +66,7 @@ export default function BottomDock() {
             }
             onClick={() => setActivePopup("features")}
           >
-            <SVGIcon className="flex w-4" svgString={icons.Gliter} />
+            <SVGIcon className="flex w-4" svgString={RAW_ICONS.Gliter} />
             <p className="text-xs">Features</p>
           </div>
         </div>
@@ -109,8 +107,8 @@ const ProfileWindow = ({
       {/* Popup Content */}
       <p className="text-white ">Profile</p>
       <div className="grid grid-cols-2 gap-x-2 mt-2">
-        <DockOptions svg={icons.Target} optName="Inbox" />
-        <DockOptions svg={icons.Target} optName="My Issues" />
+        <DockOptions svg={RAW_ICONS.Target} optName="Inbox" />
+        <DockOptions svg={RAW_ICONS.Target} optName="My Issues" />
       </div>
 
       {/* Close Button */}
@@ -118,7 +116,7 @@ const ProfileWindow = ({
         onClick={() => setClose("none")}
         className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
       >
-        <SVGIcon className="" svgString={icons.Close} />
+        <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
     </div>
   );
@@ -133,9 +131,9 @@ const WorkflowWindow = ({
       {/* Popup Content */}
       <p className="text-white ">Workflow</p>
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-2">
-        <DockOptions svg={icons.RubiksCube} optName="Projects" />
-        <DockOptions svg={icons.Members} optName="Members" />
-        <DockOptions svg={icons.Team} optName="Teams" />
+        <DockOptions svg={RAW_ICONS.RubiksCube} optName="Projects" />
+        <DockOptions svg={RAW_ICONS.Members} optName="Members" />
+        <DockOptions svg={RAW_ICONS.Team} optName="Teams" />
       </div>
 
       {/* Close Button */}
@@ -143,7 +141,7 @@ const WorkflowWindow = ({
         onClick={() => setClose("none")}
         className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
       >
-        <SVGIcon className="" svgString={icons.Close} />
+        <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
     </div>
   );
@@ -158,9 +156,9 @@ const FeaturesWindow = ({
       {/* Popup Content */}
       <p className="text-white ">Features</p>
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-2">
-        <DockOptions svg={icons.GitHub} optName="GitHub" />
-        <DockOptions svg={icons.Target} optName="Import Iss…" />
-        <DockOptions svg={icons.Members} optName="Invite People" />
+        <DockOptions svg={RAW_ICONS.GitHub} optName="GitHub" />
+        <DockOptions svg={RAW_ICONS.Target} optName="Import Iss…" />
+        <DockOptions svg={RAW_ICONS.Members} optName="Invite People" />
       </div>
 
       {/* Close Button */}
@@ -168,7 +166,7 @@ const FeaturesWindow = ({
         onClick={() => setClose("none")}
         className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
       >
-        <SVGIcon className="" svgString={icons.Close} />
+        <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
     </div>
   );
@@ -184,16 +182,16 @@ const TeamsWindow = ({
       <p className="text-white ">Teams</p>
 
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-2">
-        <DockOptions svg={icons.Target} optName="Issues" />
-        <DockOptions svg={icons.RubiksCube} optName="Project" />
-        <DockOptions svg={icons.Eye} optName="Views" />
+        <DockOptions svg={RAW_ICONS.Target} optName="Issues" />
+        <DockOptions svg={RAW_ICONS.RubiksCube} optName="Project" />
+        <DockOptions svg={RAW_ICONS.Eye} optName="Views" />
       </div>
       {/* Close Button */}
       <button
         onClick={() => setClose("none")}
         className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
       >
-        <SVGIcon className="" svgString={icons.Close} />
+        <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
     </div>
   );
