@@ -5,31 +5,29 @@ import Link from "next/link";
 import { title } from "process";
 import { useState } from "react";
 
-const icons = RAW_ICONS;
-
 const optionsArr = [
   {
     title: "Search for help…",
-    svg: icons.Search,
+    svg: RAW_ICONS.Search,
     redirectHref: "",
     openToNewPage: false,
   },
   {
     title: "Shortcuts",
-    svg: icons.Keyboard,
+    svg: RAW_ICONS.Keyboard,
     redirectHref: "",
     openToNewPage: false,
   },
-  { title: "Docs", svg: icons.Docs, redirectHref: "", openToNewPage: true },
+  { title: "Docs", svg: RAW_ICONS.Docs, redirectHref: "", openToNewPage: true },
   {
     title: "Contact us",
-    svg: icons.ContactUs,
+    svg: RAW_ICONS.ContactUs,
     redirectHref: "",
     openToNewPage: false,
   },
   {
     title: "Community",
-    svg: icons.Community,
+    svg: RAW_ICONS.Community,
     redirectHref: "",
     openToNewPage: true,
   },
@@ -45,7 +43,7 @@ export const BottomOptionsTile = () => {
         className="flex border w-8 h-8 items-center justify-center cursor-pointer rounded-full absolute bottom-2 md:bottom-4 left-4 border-[#414141] hover:bg-[#23252A] transition-all duration-300"
         onClick={() => setOptionsOpen(!optionsOpen)} // Toggle popup visibility
       >
-        <SVGIcon className="flex w-5" svgString={icons.Gliter} />
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.Gliter} />
       </div>
 
       {/* Popup */}
@@ -92,7 +90,7 @@ const BottomOptionLabel = ({
       <SVGIcon className="flex w-4" svgString={svg} />
       <p>{title}</p>
       {openToNewPage && (
-        <SVGIcon className="flex w-4" svgString={icons.Arrow45} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.Arrow45} />
       )}
     </Link>
   );

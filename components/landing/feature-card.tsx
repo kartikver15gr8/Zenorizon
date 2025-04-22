@@ -11,7 +11,7 @@ export const FeatureCard = ({
   description?: string;
 }) => {
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-4xl cursor-pointer bg-black border border-transparent hover:border-[#565555] transition-all duration-300 group">
+    <div className="relative w-full h-full overflow-hidden rounded-4xl cursor-pointer bg-black border border-transparent hover:border-[#232323] transition-all duration-300 group">
       {/* Background Image with Next.js Image component */}
       <div className="absolute inset-0 w-full h-full">
         {typeof img === "string" ? (
