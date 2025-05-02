@@ -2,7 +2,7 @@
 
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
-import { IssueBody } from "@/utils/types";
+import { IssueBody, ProjectBody } from "@/utils/types";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export default function Issue() {
   const path = usePathname();
 
   const [project_id, setProjectId] = useState<string | null>("");
-
+  const [project, setProject] = useState<ProjectBody | null>(null);
   const [issueTitle, setIssueTitle] = useState("");
   const [issueDescription, setIssueDescription] = useState("");
 
@@ -46,6 +46,27 @@ export default function Issue() {
       }
     };
     fetchIssues();
+  }, [project_id]);
+
+  useEffect(() => {
+    const fetchUniqueProject = async () => {
+      if (!project_id) return;
+
+      try {
+        setIsLoading(true);
+        const response = await axios.post("/api/workflow/project", {
+          project_id: project_id,
+        });
+
+        setProject(response.data);
+        // toast.info("Product fetched successfully!");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUniqueProject();
   }, [project_id]);
 
   useEffect(() => {
@@ -85,7 +106,7 @@ export default function Issue() {
               <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded hover:bg-[#1C1D21] transition-all duration-300">
                 <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                  project
+                  {project?.title}
                 </p>
               </div>
               <Link
@@ -130,6 +151,10 @@ export default function Issue() {
                     key={key}
                     title={elem.title}
                     projectID={project_id}
+                    projectKey={project?.title.slice(0, 3).toUpperCase()}
+                    issueID={elem.id}
+                    priority={elem.priority}
+                    status={elem.status}
                   />
                 );
               })}
