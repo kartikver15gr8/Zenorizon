@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import IssueLabel from "@/components/workflow/issues/issue-label";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -24,6 +25,8 @@ export default function Issue() {
 
   const [issues, setIssues] = useState<IssueBody[]>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [createIssueWindowOpen, setCreateIssueWindowOpen] = useState(false);
 
   useEffect(() => {
     const fetchIssues = async () => {
@@ -79,23 +82,21 @@ export default function Issue() {
               >
                 Projects
               </Link>
-              <Link
-                href={`/workflow/project/${project_id}`}
-                className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300"
-              >
+              <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded hover:bg-[#1C1D21] transition-all duration-300">
                 <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   project
                 </p>
-              </Link>
-              <div
+              </div>
+              <Link
+                href={`/workflow/project/${project_id}`}
                 className={path.includes("/issues") ? inactiveTab : activeTab}
               >
                 <SVGIcon className="flex w-4" svgString={RAW_ICONS.Docs} />
                 <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                   Overview
                 </p>
-              </div>
+              </Link>
               <Link
                 href={`/workflow/project/${project_id}/issues`}
                 className={path.includes("/issues") ? activeTab : inactiveTab}
@@ -106,39 +107,117 @@ export default function Issue() {
                 </p>
               </Link>
             </div>
-            <div className="flex gap-x-2 md:gap-x-4 ">
+            <div className="flex ">
+              <div
+                onClick={() => {
+                  setCreateIssueWindowOpen(true);
+                }}
+                className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
+              >
+                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Add} />
+              </div>
               <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
                 <SVGIcon className="flex w-5" svgString={RAW_ICONS.SideBar} />
               </div>
             </div>
           </div>
-          <div className="flex-grow overflow-y-auto h-96 scrollbar-hide ">
+          <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
             {issues &&
               issues?.length > 0 &&
               issues?.map((elem, key) => {
                 return (
-                  <IssuesLabel
+                  <IssueLabel
                     key={key}
                     title={elem.title}
                     projectID={project_id}
                   />
                 );
               })}
-
-            <div className="h-14 rounded-lg border border-[#97989A] px-3 flex items-center gap-x-3">
-              <div className="border rounded-full h-5 w-5"></div>
-              <p>Build v1 for Zenorizon</p>
-              <p>Key for project</p>
-              <p>Priority</p>
-              <p>date</p>
-              <p>Assigned to</p>
-            </div>
           </div>
         </div>
       </div>
+      {createIssueWindowOpen && (
+        <CreateIssueWindow
+          setClose={setCreateIssueWindowOpen}
+          project_id={project_id}
+        />
+      )}
     </>
   );
 }
+
+const CreateIssueWindow = ({
+  setClose,
+  project_id,
+}: {
+  setClose: React.Dispatch<React.SetStateAction<boolean>>;
+  project_id: string | null;
+}) => {
+  const [issueTitle, setIssueTitle] = useState("");
+  const [issueDescription, setIssueDescription] = useState("");
+
+  const createIssue = async () => {
+    try {
+      const response = await axios.post("/api/issues/createissue", {
+        issueTitle: issueTitle,
+        issueDescription: issueDescription,
+        projectId: project_id,
+      });
+
+      toast.info(response.data.message);
+    } catch (error) {
+      toast.info("Error occured while creating project");
+    } finally {
+      setClose(false);
+    }
+  };
+
+  return (
+    <div className="absolute bg-[rgba(0,0,0,0.1)] backdrop-blur-lg w-full min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-10 lg:px-14 xl:px-44">
+      {/* Issue Box */}
+
+      <div className="border border-[#393B42] bg-[#0F1111] rounded-xl h-96 w-[95%] xl:w-[70%] p-4 flex flex-col">
+        <div className="flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center">
+            <div className="w-20 border border-[#2D3035] h-8 rounded-lg"></div>
+            <SVGIcon svgString={RAW_ICONS.ArrowRight} />
+            <p className="font-medium text-lg">New Issue</p>
+          </div>
+          <div
+            onClick={() => {
+              setClose(false);
+            }}
+            className="p-1 rounded-md hover:bg-[#2D3035] transition-all duration-200"
+          >
+            <SVGIcon className="flex" svgString={RAW_ICONS.Close} />
+          </div>
+        </div>
+        <input
+          className="mt-4 text-2xl flex-shrink-0 outline-none"
+          onChange={(e) => {
+            setIssueTitle(e.target.value);
+          }}
+          placeholder="Issue title"
+          value={issueTitle}
+        />
+        <textarea
+          className="w-full mt-4 text-lg outline-none flex-1 resize-none"
+          onChange={(e) => {
+            setIssueDescription(e.target.value);
+          }}
+          placeholder="Issue description"
+          name="description"
+          value={issueDescription}
+        ></textarea>
+        <div className=" justify-end flex items-center">
+          <button onClick={createIssue} className="border px-2 rounded-md h-9">
+            Create issue
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const renderPrioritySvg = (priority: string) => {
   switch (priority.split(" ").join().toLowerCase()) {
@@ -159,137 +238,4 @@ const renderPrioritySvg = (priority: string) => {
     default:
       return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
   }
-};
-
-const IssuesLabel = ({
-  title,
-  description,
-  health,
-  priority,
-  lead,
-  targetDate,
-  status,
-  projectID,
-}: {
-  title: string;
-  description?: string;
-  health?: string;
-  priority?: string;
-  lead?: string;
-  targetDate?: string;
-  status?: string;
-  projectID: string | null;
-}) => {
-  const [selectedHealthOption, setSelectedHealthOption] = useState(health);
-
-  const [showOptionsDropdown, setShowOptionsDropdown] = useState<
-    "health" | "priority" | boolean
-  >(false);
-
-  const [selectedPriorityOption, setSelectedPriorityOption] =
-    useState(priority);
-
-  const healthOptions = [
-    "Completed",
-    "In Progress",
-    "Cancelled",
-    "Backlog",
-    "Planned",
-  ];
-  const priorityOptions = ["Urgent", "No Priority", "High", "Medium", "Low"];
-
-  const handleHealthOptionClick = async (option: string) => {
-    setSelectedHealthOption(option);
-
-    setShowOptionsDropdown(false);
-    try {
-      const response = await axios.patch("/api/workflow/updateproject", {
-        projectId: projectID,
-        status: option,
-      });
-      if (response.status === 200) {
-        toast.info(`Status set to ${option} successfully 🎉`);
-      } else {
-        toast.error("Failed to update project status");
-      }
-    } catch (error) {
-      console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
-    }
-  };
-
-  const handlePriorityOptionClick = async (option: string) => {
-    setSelectedPriorityOption(option);
-    setShowOptionsDropdown(false);
-    try {
-      const response = await axios.patch("/api/workflow/updateproject", {
-        projectId: projectID,
-        priority: option,
-      });
-      if (response.status === 200) {
-        toast.info(`Priority set to ${option} successfully 🎉`);
-      } else {
-        toast.error("Failed to update project status");
-      }
-    } catch (error) {
-      console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
-    }
-  };
-
-  return (
-    <Link
-      href={`/workflow/project/${projectID}`}
-      className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px] border"
-    >
-      <p className="col-span-4 text-sm lg:text-lg">{title}</p>
-      <div className="col-span-2 relative">
-        <div
-          className="w-fit flex items-center px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
-          onClick={() => setShowOptionsDropdown("health")}
-        >
-          {selectedHealthOption}
-        </div>
-        {showOptionsDropdown == "health" && (
-          <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
-            {healthOptions.map((option) => (
-              <div
-                key={option}
-                className="px-4 py-2 hover:bg-[#151818] cursor-pointer text-white"
-                onClick={() => handleHealthOptionClick(option)}
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="col-span-2 relative">
-        <div
-          className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
-          onClick={() => setShowOptionsDropdown("priority")}
-        >
-          {/* {renderPrioritySvg(selectedPriorityOption)} */}priority
-        </div>
-        {showOptionsDropdown == "priority" && (
-          <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
-            {priorityOptions.map((option) => (
-              <div
-                key={option}
-                className="px-4 py-2 hover:bg-[#151818] cursor-pointer text-white"
-                onClick={() => handlePriorityOptionClick(option)}
-              >
-                {option}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="col-span-1 h-8 w-8 flex items-center justify-center rounded hover:bg-[#212227] transition-all duration-300">
-        <SVGIcon className="flex w-4 " svgString={RAW_ICONS.Account} />
-      </div>
-      <p className="col-span-2">{targetDate}</p>
-      <p className="col-span-1">{status}</p>
-    </Link>
-  );
 };

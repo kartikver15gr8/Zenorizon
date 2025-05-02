@@ -1,4 +1,3 @@
-// app/emails/WaitlistEmail.tsx
 import * as React from "react";
 
 interface WaitlistEmailProps {
@@ -6,7 +5,7 @@ interface WaitlistEmailProps {
 }
 
 export const WaitlistEmail: React.FC<WaitlistEmailProps> = ({ userEmail }) => (
-  <div style={{ fontFamily: "bricolage_grotesque" }}>
+  <div style={{ fontFamily: '"Open Sans", Arial, sans-serif' }}>
     <div
       style={{
         maxWidth: "600px",
