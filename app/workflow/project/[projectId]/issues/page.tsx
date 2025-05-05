@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import IssueLabel from "@/components/workflow/issues/issue-label";
+import { IssueViewOptArray } from "@/utils/issues-view-options";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -142,6 +143,13 @@ export default function Issue() {
               </div>
             </div>
           </div>
+          <div className="h-10 border-b border-[#2E3035] flex items-center px-2 gap-x-2">
+            {IssueViewOptArray.map((elem, key) => {
+              return (
+                <IssuesViewButton key={key} title={elem.title} svg={elem.svg} />
+              );
+            })}
+          </div>
           <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
             {issues &&
               issues?.length > 0 &&
@@ -263,4 +271,13 @@ const renderPrioritySvg = (priority: string) => {
     default:
       return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
   }
+};
+
+const IssuesViewButton = ({ title, svg }: { title: string; svg: string }) => {
+  return (
+    <button className=" flex items-center gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300">
+      <SVGIcon className="flex w-4" svgString={svg} />
+      <p>{title}</p>
+    </button>
+  );
 };

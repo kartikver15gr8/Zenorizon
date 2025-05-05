@@ -3,8 +3,6 @@ import { FeatureCard } from "./feature-card";
 import { FeaturesArray } from "@/utils/features-array";
 
 export default function Features() {
-  const featuresData = FeaturesArray;
-
   return (
     <section className="min-h-screen relative flex flex-col justify-center bg-gradient-to-b from-[#0A0A0A] via-[#131516] to-[#0A0A0A] mt-5 px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 gap-y-3 sm:gap-y-4 md:gap-y-5 xl:gap-y-6">
       {/* Coming Soon Mask */}
@@ -29,7 +27,7 @@ export default function Features() {
         <div className="mt-8">
           {/* Mobile view: horizontal scrolling */}
           <div className="flex space-x-4 overflow-x-auto scrollbar-hidden snap-x snap-mandatory sm:hidden pb-4 h-[430px]">
-            {featuresData.map((feature, index) => (
+            {FeaturesArray.map((feature, index) => (
               <div key={index} className="snap-center shrink-0 w-full">
                 <MobileFeatureCard
                   img={feature.img}
@@ -42,7 +40,7 @@ export default function Features() {
 
           {/* Tablet and Desktop view: grid layout */}
           <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6 h-[430px]">
-            {featuresData.map((feature, index) => (
+            {FeaturesArray.map((feature, index) => (
               <FeatureCard
                 key={index}
                 img={feature.img}

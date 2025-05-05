@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const WorkflowTab = () => {
   return (
-    <div className="flex item-center justify-between h-16 px-4 cursor-pointer ">
+    <div className="flex item-center justify-between h-16 px-2 cursor-pointer">
       <div className="flex items-center gap-x-2 ">
         <Link
           href={"/"}

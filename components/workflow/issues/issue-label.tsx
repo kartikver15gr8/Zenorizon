@@ -1,5 +1,6 @@
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
+import { IssueStatus } from "@/utils/issues-view-options";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -39,14 +40,6 @@ export default function IssueLabel({
     priority ? priority : "No Priority"
   );
 
-  const statusOptions = [
-    "Completed",
-    "In Progress",
-    "Cancelled",
-    "Backlog",
-    "Planned",
-  ];
-
   const priorityOptionsArray = [
     { name: "Urgent", svg: RAW_ICONS.UrgentPriority },
     { name: "No Priority", svg: RAW_ICONS.NoPriority },
@@ -55,27 +48,27 @@ export default function IssueLabel({
     { name: "Low", svg: RAW_ICONS.LowPriority },
   ];
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowOptionsDropdown(false);
-      }
-    }
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node)
+  //     ) {
+  //       setShowOptionsDropdown(false);
+  //     }
+  //   }
 
-    if (showOptionsDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
+  //   if (showOptionsDropdown) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
 
-    // Cleanup
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showOptionsDropdown]);
+  //   // Cleanup
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [showOptionsDropdown]);
 
   const handleStatusOptionClick = async (option: string) => {
     setSelectedStatusOption(option);
@@ -131,14 +124,15 @@ export default function IssueLabel({
           {status}
         </div>
         {showOptionsDropdown == "status" && (
-          <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
-            {statusOptions.map((option) => (
+          <div className="absolute w-36 top-full left-0 bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-lg shadow-lg mt-1 z-10">
+            {IssueStatus.map((option, key) => (
               <div
-                key={option}
-                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white text-sm"
-                onClick={() => handleStatusOptionClick(option)}
+                key={key}
+                className="px-2 flex gap-x-2 rounded-lg items-center py-2 hover:bg-[#151818] cursor-pointer text-white text-sm"
+                onClick={() => handleStatusOptionClick(option.title)}
               >
-                {option}
+                <SVGIcon className="flex w-4" svgString={option.svg} />
+                <p>{option.title}</p>
               </div>
             ))}
           </div>
