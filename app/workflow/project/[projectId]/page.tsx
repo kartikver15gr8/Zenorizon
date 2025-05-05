@@ -78,7 +78,7 @@ export default function Project({
                 >
                   Projects
                 </Link>
-                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
+                <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded  hover:bg-[#1C1D21] transition-all duration-300">
                   <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
                   <p className="text-[12px] sm:text-[13px] md:text-[15px]">
                     {project ? project.title : "Loading…"}

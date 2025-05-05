@@ -7,8 +7,9 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import ProjectListSkeleton from "./project-skeleton-loader";
 
 type ProjectStatusType =
   | "Completed"
@@ -21,15 +22,18 @@ type ProjectPriorityType = "No Priority" | "Urgent" | "High" | "Medium" | "Low";
 
 export default function Projects() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/");
+    },
+  });
+
   const [createWindowOpen, setCreateWindowOpen] = useState(false);
   const [projects, setProjects] = useState<ProjectBody[]>();
-  const [projStatus, setProjStatus] = useState<ProjectStatusType>("Backlog");
-
   const [isLoading, setIsLoading] = useState(false);
-
-  const [projPriority, setProjPriority] =
-    useState<ProjectPriorityType>("No Priority");
 
   const fetchProjects = async () => {
     try {
@@ -48,11 +52,10 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    if (!session?.user.email) {
-      router.push("/");
-    }
-  }, [router, session?.user.email]);
+  if (status === "loading") {
+    return <ProjectListSkeleton />;
+  }
+
   return (
     <>
       <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
@@ -181,6 +184,8 @@ const ProjectLabel = ({
     "health" | "priority" | boolean
   >(false);
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const [selectedPriorityOption, setSelectedPriorityOption] =
     useState(priority);
 
@@ -191,7 +196,14 @@ const ProjectLabel = ({
     "Backlog",
     "Planned",
   ];
-  const priorityOptions = ["Urgent", "No Priority", "High", "Medium", "Low"];
+
+  const priorityOptionsArray = [
+    { name: "Urgent", svg: RAW_ICONS.UrgentPriority },
+    { name: "No Priority", svg: RAW_ICONS.NoPriority },
+    { name: "High", svg: RAW_ICONS.HighPriority },
+    { name: "Medium", svg: RAW_ICONS.MediumPriority },
+    { name: "Low", svg: RAW_ICONS.LowPriority },
+  ];
 
   const handleHealthOptionClick = async (option: string) => {
     setSelectedHealthOption(option);
@@ -232,13 +244,37 @@ const ProjectLabel = ({
     }
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
+    }
+
+    if (showOptionsDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOptionsDropdown]);
+
   return (
-    <Link
-      href={`/workflow/project/${projectID}`}
-      className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px]"
-    >
-      <p className="col-span-4 text-sm lg:text-lg">{title}</p>
-      <div className="col-span-2 relative">
+    <div className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px]">
+      <Link
+        href={`/workflow/project/${projectID}`}
+        className="col-span-4 text-sm lg:text-lg"
+      >
+        {title}
+      </Link>
+      <div className="col-span-2 relative" ref={dropdownRef}>
         <div
           className="w-fit flex items-center px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() => setShowOptionsDropdown("health")}
@@ -259,7 +295,7 @@ const ProjectLabel = ({
           </div>
         )}
       </div>
-      <div className="col-span-2 relative">
+      <div className="col-span-2 relative" ref={dropdownRef}>
         <div
           className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() => setShowOptionsDropdown("priority")}
@@ -268,13 +304,14 @@ const ProjectLabel = ({
         </div>
         {showOptionsDropdown == "priority" && (
           <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
-            {priorityOptions.map((option) => (
+            {priorityOptionsArray.map((option, key) => (
               <div
-                key={option}
-                className="px-4 py-2 hover:bg-[#151818] cursor-pointer text-white"
-                onClick={() => handlePriorityOptionClick(option)}
+                key={key}
+                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center  gap-x-2"
+                onClick={() => handlePriorityOptionClick(option.name)}
               >
-                {option}
+                <SVGIcon className="flex w-4" svgString={option.svg} />
+                <p className="text-sm">{option.name}</p>
               </div>
             ))}
           </div>
@@ -285,7 +322,7 @@ const ProjectLabel = ({
       </div>
       <p className="col-span-2">{targetDate}</p>
       <p className="col-span-1">{status}</p>
-    </Link>
+    </div>
   );
 };
 
@@ -300,8 +337,12 @@ const CreateProjectWindow = ({
   const [status, setStatus] = useState<ProjectStatusType>("Backlog");
   const [priority, setPriority] = useState<ProjectPriorityType>("No Priority");
 
-  const [showStatusOptions, setShowStatusOptions] = useState(false);
-  const [showPriorityOptions, setShowPriorityOptions] = useState(false);
+  const [showOptionsDropdown, setShowOptionsDropdown] = useState<
+    "health" | "priority" | boolean
+  >(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const statusOptions = [
     "Completed",
     "Backlog",
@@ -310,15 +351,7 @@ const CreateProjectWindow = ({
     "Planned",
   ];
 
-  const toggleOptions = () => {
-    setShowStatusOptions(!showStatusOptions);
-  };
-
   const priorityOptions = ["No Priority", "Urgent", "High", "Medium", "Low"];
-
-  const togglePriorityOptions = () => {
-    setShowPriorityOptions(!showPriorityOptions);
-  };
 
   const { data: session } = useSession();
 
@@ -381,12 +414,12 @@ const CreateProjectWindow = ({
 
         <div className="my-2 h-10 gap-x-2 flex items-center  text-[10px]  md:text-[14px] lg:text-[15px] xl:text-[16px] ">
           <button
-            onClick={toggleOptions}
-            className="border border-[#525353]  bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300"
+            onClick={() => setShowOptionsDropdown("health")}
+            className="border border-[#525353] flex items-center  bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300"
           >
             {status}
           </button>
-          {showStatusOptions && (
+          {showOptionsDropdown == "health" && (
             <div className="absolute bg-[#1D1D21] border border-[#525353] rounded-md mt-2">
               {statusOptions.map((option, index) => (
                 <div
@@ -395,7 +428,7 @@ const CreateProjectWindow = ({
                   onClick={() => {
                     //@ts-expect-error //status type differ
                     setStatus(option);
-                    setShowStatusOptions(false);
+                    setShowOptionsDropdown(false);
                   }}
                 >
                   {option}
@@ -404,12 +437,12 @@ const CreateProjectWindow = ({
             </div>
           )}
           <button
-            onClick={togglePriorityOptions}
-            className="border border-[#525353] bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300"
+            onClick={() => setShowOptionsDropdown("priority")}
+            className="border border-[#525353] flex items-center bg-[#1D1D21] h-8 px-2 lg:px-3 rounded-md hover:bg-[#29292e] transition-all duration-300"
           >
             {priority}
           </button>
-          {showPriorityOptions && (
+          {showOptionsDropdown == "priority" && (
             <div className="absolute bg-[#1D1D21] border border-[#525353] rounded-md mt-2">
               {priorityOptions.map((option, index) => (
                 <div
@@ -418,7 +451,7 @@ const CreateProjectWindow = ({
                   onClick={() => {
                     //@ts-expect-error //project type is different
                     setPriority(option);
-                    setShowPriorityOptions(false);
+                    setShowOptionsDropdown(false);
                   }}
                 >
                   {option}
