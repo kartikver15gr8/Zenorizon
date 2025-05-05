@@ -9,9 +9,7 @@ import { WorkflowTab } from "./workflow-tab";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-
-
-const TabActive = "rounded  bg-[#0F1111] border border-[#4b4b4b] ";
+const TabActive = "rounded  bg-[#0F1111] border border-[#2E3035] ";
 
 interface CollapsedState {
   teams: boolean;
