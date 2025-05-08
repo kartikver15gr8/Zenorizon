@@ -46,11 +46,7 @@ export default function SignupPage() {
             height={100}
           />
           <div className="grid grid-cols-1 gap-y-2 w-full">
-            <AuthButton
-              btnTitle="Continue with Google"
-              working={true}
-              handleOnClickFunction={signUpWithGoogle}
-            />
+            <AuthButton btnTitle="Continue with Google" working={false} />
             <AuthButton
               btnTitle="Continue with GitHub"
               working={true}
