@@ -26,6 +26,14 @@ export default function SignupPage() {
       console.log(`You got an error while signing up using GitHub: ${error}`);
     }
   };
+
+  const signUpWithGoogle = async () => {
+    try {
+      await signIn("google");
+    } catch (error) {
+      console.log(`You got an error while signing up using GitHub: ${error}`);
+    }
+  };
   return (
     <div className="grid grid-cols-1 items-center justify-center pt-[70px] min-h-screen px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 shadow-[inset_-270px_-250px_160px_rgba(190,210,211,0.03)]">
       <div className="h-full rounded-2xl flex items-center justify-center">
@@ -38,7 +46,11 @@ export default function SignupPage() {
             height={100}
           />
           <div className="grid grid-cols-1 gap-y-2 w-full">
-            <AuthButton btnTitle="Continue with Google" working={false} />
+            <AuthButton
+              btnTitle="Continue with Google"
+              working={true}
+              handleOnClickFunction={signUpWithGoogle}
+            />
             <AuthButton
               btnTitle="Continue with GitHub"
               working={true}
