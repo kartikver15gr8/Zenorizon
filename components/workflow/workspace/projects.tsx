@@ -14,7 +14,7 @@ import ProjectListSkeleton from "./project-skeleton-loader";
 type ProjectStatusType =
   | "Completed"
   | "Backlog"
-  | "In Progress"
+  | "Working"
   | "Cancelled"
   | "Planned";
 
@@ -191,7 +191,7 @@ const ProjectLabel = ({
 
   const healthOptions = [
     "Completed",
-    "In Progress",
+    "Working",
     "Cancelled",
     "Backlog",
     "Planned",
@@ -346,7 +346,7 @@ const CreateProjectWindow = ({
   const statusOptions = [
     "Completed",
     "Backlog",
-    "In Progress",
+    "Working",
     "Cancelled",
     "Planned",
   ];

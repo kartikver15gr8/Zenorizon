@@ -7,9 +7,10 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import IssueLabel from "@/components/workflow/issues/issue-label";
 import { IssueViewOptArray } from "@/utils/issues-view-options";
+import { CreateIssueWindow } from "@/components/workflow/issues/create-issue-window";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -18,7 +19,6 @@ const inactiveTab =
 
 export default function Issue() {
   const path = usePathname();
-
   const [project_id, setProjectId] = useState<string | null>("");
   const [project, setProject] = useState<ProjectBody | null>(null);
   const [issueTitle, setIssueTitle] = useState("");
@@ -28,6 +28,13 @@ export default function Issue() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [createIssueWindowOpen, setCreateIssueWindowOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("");
+
+  const filteredIssues = statusFilter
+    ? issues?.filter(
+        (issue) => issue.status?.toLowerCase() === statusFilter.toLowerCase()
+      )
+    : issues;
 
   useEffect(() => {
     const fetchIssues = async () => {
@@ -72,6 +79,7 @@ export default function Issue() {
 
   useEffect(() => {
     setProjectId(localStorage.getItem("ZENO_PROJECT_ID"));
+    console.log(filteredIssues);
   }, []);
 
   const createIssue = async () => {
@@ -146,14 +154,19 @@ export default function Issue() {
           <div className="h-10 border-b border-[#2E3035] flex items-center px-2 gap-x-2">
             {IssueViewOptArray.map((elem, key) => {
               return (
-                <IssuesViewButton key={key} title={elem.title} svg={elem.svg} />
+                <IssuesViewButton
+                  key={key}
+                  title={elem.title}
+                  svg={elem.svg}
+                  filter={statusFilter}
+                  setFilter={setStatusFilter}
+                />
               );
             })}
           </div>
           <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
-            {issues &&
-              issues?.length > 0 &&
-              issues?.map((elem, key) => {
+            {filteredIssues && filteredIssues?.length > 0 ? (
+              filteredIssues?.map((elem, key) => {
                 return (
                   <IssueLabel
                     key={key}
@@ -165,7 +178,12 @@ export default function Issue() {
                     status={elem.status}
                   />
                 );
-              })}
+              })
+            ) : (
+              <div className="h-10 flex items-center w-full justify-center">
+                <p className="text-[#939494]">No Issues Found</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -173,109 +191,39 @@ export default function Issue() {
         <CreateIssueWindow
           setClose={setCreateIssueWindowOpen}
           project_id={project_id}
+          project_title={project?.title}
         />
       )}
     </>
   );
 }
 
-const CreateIssueWindow = ({
-  setClose,
-  project_id,
+const IssuesViewButton = ({
+  title,
+  svg,
+  filter,
+  setFilter,
 }: {
-  setClose: React.Dispatch<React.SetStateAction<boolean>>;
-  project_id: string | null;
+  title: string;
+  svg: string;
+  filter: string;
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const [issueTitle, setIssueTitle] = useState("");
-  const [issueDescription, setIssueDescription] = useState("");
-
-  const createIssue = async () => {
-    try {
-      const response = await axios.post("/api/issues/createissue", {
-        issueTitle: issueTitle,
-        issueDescription: issueDescription,
-        projectId: project_id,
-      });
-
-      toast.info(response.data.message);
-    } catch (error) {
-      toast.info("Error occured while creating project");
-    } finally {
-      setClose(false);
-    }
-  };
-
   return (
-    <div className="absolute bg-[rgba(0,0,0,0.1)] backdrop-blur-lg w-full min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-10 lg:px-14 xl:px-44">
-      {/* Issue Box */}
-
-      <div className="border border-[#393B42] bg-[#0F1111] rounded-xl h-96 w-[95%] xl:w-[70%] p-4 flex flex-col">
-        <div className="flex items-center justify-between flex-shrink-0">
-          <div className="flex items-center">
-            <div className="w-20 border border-[#2D3035] h-8 rounded-lg"></div>
-            <SVGIcon svgString={RAW_ICONS.ArrowRight} />
-            <p className="font-medium text-lg">New Issue</p>
-          </div>
-          <div
-            onClick={() => {
-              setClose(false);
-            }}
-            className="p-1 rounded-md hover:bg-[#2D3035] transition-all duration-200"
-          >
-            <SVGIcon className="flex" svgString={RAW_ICONS.Close} />
-          </div>
-        </div>
-        <input
-          className="mt-4 text-2xl flex-shrink-0 outline-none"
-          onChange={(e) => {
-            setIssueTitle(e.target.value);
-          }}
-          placeholder="Issue title"
-          value={issueTitle}
-        />
-        <textarea
-          className="w-full mt-4 text-lg outline-none flex-1 resize-none"
-          onChange={(e) => {
-            setIssueDescription(e.target.value);
-          }}
-          placeholder="Issue description"
-          name="description"
-          value={issueDescription}
-        ></textarea>
-        <div className=" justify-end flex items-center">
-          <button onClick={createIssue} className="border px-2 rounded-md h-9">
-            Create issue
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const renderPrioritySvg = (priority: string) => {
-  switch (priority.split(" ").join().toLowerCase()) {
-    case "urgent":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
-      );
-    case "high":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
-      );
-    case "medium":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
-      );
-    case "low":
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
-    default:
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
-  }
-};
-
-const IssuesViewButton = ({ title, svg }: { title: string; svg: string }) => {
-  return (
-    <button className=" flex items-center gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300">
+    <button
+      onClick={
+        title.toLowerCase() == "all issues"
+          ? () => {
+              setFilter("");
+            }
+          : () => setFilter(title.toString())
+      }
+      className={
+        filter == title
+          ? " flex items-center bg-[#1C1D21] gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300"
+          : " flex items-center gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300"
+      }
+    >
       <SVGIcon className="flex w-4" svgString={svg} />
       <p>{title}</p>
     </button>

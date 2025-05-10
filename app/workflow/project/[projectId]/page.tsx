@@ -120,7 +120,7 @@ export default function Project({
 
                 <div className="flex gap-x-2 my-5 text-xs md:text-sm ">
                   <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
-                    In progress
+                    Working
                   </p>
                   <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
                     High
