@@ -172,30 +172,30 @@ export default function IssueLabel({
   );
 }
 
-const renderPrioritySvg = (priority: string) => {
+export const renderPrioritySvg = (priority: string) => {
   switch (priority.split(" ").join().toLowerCase()) {
     case "urgent":
       return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.UrgentPriority} />
       );
     case "high":
       return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.HighPriority} />
       );
     case "medium":
       return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.MediumPriority} />
       );
     case "low":
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
+      return <SVGIcon className="flex w-4" svgString={RAW_ICONS.LowPriority} />;
     default:
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
+      return <SVGIcon className="flex w-4" svgString={RAW_ICONS.NoPriority} />;
   }
 };
 
-const RenderStatusSvg = ({ status }: { status: string }) => {
+export const RenderStatusSvg = ({ status }: { status: string }) => {
   switch (status.split(" ").join().toLowerCase()) {
-    case "in progress":
+    case "working":
       return <SVGIcon className="flex w-5" svgString={RAW_ICONS.InProgress} />;
     case "completed":
       return (

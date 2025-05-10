@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { usePathname, useSearchParams } from "next/navigation";
 import IssueLabel from "@/components/workflow/issues/issue-label";
 import { IssueViewOptArray } from "@/utils/issues-view-options";
+import { CreateIssueWindow } from "@/components/workflow/issues/create-issue-window";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -190,105 +191,12 @@ export default function Issue() {
         <CreateIssueWindow
           setClose={setCreateIssueWindowOpen}
           project_id={project_id}
+          project_title={project?.title}
         />
       )}
     </>
   );
 }
-
-const CreateIssueWindow = ({
-  setClose,
-  project_id,
-}: {
-  setClose: React.Dispatch<React.SetStateAction<boolean>>;
-  project_id: string | null;
-}) => {
-  const [issueTitle, setIssueTitle] = useState("");
-  const [issueDescription, setIssueDescription] = useState("");
-
-  const createIssue = async () => {
-    try {
-      const response = await axios.post("/api/issues/createissue", {
-        issueTitle: issueTitle,
-        issueDescription: issueDescription,
-        projectId: project_id,
-      });
-
-      toast.info(response.data.message);
-    } catch (error) {
-      toast.info("Error occured while creating project");
-    } finally {
-      setClose(false);
-    }
-  };
-
-  return (
-    <div className="absolute bg-[rgba(0,0,0,0.1)] backdrop-blur-lg w-full min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-10 lg:px-14 xl:px-44">
-      {/* Issue Box */}
-
-      <div className="border border-[#393B42] bg-[#0F1111] rounded-xl h-96 w-[95%] xl:w-[70%] p-4 flex flex-col">
-        <div className="flex items-center justify-between flex-shrink-0">
-          <div className="flex items-center">
-            <div className="w-20 border border-[#2D3035] h-8 rounded-lg"></div>
-            <SVGIcon svgString={RAW_ICONS.ArrowRight} />
-            <p className="font-medium text-lg">New Issue</p>
-          </div>
-          <div
-            onClick={() => {
-              setClose(false);
-            }}
-            className="p-1 rounded-md hover:bg-[#2D3035] transition-all duration-200"
-          >
-            <SVGIcon className="flex" svgString={RAW_ICONS.Close} />
-          </div>
-        </div>
-        <input
-          className="mt-4 text-2xl flex-shrink-0 outline-none"
-          onChange={(e) => {
-            setIssueTitle(e.target.value);
-          }}
-          placeholder="Issue title"
-          value={issueTitle}
-        />
-        <textarea
-          className="w-full mt-4 text-lg outline-none flex-1 resize-none"
-          onChange={(e) => {
-            setIssueDescription(e.target.value);
-          }}
-          placeholder="Issue description"
-          name="description"
-          value={issueDescription}
-        ></textarea>
-        <div className=" justify-end flex items-center">
-          <button onClick={createIssue} className="border px-2 rounded-md h-9">
-            Create issue
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const renderPrioritySvg = (priority: string) => {
-  switch (priority.split(" ").join().toLowerCase()) {
-    case "urgent":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
-      );
-    case "high":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
-      );
-    case "medium":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
-      );
-    case "low":
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
-    default:
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
-  }
-};
 
 const IssuesViewButton = ({
   title,

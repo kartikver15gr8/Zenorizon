@@ -4,7 +4,13 @@ import { NextRequest } from "next/server";
 import { prisma } from "@/db";
 
 export async function POST(request: NextRequest) {
-  const { issueTitle, issueDescription, projectId } = await request.json();
+  const {
+    issueTitle,
+    issueDescription,
+    issueStatus,
+    issuePriority,
+    projectId,
+  } = await request.json();
 
   const session = await getServerSession(authOptions);
 
@@ -17,6 +23,8 @@ export async function POST(request: NextRequest) {
       data: {
         title: issueTitle,
         description: issueDescription,
+        status: issueStatus,
+        priority: issuePriority,
         projectId: projectId,
       },
     });
