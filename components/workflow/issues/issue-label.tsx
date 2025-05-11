@@ -112,7 +112,11 @@ export default function IssueLabel({
   return (
     <div className="h-14 rounded-lg border border-transparent hover:bg-[#1C1D21]  hover:border-[#2E3035] transition-all duration-200 px-3 grid grid-cols-12 items-center ">
       <div className=" col-span-4 flex items-center  gap-x-5">
-        <div className="border rounded-full h-5 w-5"></div>
+        {status ? (
+          <RenderStatusSvg status={status} />
+        ) : (
+          <div className="border rounded-full h-5 w-5"></div>
+        )}
         <p>{title}</p>
       </div>
       <p className="col-span-1">{projectKey ? projectKey : "ZEN-1"}</p>
@@ -168,23 +172,48 @@ export default function IssueLabel({
   );
 }
 
-const renderPrioritySvg = (priority: string) => {
+export const renderPrioritySvg = (priority: string) => {
   switch (priority.split(" ").join().toLowerCase()) {
     case "urgent":
       return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.UrgentPriority} />
       );
     case "high":
       return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.HighPriority} />
       );
     case "medium":
       return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
+        <SVGIcon className="flex w-4" svgString={RAW_ICONS.MediumPriority} />
       );
     case "low":
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
+      return <SVGIcon className="flex w-4" svgString={RAW_ICONS.LowPriority} />;
     default:
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
+      return <SVGIcon className="flex w-4" svgString={RAW_ICONS.NoPriority} />;
+  }
+};
+
+export const RenderStatusSvg = ({ status }: { status: string }) => {
+  switch (status.split(" ").join().toLowerCase()) {
+    case "working":
+      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.InProgress} />;
+    case "completed":
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.CompletedIssue} />
+      );
+    case "backlog":
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.DashedCircle} />
+      );
+    case "cancelled":
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.CancelledIssue} />
+      );
+    case "planned":
+      return (
+        <SVGIcon className="flex w-5" svgString={RAW_ICONS.PlannedIssue} />
+      );
+    default:
+      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.Todo} />;
   }
 };
