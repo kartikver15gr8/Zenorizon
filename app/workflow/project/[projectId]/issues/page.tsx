@@ -11,6 +11,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import IssueLabel from "@/components/workflow/issues/issue-label";
 import { IssueViewOptArray } from "@/utils/issues-view-options";
 import { CreateIssueWindow } from "@/components/workflow/issues/create-issue-window";
+import IssuesTopTile from "@/components/workflow/issues/issues-top-tile";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -151,19 +152,25 @@ export default function Issue() {
               </div>
             </div>
           </div>
-          <div className="h-10 border-b border-[#2E3035] flex items-center px-2 gap-x-2">
-            {IssueViewOptArray.map((elem, key) => {
-              return (
-                <IssuesViewButton
-                  key={key}
-                  title={elem.title}
-                  svg={elem.svg}
-                  filter={statusFilter}
-                  setFilter={setStatusFilter}
-                />
-              );
-            })}
+          <div
+            className="
+    h-10 border-b border-[#2E3035] flex items-center px-2 gap-x-2
+    overflow-x-auto whitespace-nowrap
+    sm:overflow-x-visible scrollbar-hide
+  "
+          >
+            {IssueViewOptArray.map((elem, key) => (
+              <IssuesViewButton
+                key={key}
+                title={elem.title}
+                svg={elem.svg}
+                filter={statusFilter}
+                setFilter={setStatusFilter}
+              />
+            ))}
           </div>
+
+          <IssuesTopTile />
           <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
             {filteredIssues && filteredIssues?.length > 0 ? (
               filteredIssues?.map((elem, key) => {
@@ -172,10 +179,11 @@ export default function Issue() {
                     key={key}
                     title={elem.title}
                     projectID={project_id}
-                    projectKey={project?.title.slice(0, 3).toUpperCase()}
+                    projectKey={project?.title}
                     issueID={elem.id}
                     priority={elem.priority}
                     status={elem.status}
+                    updatedAt={elem.updatedAt}
                   />
                 );
               })
@@ -212,20 +220,17 @@ const IssuesViewButton = ({
   return (
     <button
       onClick={
-        title.toLowerCase() == "all issues"
-          ? () => {
-              setFilter("");
-            }
-          : () => setFilter(title.toString())
+        title.toLowerCase() === "all issues"
+          ? () => setFilter("")
+          : () => setFilter(title)
       }
       className={
-        filter == title
-          ? " flex items-center bg-[#1C1D21] gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300"
-          : " flex items-center gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300"
+        (filter === title ? "bg-[#1C1D21] " : "") +
+        "flex items-center gap-x-1 border border-[#2C2E34] h-7 px-2 rounded-md text-[#9a9a9a] text-sm hover:bg-[#1c1e22] transition-all duration-300 min-w-[90px] flex-shrink-0"
       }
     >
       <SVGIcon className="flex w-4" svgString={svg} />
-      <p>{title}</p>
+      <p className="truncate">{title}</p>
     </button>
   );
 };

@@ -16,6 +16,7 @@ export default function IssueLabel({
   assigedUser,
   projectID,
   issueID,
+  updatedAt,
 }: {
   title: string;
   description?: string;
@@ -27,7 +28,26 @@ export default function IssueLabel({
   assigedUser?: string;
   projectID: string | null;
   issueID: string;
+  updatedAt?: string;
 }) {
+  const date = new Date(updatedAt ? updatedAt : "");
+  // Display: "12 May"
+  const shortDate = date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+  });
+
+  // Tooltip: "12 May 2025, 01:18 PM"
+  const fullDate = date.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  });
+
   const [selectedStatusOption, setSelectedStatusOption] = useState(status);
 
   const [showOptionsDropdown, setShowOptionsDropdown] = useState<
@@ -110,19 +130,24 @@ export default function IssueLabel({
   };
 
   return (
-    <div className="h-14 rounded-lg border border-transparent hover:bg-[#1C1D21]  hover:border-[#2E3035] transition-all duration-200 px-3 grid grid-cols-12 items-center ">
-      <div className=" col-span-4 flex items-center  gap-x-5">
+    <div className="h-14 rounded-lg border border-transparent hover:bg-[#1C1D21]  hover:border-[#2E3035] transition-all duration-200 px-3 grid grid-cols-12 items-center text-xs md:text-sm xl:text-[15px] ">
+      <div className=" col-span-5 sm:col-span-4 flex items-center  gap-x-5 ">
         {status ? (
           <RenderStatusSvg status={status} />
         ) : (
           <div className="border rounded-full h-5 w-5"></div>
         )}
-        <p>{title}</p>
+        <p className="text-sm xl:text-[16px]">{title}</p>
       </div>
-      <p className="col-span-1">{projectKey ? projectKey : "ZEN-1"}</p>
-      <div className="col-span-1 relative" ref={dropdownRef}>
+      <p
+        className="hidden sm:block col-span-1 cursor-pointer"
+        title={projectKey}
+      >
+        {projectKey ? projectKey.slice(0, 3).toUpperCase() : "ZEN-1"}
+      </p>
+      <div className="col-span-1 relative " ref={dropdownRef}>
         <div
-          className="w-fit flex items-center text-sm px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
+          className="w-fit flex items-center  px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() => setShowOptionsDropdown("status")}
         >
           {status}
@@ -132,7 +157,7 @@ export default function IssueLabel({
             {IssueStatus.map((option, key) => (
               <div
                 key={key}
-                className="px-2 flex gap-x-2 rounded-lg items-center py-2 hover:bg-[#151818] cursor-pointer text-white text-sm"
+                className="px-2 flex gap-x-2 rounded-lg items-center py-2 hover:bg-[#151818] cursor-pointer text-white "
                 onClick={() => handleStatusOptionClick(option.title)}
               >
                 <SVGIcon className="flex w-4" svgString={option.svg} />
@@ -142,9 +167,9 @@ export default function IssueLabel({
           </div>
         )}
       </div>
-      <div className="col-span-1 relative" ref={dropdownRef}>
+      <div className="col-span-1 relative " ref={dropdownRef}>
         <div
-          className="flex items-center text-sm justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
+          className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() => setShowOptionsDropdown("priority")}
         >
           {renderPrioritySvg(selectedPriorityOption)}
@@ -158,16 +183,18 @@ export default function IssueLabel({
                 onClick={() => handlePriorityOptionClick(option.name)}
               >
                 <SVGIcon className="flex w-4" svgString={option.svg} />
-                <p className="text-sm">{option.name}</p>
+                <p className="">{option.name}</p>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      <p className="col-span-2 ">update</p>
-      <p className="col-span-1 ">date</p>
-      <p className="col-span-1 ">Assigned to</p>
+      <div title={fullDate} className="col-span-1 cursor-pointer ">
+        {shortDate}
+      </div>
+      <div className="col-span-1 border border-[#2C2E33] h-8 w-8 rounded-full"></div>
+      <p className="col-span-3">update</p>
     </div>
   );
 }
