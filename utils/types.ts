@@ -18,6 +18,7 @@ export type IssueBody = {
   status?: string;
   priority?: string;
   projectId: string;
+  updatedAt: string | undefined;
 };
 
 export type User = {

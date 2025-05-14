@@ -92,4 +92,5 @@ model Issue {
   Project      Project  @relation(fields: [projectId], references: [id])
   projectId    String
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
