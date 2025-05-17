@@ -14,12 +14,6 @@ import spinner from "@/public/assets/loader/spinner.svg";
 
 const emailSchema = z.string().email({ message: "Invalid email address" });
 
-const active =
-  "h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-white";
-
-const disable =
-  "h-10 md:h-12 px-4 text-xs sm:text-sm font-extralight md:text-lg rounded-md text-black bg-black bg-opacity-50 border border-white";
-
 export default function Hero() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -74,58 +68,49 @@ export default function Hero() {
           <BlurFade
             delay={0.5}
             inView
-            className="md:mb-2 text-2xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-1 md:mb-2"
           >
             Streamline your workflow,
           </BlurFade>
           <BlurFade
             delay={0.75}
             inView
-            className="text-2xl sm:text-4xl flex-wrap justify-center md:text-4xl lg:text-5xl xl:text-6xl flex gap-x-1 xl:gap-x-3"
+            className="flex flex-wrap justify-center items-center gap-x-1 xl:gap-x-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold"
           >
             Amplify your impact with
-            <p className="mt-1 sm:mt-0 text-transparent bg-gradient-to-b from-gray-600 via-gray-400 to-white bg-clip-text mb-5  text-5xl sm:text-4xl lg:text-5xl xl:text-6xl">
+            <p className="text-transparent bg-gradient-to-b from-gray-600 via-gray-400 to-white bg-clip-text ml-2">
               Zenorizon
             </p>
           </BlurFade>
-          <div className="flex font-extralight flex-col items-center text-sm md:text-lg xl:text-xl  text-[#AEAEAE]">
-            <BlurFade
-              delay={1}
-              inView
-              className="text-[10px] sm:text-xs md:text-sm lg:text-[16px]"
-            >
+          <div className="mt-4 flex flex-col items-center font-extralight text-[#AEAEAE] text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+            <BlurFade delay={1} inView>
               Introducing the system for modern software development.
             </BlurFade>
-
-            <BlurFade
-              delay={1}
-              inView
-              className="text-[10px] sm:text-xs md:text-sm lg:text-[16px]"
-            >
+            <BlurFade delay={1.2} inView>
               Organize issues, projects, and product roadmaps.
             </BlurFade>
           </div>
 
           <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">
-            <div className="border border-[#565555] h-10 md:h-12 w-60 sm:w-64 md:w-96 rounded-md bg-[#121212]">
+            <div className="border border-[#565555] h-10 md:h-12 w-fit bg-[#121212] flex items-center p-1 rounded-full">
               <input
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
-                className="rounded-md h-full w-full bg-transparent px-3 outline-none font-extralight"
-                placeholder="you@example.com"
+                className="rounded-md h-full bg-transparent px-3 outline-none font-extralight w-60 sm:w-64 md:w-96 text-[14px] sm:text-sm md:text-[16px]"
+                placeholder="Email"
                 value={email}
                 disabled={isLoading}
                 onKeyDown={handleKeyPress}
               ></input>
+              <button
+                onClick={waitListCall}
+                disabled={(email.length == 0 ? true : false) || isLoading}
+                className="h-full px-4 text-[14px] sm:text-sm md:text-[16px] rounded-full text-white bg-[#27272A] border border-[#565555]"
+              >
+                {!isLoading ? "Join waitlist" : <Image src={spinner} alt="" />}
+              </button>
             </div>
-            <button
-              onClick={waitListCall}
-              disabled={(email.length == 0 ? true : false) || isLoading}
-              className={isLoading ? disable : active}
-            >
-              {!isLoading ? "Join waitlist" : <Image src={spinner} alt="" />}
-            </button>
           </BlurFade>
         </div>
       </div>
