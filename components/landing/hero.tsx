@@ -4,11 +4,11 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { TextAnimate } from "../magicui/text-animate";
+
 import { BlurFade } from "../magicui/blur-fade";
 import Image from "next/image";
-import homebannerImg from "@/public/banner/homebanner.png";
-import { HyperText } from "../magicui/hyper-text";
+import homebannerImg from "@/public/banner/homebannertwo.png";
+
 import grid from "@/public/assets/bg/grid.svg";
 import spinner from "@/public/assets/loader/spinner.svg";
 
@@ -62,7 +62,7 @@ export default function Hero() {
     event: React.KeyboardEvent<HTMLInputElement>
   ): void => {
     if (event.key === "Enter" && !isLoading) {
-      // waitListCall();
+      waitListCall();
     }
   };
 

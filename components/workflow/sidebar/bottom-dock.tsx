@@ -7,9 +7,9 @@ import { useState } from "react";
 type activePopupProp = "profile" | "workflow" | "features" | "teams" | "none";
 
 const dockOptionActive =
-  "flex items-center justify-center gap-x-1 bg-[#414141] h-10 rounded-full cursor-pointer";
+  "flex items-center justify-center gap-x-1 bg-[#2E3035] h-10 rounded-full cursor-pointer";
 const dockOptionInactive =
-  "flex items-center justify-center gap-x-1  h-10 rounded-full cursor-pointer";
+  "flex items-center justify-center gap-x-1  h-10 rounded-full cursor-pointer hover:bg-[#4b4b4b48] transition-all duration-200";
 
 export default function BottomDock() {
   const [windowActive, setWindowActive] = useState(false);
@@ -114,7 +114,7 @@ const ProfileWindow = ({
       {/* Close Button */}
       <button
         onClick={() => setClose("none")}
-        className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
+        className="absolute top-1 right-1 rounded-lg  hover:bg-[#2E3035] transition-colors duration-200"
       >
         <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
@@ -131,15 +131,20 @@ const WorkflowWindow = ({
       {/* Popup Content */}
       <p className="text-white ">Workflow</p>
       <div className="grid grid-cols-2 gap-x-2 gap-y-2 mt-2">
-        <DockOptions svg={RAW_ICONS.RubiksCube} optName="Projects" />
+        <DockOptions
+          svg={RAW_ICONS.RubiksCube}
+          optName="Projects"
+          redirectUri="/workflow/project"
+        />
         <DockOptions svg={RAW_ICONS.Members} optName="Members" />
         <DockOptions svg={RAW_ICONS.Team} optName="Teams" />
+        <DockOptions svg={RAW_ICONS.RubiksCube} optName="Issues" />
       </div>
 
       {/* Close Button */}
       <button
         onClick={() => setClose("none")}
-        className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
+        className="absolute top-1 right-1 rounded-lg  cursor-pointer duration-200"
       >
         <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
@@ -164,7 +169,7 @@ const FeaturesWindow = ({
       {/* Close Button */}
       <button
         onClick={() => setClose("none")}
-        className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
+        className="absolute top-1 right-1 rounded-lg  cursor-pointer duration-200"
       >
         <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
@@ -189,7 +194,7 @@ const TeamsWindow = ({
       {/* Close Button */}
       <button
         onClick={() => setClose("none")}
-        className="absolute top-1 right-1 rounded-lg bg-[#e2e2e4] hover:bg-[#d1d1d3] transition-colors duration-200"
+        className="absolute top-1 right-1 rounded-lg  cursor-pointer duration-200"
       >
         <SVGIcon className="" svgString={RAW_ICONS.Close} />
       </button>
@@ -207,7 +212,7 @@ function DockOptions({
   redirectUri?: string;
 }) {
   return (
-    <div className="border border-[#414141] h-8 flex px-4 rounded-lg items-center gap-x-2 hover:bg-[#1d1d21] transition-all duration-200">
+    <div className="border border-[#414141] h-8 flex px-4 rounded-lg items-center gap-x-2 hover:bg-[#1d1d21] transition-all duration-200 cursor-pointer">
       <div className="">
         <SVGIcon className="flex w-5" svgString={svg} />
       </div>

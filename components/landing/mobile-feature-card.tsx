@@ -13,7 +13,7 @@ export const MobileFeatureCard = ({
 }) => {
   return (
     <div
-      className="relative w-full h-full overflow-hidden rounded-4xl cursor-pointer border border-transparent hover:border-[#565555] transition-all duration-300 group"
+      className="relative w-full h-full overflow-hidden rounded-4xl cursor-pointer border border-[#1f1f1f] hover:border-[#2e2e2e]  transition-all duration-300 group"
       role="article"
       aria-labelledby={
         heading

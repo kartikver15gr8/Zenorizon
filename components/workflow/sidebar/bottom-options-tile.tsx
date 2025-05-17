@@ -1,11 +1,24 @@
 "use client";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { title } from "process";
 import { useState } from "react";
+import { toast } from "sonner";
 
-const optionsArr = [
+const optionsArr: {
+  title: string;
+  svg: string;
+  redirectHref: string;
+  openToNewPage: boolean;
+}[] = [
+  {
+    title: "Profile",
+    svg: RAW_ICONS.User,
+    redirectHref: "/profile",
+    openToNewPage: false,
+  },
   {
     title: "Search for help…",
     svg: RAW_ICONS.Search,
@@ -48,7 +61,7 @@ export const BottomOptionsTile = () => {
 
       {/* Popup */}
       <div
-        className={`absolute bottom-16 left-4 w-52 h-72 bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300 ${
+        className={`absolute bottom-16 left-4 w-52 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300 ${
           optionsOpen
             ? "opacity-100 scale-100"
             : "opacity-0 scale-95 pointer-events-none"
@@ -65,6 +78,7 @@ export const BottomOptionsTile = () => {
             />
           );
         })}
+        <LogoutBtn />
       </div>
     </>
   );
@@ -85,7 +99,7 @@ const BottomOptionLabel = ({
     <Link
       href={redirectHref}
       target={openToNewPage ? "_blank" : "_self"}
-      className="rounded-lg flex items-center h-9 px-2 gap-x-2 hover:bg-[#1f1f22] transition-all duration-300  border border-transparent hover:border-[#4b4b4b] "
+      className="rounded-lg flex items-center h-9 px-2 gap-x-2 hover:bg-[#4b4b4b48] transition-all duration-300  border border-transparent hover:border-[#4b4b4b] "
     >
       <SVGIcon className="flex w-4" svgString={svg} />
       <p>{title}</p>
@@ -93,5 +107,29 @@ const BottomOptionLabel = ({
         <SVGIcon className="flex w-4" svgString={RAW_ICONS.Arrow45} />
       )}
     </Link>
+  );
+};
+
+const LogoutBtn = () => {
+  const [signoutLoading, setSignoutLoading] = useState(false);
+  const handleSignout = () => {
+    try {
+      setSignoutLoading(true);
+      signOut();
+    } catch (error) {
+      toast.error(`Got an error while signing out: ${error}`);
+    } finally {
+      setSignoutLoading(false);
+      toast.info("Logged out!");
+    }
+  };
+  return (
+    <div
+      onClick={handleSignout}
+      className="rounded-lg flex items-center h-9 px-2 gap-x-2 hover:bg-[#a52f0b28] transition-all duration-300  border border-[#421C13] hover:border-[#A5300B] cursor-pointer"
+    >
+      <SVGIcon className="flex w-4" svgString={RAW_ICONS.Logout} />
+      <p>Log out</p>
+    </div>
   );
 };
