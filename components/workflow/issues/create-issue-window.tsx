@@ -99,12 +99,16 @@ export const CreateIssueWindow = ({
             <div className=" relative" ref={dropdownRef}>
               <div
                 className="flex border border-[#6A6C75] bg-[#1f2025] items-center text-sm justify-center h-7 w-8 rounded-md hover:bg-[#212227] transition-all duration-300 cursor-pointer"
-                onClick={() => setShowOptionsDropdown("priority")}
+                onClick={() =>
+                  setShowOptionsDropdown(
+                    showOptionsDropdown == "priority" ? false : "priority"
+                  )
+                }
               >
                 {renderPrioritySvg(selectedPriorityOption)}
               </div>
               {showOptionsDropdown == "priority" && (
-                <div className="absolute w-28 top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
+                <div className="absolute w-36 top-full left-0 bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-lg shadow-lg mt-1 z-10">
                   {PriorityOptionsArray.map((option, key) => (
                     <div
                       key={key}
@@ -122,7 +126,11 @@ export const CreateIssueWindow = ({
             <div className="col-span-1 relative" ref={dropdownRef}>
               <div
                 className="flex border border-[#6A6C75] bg-[#1f2025] items-center text-sm justify-center h-7 w-8 rounded-md hover:bg-[#212227] transition-all duration-300 cursor-pointer"
-                onClick={() => setShowOptionsDropdown("status")}
+                onClick={() =>
+                  setShowOptionsDropdown(
+                    showOptionsDropdown == "status" ? false : "status"
+                  )
+                }
               >
                 <RenderStatusSvg status={selectedStatusOption} />
               </div>

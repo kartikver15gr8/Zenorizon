@@ -148,7 +148,11 @@ export default function IssueLabel({
       <div className="col-span-1 relative " ref={dropdownRef}>
         <div
           className="w-fit flex items-center  px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
-          onClick={() => setShowOptionsDropdown("status")}
+          onClick={() =>
+            setShowOptionsDropdown(
+              showOptionsDropdown == "status" ? false : "status"
+            )
+          }
         >
           {status}
         </div>
@@ -170,12 +174,16 @@ export default function IssueLabel({
       <div className="col-span-1 relative " ref={dropdownRef}>
         <div
           className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
-          onClick={() => setShowOptionsDropdown("priority")}
+          onClick={() =>
+            setShowOptionsDropdown(
+              showOptionsDropdown == "priority" ? false : "priority"
+            )
+          }
         >
           {renderPrioritySvg(selectedPriorityOption)}
         </div>
         {showOptionsDropdown == "priority" && (
-          <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
+          <div className="absolute w-36 top-full left-0 bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-lg shadow-lg mt-1 z-10">
             {priorityOptionsArray.map((option, key) => (
               <div
                 key={key}
@@ -193,7 +201,9 @@ export default function IssueLabel({
       <div title={fullDate} className="col-span-1 cursor-pointer ">
         {shortDate}
       </div>
-      <div className="col-span-1 border border-[#2C2E33] h-8 w-8 rounded-full"></div>
+      <div className="col-span-1 border border-[#2C2E33] h-7 w-7 rounded-full flex items-center justify-center hover:bg-[#4141414f] transition-all duration-200">
+        <SVGIcon className="flex w-6" svgString={RAW_ICONS.AssignedUser} />
+      </div>
       <p className="col-span-3">update</p>
     </div>
   );
