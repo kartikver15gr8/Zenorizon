@@ -12,6 +12,7 @@ import IssueLabel from "@/components/workflow/issues/issue-label";
 import { IssueViewOptArray } from "@/utils/issues-view-options";
 import { CreateIssueWindow } from "@/components/workflow/issues/create-issue-window";
 import IssuesTopTile from "@/components/workflow/issues/issues-top-tile";
+import { WorkflowLayout } from "@/components/workflow/workflow-layout";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -99,102 +100,98 @@ export default function Issue() {
 
   return (
     <>
-      <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
-        <div className="flex justify-center items-center gap-x-1 h-10 md:h-12">
-          <SVGIcon className="flex w-3 sm:w-4" svgString={RAW_ICONS.Issue} />
-          <p className="text-[13px] sm:text-[15px]">Issues</p>
-        </div>
-        <div className="flex flex-col flex-grow border border-[#414141] bg-[#0F1111] rounded-lg ml-2 md:ml-0 mr-2 mb-2 p-1">
-          <div className="border h-10 rounded border-[#2d3036] flex items-center justify-between px-4">
-            <div className=" flex gap-x-2 items-center ">
-              <Link
-                href={"/workflow/project"}
-                className="flex items-center rounded text-[12px] sm:text-[13px] md:text-[15px] border border-transparent  hover:border-[#2E3035] px-2 h-7  hover:bg-[#1C1D21] transition-all duration-300"
-              >
-                Projects
-              </Link>
-              <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded hover:bg-[#1C1D21] transition-all duration-300">
-                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
-                <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                  {project?.title}
-                </p>
-              </div>
-              <Link
-                href={`/workflow/project/${project_id}`}
-                className={path.includes("/issues") ? inactiveTab : activeTab}
-              >
-                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Docs} />
-                <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                  Overview
-                </p>
-              </Link>
-              <Link
-                href={`/workflow/project/${project_id}/issues`}
-                className={path.includes("/issues") ? activeTab : inactiveTab}
-              >
-                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Issue} />
-                <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                  Issues
-                </p>
-              </Link>
+      <WorkflowLayout windowSvg={RAW_ICONS.Issue} windowTitle="Issues">
+        <div className="border h-10 rounded border-[#2d3036] flex items-center justify-between px-4">
+          <div className=" flex gap-x-2 items-center ">
+            <Link
+              href={"/workflow/project"}
+              className="flex items-center rounded text-[12px] sm:text-[13px] md:text-[15px] border border-transparent  hover:border-[#2E3035] px-2 h-7  hover:bg-[#1C1D21] transition-all duration-300"
+            >
+              Projects
+            </Link>
+            <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded hover:bg-[#1C1D21] transition-all duration-300">
+              <SVGIcon className="flex w-4" svgString={RAW_ICONS.Cube} />
+              <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+                {project ? project.title : "Loading…"}
+              </p>
             </div>
-            <div className="flex ">
-              <div
-                onClick={() => {
-                  setCreateIssueWindowOpen(true);
-                }}
-                className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
-              >
-                <SVGIcon className="flex w-4" svgString={RAW_ICONS.Add} />
-              </div>
-              <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
-                <SVGIcon className="flex w-5" svgString={RAW_ICONS.SideBar} />
-              </div>
+            <Link
+              href={`/workflow/project/${project_id}`}
+              className={path.includes("/issues") ? inactiveTab : activeTab}
+            >
+              <SVGIcon className="flex w-4" svgString={RAW_ICONS.Docs} />
+              <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+                Overview
+              </p>
+            </Link>
+            <Link
+              href={`/workflow/project/${project_id}/issues`}
+              className={path.includes("/issues") ? activeTab : inactiveTab}
+            >
+              <SVGIcon className="flex w-4" svgString={RAW_ICONS.Issue} />
+              <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+                Issues
+              </p>
+            </Link>
+          </div>
+          <div className="flex ">
+            <div
+              onClick={() => {
+                setCreateIssueWindowOpen(true);
+              }}
+              className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
+            >
+              <SVGIcon className="flex w-4" svgString={RAW_ICONS.Add} />
+            </div>
+            <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded-lg hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300">
+              <SVGIcon className="flex w-5" svgString={RAW_ICONS.SideBar} />
             </div>
           </div>
-          <div
-            className="
+        </div>
+
+        <div
+          className="
     h-10 border-b border-[#2E3035] flex items-center px-2 gap-x-2
     overflow-x-auto whitespace-nowrap
     sm:overflow-x-visible scrollbar-hide
   "
-          >
-            {IssueViewOptArray.map((elem, key) => (
-              <IssuesViewButton
-                key={key}
-                title={elem.title}
-                svg={elem.svg}
-                filter={statusFilter}
-                setFilter={setStatusFilter}
-              />
-            ))}
-          </div>
-
-          <IssuesTopTile />
-          <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
-            {filteredIssues && filteredIssues?.length > 0 ? (
-              filteredIssues?.map((elem, key) => {
-                return (
-                  <IssueLabel
-                    key={key}
-                    title={elem.title}
-                    projectID={project_id}
-                    projectKey={project?.title}
-                    issueID={elem.id}
-                    priority={elem.priority}
-                    status={elem.status}
-                    updatedAt={elem.updatedAt}
-                  />
-                );
-              })
-            ) : (
-              <div className="h-10 flex items-center w-full justify-center">
-                <p className="text-[#939494]">No Issues Found</p>
-              </div>
-            )}
-          </div>
+        >
+          {IssueViewOptArray.map((elem, key) => (
+            <IssuesViewButton
+              key={key}
+              title={elem.title}
+              svg={elem.svg}
+              filter={statusFilter}
+              setFilter={setStatusFilter}
+            />
+          ))}
         </div>
-      </div>
+
+        <IssuesTopTile />
+        <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
+          {filteredIssues && filteredIssues?.length > 0 ? (
+            filteredIssues?.map((elem, key) => {
+              return (
+                <IssueLabel
+                  key={key}
+                  title={elem.title}
+                  projectID={project_id}
+                  projectKey={project?.title}
+                  issueID={elem.id}
+                  priority={elem.priority}
+                  status={elem.status}
+                  updatedAt={elem.updatedAt}
+                />
+              );
+            })
+          ) : (
+            <div className="h-10 flex items-center w-full justify-center">
+              <p className="text-[#939494]">No Issues Found</p>
+            </div>
+          )}
+        </div>
+      </WorkflowLayout>
+
       {createIssueWindowOpen && (
         <CreateIssueWindow
           setClose={setCreateIssueWindowOpen}
