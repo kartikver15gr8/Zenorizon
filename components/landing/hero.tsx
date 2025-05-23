@@ -9,6 +9,7 @@ import { BlurFade } from "../magicui/blur-fade";
 import Image from "next/image";
 import homebannerImg from "@/public/banner/homebannertwo.png";
 
+import bg from "@/public/assets/bg/bg.svg";
 import grid from "@/public/assets/bg/grid.svg";
 import spinner from "@/public/assets/loader/spinner.svg";
 
@@ -63,7 +64,7 @@ export default function Hero() {
   return (
     <div className="">
       <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
-        <Image className="absolute opacity-20 z-0" src={grid} alt="" />
+        <Image className="absolute opacity-20 z-0" src={bg} alt="" />
         <div className=" flex flex-col items-center md:font-bold ">
           <BlurFade
             delay={0.5}

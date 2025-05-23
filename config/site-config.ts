@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-const TITLE = "Zenorizon - Streamline your workflow, amplify your impact";
+const TITLE = "Zenorizon - Streamline your workflow, amplify your impact.";
 const DESCRIPTION =
   "Introducing the system for modern software development. Organize issues, projects, and product roadmaps.";
 

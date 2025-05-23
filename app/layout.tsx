@@ -7,16 +7,6 @@ import { siteConfig } from "@/config/site-config";
 import { Providers } from "./providers";
 import { Bricolage_Grotesque } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const bricolage_grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
 });
