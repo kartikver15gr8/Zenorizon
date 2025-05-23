@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import ProjectListSkeleton from "./project-skeleton-loader";
+import { WorkflowLayout } from "../workflow-layout";
 
 type ProjectStatusType =
   | "Completed"
@@ -58,68 +59,60 @@ export default function Projects() {
 
   return (
     <>
-      <div className="w-full  bg-[#0A0A0A] h-screen flex flex-col">
-        <div className="flex justify-center items-center gap-x-1 h-10 md:h-12">
-          <SVGIcon
-            className="flex w-3 sm:w-4"
-            svgString={RAW_ICONS.RubiksCube}
-          />
-          <p className="text-[13px] sm:text-[15px]">Projects</p>
-        </div>
-
-        <div className="flex-grow border border-[#414141] bg-[#0F1111] rounded-lg ml-2 md:ml-0 mr-2 mb-2 p-1">
-          <div className="border h-10 rounded border-[#2d3036] flex items-center justify-between px-4">
-            <div className=" flex gap-x-2 md:gap-x-4 items-center ">
+      <WorkflowLayout windowSvg={RAW_ICONS.RubiksCube} windowTitle="Projects">
+        <div className="border h-10 rounded border-[#2d3036] flex items-center justify-between px-4">
+          <div className=" flex gap-x-2 md:gap-x-4 items-center ">
+            <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+              Projects
+            </p>
+            <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
+              <SVGIcon className="flex w-3" svgString={RAW_ICONS.Cube} />
               <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                Projects
+                All projects
               </p>
-              <div className="flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300">
-                <SVGIcon className="flex w-3" svgString={RAW_ICONS.Cube} />
-                <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                  All projects
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-x-2 md:gap-x-4 ">
-              <div
-                onClick={() => setCreateWindowOpen(true)}
-                className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
-              >
-                <SVGIcon className="flex w-3" svgString={RAW_ICONS.Add} />
-                <p className="text-[12px] sm:text-[13px] md:text-[15px]">
-                  Create project
-                </p>
-              </div>
             </div>
           </div>
-          <ProjectTopTile />
-
-          {isLoading && (
-            <div className="h-20 flex items-center justify-center">
-              <SVGIcon
-                className="flex w-10 md:w-20"
-                svgString={RAW_ICONS.Loader}
-              />
+          <div className="flex gap-x-2 md:gap-x-4 ">
+            <div
+              onClick={() => setCreateWindowOpen(true)}
+              className="flex h-7 items-center gap-x-1 cursor-pointer border border-transparent  px-2 rounded hover:bg-[#1C1D21] hover:border-[#2E3035] transition-all duration-300"
+            >
+              <SVGIcon className="flex w-3" svgString={RAW_ICONS.Add} />
+              <p className="text-[12px] sm:text-[13px] md:text-[15px]">
+                Create project
+              </p>
             </div>
-          )}
-
-          <div className="">
-            {projects &&
-              projects?.length > 0 &&
-              projects?.map((elem, key) => {
-                return (
-                  <ProjectLabel
-                    key={key}
-                    title={elem.title}
-                    health={elem.status}
-                    priority={elem.priority}
-                    projectID={elem.id}
-                  />
-                );
-              })}
           </div>
         </div>
-      </div>
+
+        <ProjectTopTile />
+
+        {isLoading && (
+          <div className="h-20 flex items-center justify-center">
+            <SVGIcon
+              className="flex w-10 md:w-20"
+              svgString={RAW_ICONS.Loader}
+            />
+          </div>
+        )}
+
+        <div className="">
+          {projects &&
+            projects?.length > 0 &&
+            projects?.map((elem, key) => {
+              return (
+                <ProjectLabel
+                  key={key}
+                  title={elem.title}
+                  health={elem.status}
+                  priority={elem.priority}
+                  projectID={elem.id}
+                />
+              );
+            })}
+        </div>
+      </WorkflowLayout>
+
       {createWindowOpen && (
         <CreateProjectWindow setClose={setCreateWindowOpen} />
       )}
