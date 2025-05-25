@@ -130,7 +130,7 @@ export default function IssueLabel({
   };
 
   return (
-    <div className="h-14 rounded-lg border border-transparent hover:bg-[#1C1D21]  hover:border-[#2E3035] transition-all duration-200 px-3 grid grid-cols-12 items-center text-xs md:text-sm xl:text-[15px] ">
+    <div className="h-14 rounded-lg border border-transparent hover:bg-[#1C1D21]  hover:border-[#2E3035] transition-all duration-200 px-3 grid grid-cols-12 items-center text-xs md:text-sm xl:text-[15px] cursor-pointer">
       <div className=" col-span-5 sm:col-span-4 flex items-center  gap-x-5 ">
         {status ? (
           <RenderStatusSvg status={status} />
