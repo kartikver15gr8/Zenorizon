@@ -84,7 +84,7 @@ export const BottomOptionsTile = () => {
   );
 };
 
-const BottomOptionLabel = ({
+export const BottomOptionLabel = ({
   title,
   svg,
   redirectHref,
@@ -110,7 +110,7 @@ const BottomOptionLabel = ({
   );
 };
 
-const LogoutBtn = () => {
+export const LogoutBtn = () => {
   const [signoutLoading, setSignoutLoading] = useState(false);
   const handleSignout = () => {
     try {

@@ -8,6 +8,50 @@ import { useState } from "react";
 import { useSession, signIn, signOut } from "@/utils/auth";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import {
+  BottomOptionLabel,
+  LogoutBtn,
+} from "../workflow/sidebar/bottom-options-tile";
+import { RAW_ICONS } from "@/lib/icons";
+
+const optionsArr: {
+  title: string;
+  svg: string;
+  redirectHref: string;
+  openToNewPage: boolean;
+}[] = [
+  {
+    title: "Profile",
+    svg: RAW_ICONS.User,
+    redirectHref: "/profile",
+    openToNewPage: false,
+  },
+  {
+    title: "Search for help…",
+    svg: RAW_ICONS.Search,
+    redirectHref: "",
+    openToNewPage: false,
+  },
+  {
+    title: "Shortcuts",
+    svg: RAW_ICONS.Keyboard,
+    redirectHref: "",
+    openToNewPage: false,
+  },
+  { title: "Docs", svg: RAW_ICONS.Docs, redirectHref: "", openToNewPage: true },
+  {
+    title: "Contact us",
+    svg: RAW_ICONS.ContactUs,
+    redirectHref: "",
+    openToNewPage: false,
+  },
+  {
+    title: "Community",
+    svg: RAW_ICONS.Community,
+    redirectHref: "",
+    openToNewPage: true,
+  },
+];
 
 const navListArr = [
   { title: "Workflow", redirectHref: "/workflow/project" },
@@ -53,32 +97,15 @@ const wrapperVariants = {
   },
 };
 
-const iconVariants = {
-  open: { rotate: 90 },
-  closed: { rotate: 0 },
-};
-
 export default function Navbar() {
   const { data: session, status } = useSession();
   const [signupLoading, setSignupLoading] = useState(false);
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
-  const handleSignup = () => {
-    try {
-      setSignupLoading(true);
-      signIn("github");
-    } catch (error) {
-      toast.error(`Got an error while signing up: ${error}`);
-    } finally {
-      setSignupLoading(false);
-      toast.info("Logged in successfully🎉");
-    }
-  };
+  // options when user logged in
+  const [profileTabOpen, setProfileTabOpen] = useState(false);
 
   const handleSignout = () => {
     try {
@@ -95,7 +122,7 @@ export default function Navbar() {
   return (
     <>
       <div className="top-0 fixed w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 z-50">
-        <div className=" h-[55px] border border-[#565555] w-full rounded-lg flex items-center justify-between px-3 bg-[#121212]">
+        <div className=" h-[55px] border border-[#565555] w-full rounded-xl flex items-center justify-between pl-3 pr-2 bg-[#121212]">
           <Link href="/">
             <Image
               className="w-8"
@@ -116,63 +143,106 @@ export default function Navbar() {
               );
             })}
           </div>
-          <div className="hidden md:flex items-center gap-x-2">
-            {!session?.user.email &&
-              pathname !== "/login" &&
-              pathname !== "/signup" && (
-                <button className="px-4 h-9 rounded hover:bg-[#4f4e4e] transition-all duration-300 cursor-pointer">
-                  Log in
-                </button>
-              )}
+          <div className="hidden md:flex items-center md:relative ">
+            {profileTabOpen && (
+              <div
+                className={`absolute top-13 -right-2 w-44 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300 ${
+                  profileTabOpen
+                    ? "opacity-100 scale-100"
+                    : "opacity-0 scale-95 pointer-events-none"
+                }`}
+              >
+                {optionsArr.map((elem, key) => {
+                  return (
+                    <BottomOptionLabel
+                      key={key}
+                      svg={elem.svg}
+                      title={elem.title}
+                      redirectHref={elem.redirectHref}
+                      openToNewPage={elem.openToNewPage}
+                    />
+                  );
+                })}
+                <LogoutBtn />
+              </div>
+            )}
             {!session?.user?.id &&
               pathname !== "/login" &&
               pathname !== "/signup" && (
                 <Link
                   href={"/signup"}
-                  className="border flex items-center px-4 h-9 rounded text-black bg-white cursor-pointer"
+                  className="border-2 flex items-center px-4 h-9 rounded-md text-black bg-white cursor-pointer border-[#625c5c] hover:bg-[#343638] hover:text-white transition-all duration-300"
                 >
-                  Sign up
+                  Sign in
                 </Link>
               )}
 
             {session?.user.email && (
               <button
-                onClick={handleSignout}
-                className="border px-4 h-9 rounded text-black bg-white cursor-pointer"
+                aria-label="Toggle menu"
+                aria-expanded={profileTabOpen}
+                onClick={() => setProfileTabOpen(!profileTabOpen)}
+                className="flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#959292] rounded-lg bg-[#38373771] cursor-pointer"
+                type="button"
               >
-                Log out
+                <span
+                  className={`
+          block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300
+          ${profileTabOpen ? "rotate-45 translate-y-2" : ""}
+        `}
+                />
+                <span
+                  className={`
+          block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300 my-1
+          ${profileTabOpen ? "opacity-0" : ""}
+        `}
+                />
+                <span
+                  className={`
+          block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300
+          ${profileTabOpen ? "-rotate-45 -translate-y-2" : ""}
+        `}
+                />
               </button>
             )}
           </div>
-          <div className="md:hidden w-fit flex ml-4">
-            <motion.button
-              onClick={toggleMenu}
-              className="text-black focus:outline-none"
-              animate={isOpen ? "open" : "closed"}
-            >
-              <motion.svg
-                className="w-7"
-                viewBox="0 0 20 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                variants={iconVariants}
-              >
-                <path
-                  d="M1 7H19M1 1H19M1 13H19"
-                  stroke="#ffffff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </motion.svg>
-            </motion.button>
-          </div>
+
+          {/* Phone Screen Nav Hamburger Tab */}
+          <button
+            aria-label="Toggle menu"
+            aria-expanded={profileTabOpen}
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+            className="md:hidden flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#959292] rounded-lg bg-[#38373771] cursor-pointer"
+            type="button"
+          >
+            <span
+              className={`
+          block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300
+          ${isOpen ? "rotate-45 translate-y-2" : ""}
+        `}
+            />
+            <span
+              className={`
+          block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300 my-1
+          ${isOpen ? "opacity-0" : ""}
+        `}
+            />
+            <span
+              className={`
+          block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300
+          ${isOpen ? "-rotate-45 -translate-y-2" : ""}
+        `}
+            />
+          </button>
         </div>
       </div>
+
       {isOpen && (
         <div className="fixed mt-[70px] rounded px-4 w-full z-50">
           <motion.div
-            className=" z-50 relative w-full border border-[#565555] bg-[#121212] shadow-lg rounded"
+            className=" z-50 relative w-full border border-[#565555] bg-[#121212] shadow-lg rounded-lg"
             initial="closed"
             animate={isOpen ? "open" : "closed"}
             variants={wrapperVariants}
