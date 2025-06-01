@@ -64,7 +64,7 @@ export default function Hero() {
   return (
     <div className="">
       <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
-        <Image className="absolute opacity-20 z-0" src={bg} alt="" />
+        <Image className="absolute opacity-20 z-0" src={grid} alt="" />
         <div className=" flex flex-col items-center md:font-bold ">
           <BlurFade
             delay={0.5}
@@ -93,7 +93,7 @@ export default function Hero() {
           </div>
 
           <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">
-            <div className="border border-[#565555] h-10 md:h-12 w-fit bg-[#121212] flex items-center p-1 rounded-full">
+            <div className="border border-[#686464] h-10 md:h-12 w-fit bg-[#121212a6] flex items-center p-1 rounded-full shadow-2xl shadow-[#7b7a7f74]">
               <input
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -107,7 +107,7 @@ export default function Hero() {
               <button
                 onClick={waitListCall}
                 disabled={(email.length == 0 ? true : false) || isLoading}
-                className="h-full px-4 text-[14px] sm:text-sm md:text-[16px] rounded-full text-white bg-[#27272A] border border-[#565555]"
+                className="h-full px-4 text-[14px] sm:text-sm md:text-[16px] rounded-full text-white bg-[#232222] border border-[#565555] cursor-pointer hover:bg-[#363537] transition-all duration-300"
               >
                 {!isLoading ? "Join waitlist" : <Image src={spinner} alt="" />}
               </button>
