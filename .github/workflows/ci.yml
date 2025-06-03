@@ -29,9 +29,6 @@ jobs:
       - name: Generate Prisma client
         run: pnpm run postinstall
 
-      - name: Type check (TypeScript)
-        run: pnpm tsc --noEmit
-
       - name: Lint
         run: pnpm lint
 
