@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4
