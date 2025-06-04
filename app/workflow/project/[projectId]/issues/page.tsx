@@ -81,7 +81,6 @@ export default function Issue() {
 
   useEffect(() => {
     setProjectId(localStorage.getItem("ZENO_PROJECT_ID"));
-    console.log(filteredIssues);
   }, []);
 
   const createIssue = async () => {
