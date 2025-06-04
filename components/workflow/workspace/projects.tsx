@@ -2,7 +2,7 @@
 
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
-import { ProjectBody } from "@/utils/types";
+import { ProjectBody, ProjectPriorityType, ProjectStatusType } from "@/utils/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -11,15 +11,11 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import ProjectListSkeleton from "./project-skeleton-loader";
 import { WorkflowLayout } from "../workflow-layout";
-
-type ProjectStatusType =
-  | "Completed"
-  | "Backlog"
-  | "Working"
-  | "Cancelled"
-  | "Planned";
-
-type ProjectPriorityType = "No Priority" | "Urgent" | "High" | "Medium" | "Low";
+import { renderPrioritySvg } from "../issues/issue-label";
+import {
+  healthOptions,
+  priorityOptionsArray,
+} from "@/utils/project-view-options";
 
 export default function Projects() {
   const router = useRouter();
@@ -133,27 +129,6 @@ const ProjectTopTile = () => {
   );
 };
 
-const renderPrioritySvg = (priority: string) => {
-  switch (priority.split(" ").join().toLowerCase()) {
-    case "urgent":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.UrgentPriority} />
-      );
-    case "high":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.HighPriority} />
-      );
-    case "medium":
-      return (
-        <SVGIcon className="flex w-5" svgString={RAW_ICONS.MediumPriority} />
-      );
-    case "low":
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.LowPriority} />;
-    default:
-      return <SVGIcon className="flex w-5" svgString={RAW_ICONS.NoPriority} />;
-  }
-};
-
 const ProjectLabel = ({
   title,
   health,
@@ -181,22 +156,6 @@ const ProjectLabel = ({
 
   const [selectedPriorityOption, setSelectedPriorityOption] =
     useState(priority);
-
-  const healthOptions = [
-    "Completed",
-    "Working",
-    "Cancelled",
-    "Backlog",
-    "Planned",
-  ];
-
-  const priorityOptionsArray = [
-    { name: "Urgent", svg: RAW_ICONS.UrgentPriority },
-    { name: "No Priority", svg: RAW_ICONS.NoPriority },
-    { name: "High", svg: RAW_ICONS.HighPriority },
-    { name: "Medium", svg: RAW_ICONS.MediumPriority },
-    { name: "Low", svg: RAW_ICONS.LowPriority },
-  ];
 
   const handleHealthOptionClick = async (option: string) => {
     setSelectedHealthOption(option);
@@ -237,27 +196,27 @@ const ProjectLabel = ({
     }
   };
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowOptionsDropdown(false);
-      }
-    }
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node)
+  //     ) {
+  //       setShowOptionsDropdown(false);
+  //     }
+  //   }
 
-    if (showOptionsDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
+  //   if (showOptionsDropdown) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
 
-    // Cleanup
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showOptionsDropdown]);
+  //   // Cleanup
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [showOptionsDropdown]);
 
   return (
     <div className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px]">
@@ -275,7 +234,7 @@ const ProjectLabel = ({
           {selectedHealthOption}
         </div>
         {showOptionsDropdown == "health" && (
-          <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
+          <div className="z-10 absolute top-10 -left-3 w-32 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300">
             {healthOptions.map((option) => (
               <div
                 key={option}
@@ -296,7 +255,7 @@ const ProjectLabel = ({
           {renderPrioritySvg(selectedPriorityOption)}
         </div>
         {showOptionsDropdown == "priority" && (
-          <div className="absolute top-full left-0 bg-[#0A0A0A] border border-[#414141] rounded shadow-lg mt-1 z-10">
+          <div className="z-10 absolute top-10 -left-3 w-32 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300">
             {priorityOptionsArray.map((option, key) => (
               <div
                 key={key}

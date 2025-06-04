@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ProjectBody } from "@/utils/types";
 import SVGIcon from "@/lib/svg-icon";
 import Link from "next/link";
@@ -10,6 +10,12 @@ import { usePathname } from "next/navigation";
 import { RAW_ICONS } from "@/lib/icons";
 import { WorkflowLayout } from "@/components/workflow/workflow-layout";
 import { TopTileButton } from "@/components/workflow/workflow-toptile-layout";
+import { toast } from "sonner";
+import { renderPrioritySvg } from "@/utils/render-priority-svg";
+import {
+  healthOptions,
+  priorityOptionsArray,
+} from "@/utils/project-view-options";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -22,6 +28,14 @@ export default function Project({
   params: Promise<{ projectId: string }>;
 }) {
   const path = usePathname();
+  const [selectedHealthOption, setSelectedHealthOption] = useState("");
+  const [selectedPriorityOption, setSelectedPriorityOption] = useState("");
+
+  const [showOptionsDropdown, setShowOptionsDropdown] = useState<
+    "status" | "priority" | boolean
+  >(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [project_id, setProjectID] = useState<string | null>(null);
   const [project, setProject] = useState<ProjectBody | null>(null);
@@ -55,6 +69,67 @@ export default function Project({
     };
     fetchUniqueProject();
   }, [project_id]);
+
+  const handleHealthOptionClick = async (option: string) => {
+    setSelectedHealthOption(option);
+
+    setShowOptionsDropdown(false);
+    try {
+      const response = await axios.patch("/api/workflow/updateproject", {
+        projectId: project_id,
+        status: option,
+      });
+      if (response.status === 200) {
+        toast.info(`Status set to ${option} successfully 🎉`);
+      } else {
+        toast.error("Failed to update project status");
+      }
+    } catch (error) {
+      console.error("Error updating project:", error);
+      toast.error("Failed to update project status");
+    }
+  };
+
+  const handlePriorityOptionClick = async (option: string) => {
+    setSelectedPriorityOption(option);
+    setShowOptionsDropdown(false);
+    try {
+      const response = await axios.patch("/api/workflow/updateproject", {
+        projectId: project_id,
+        priority: option,
+      });
+      if (response.status === 200) {
+        toast.info(`Priority set to ${option} successfully 🎉`);
+      } else {
+        toast.error("Failed to update project status");
+      }
+    } catch (error) {
+      console.error("Error updating project:", error);
+      toast.error("Failed to update project status");
+    }
+  };
+
+  // useEffect(() => {
+  //   function handleClickOutside(event: MouseEvent) {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target as Node)
+  //     ) {
+  //       setShowOptionsDropdown(false);
+  //     }
+  //   }
+
+  //   if (showOptionsDropdown) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
+
+  //   // Cleanup
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [showOptionsDropdown]);
 
   return (
     <>
@@ -112,28 +187,75 @@ export default function Project({
               </div>
 
               <div className="flex gap-x-2 my-5 text-xs md:text-sm ">
-                <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
-                  Working
-                </p>
-                <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
-                  High
-                </p>
-                <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                <div
+                  ref={dropdownRef}
+                  className="h-7  relative rounded-md lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300"
+                >
+                  <div
+                    className="w-full h-full px-2 flex items-center rounded-md hover:bg-[#212227] transition-all duration-300 cursor-pointer text-white"
+                    onClick={() => setShowOptionsDropdown("status")}
+                  >
+                    {project.status ? project.status : "status"}
+                  </div>
+                  {showOptionsDropdown == "status" && (
+                    <div className="z-10 absolute top-8 -left-3 w-32 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300">
+                      {healthOptions.map((option) => (
+                        <div
+                          key={option}
+                          className="px-4 py-1 hover:bg-[#151818] cursor-pointer text-white"
+                          onClick={() => handleHealthOptionClick(option)}
+                        >
+                          {option}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div
+                  ref={dropdownRef}
+                  className="h-7 w-7 relative rounded-md  flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300"
+                >
+                  <div
+                    className="flex items-center justify-center w-full h-full  rounded-md hover:bg-[#212227] transition-all duration-300 cursor-pointer"
+                    onClick={() => setShowOptionsDropdown("priority")}
+                  >
+                    {renderPrioritySvg(project.priority)}
+                  </div>
+                  {showOptionsDropdown == "priority" && (
+                    <div className="z-10 absolute top-8 -left-3 w-32 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300">
+                      {priorityOptionsArray.map((option, key) => (
+                        <div
+                          key={key}
+                          className="px-2 py-1 hover:bg-[#151818] cursor-pointer text-white flex items-center gap-x-2"
+                          onClick={() => handlePriorityOptionClick(option.name)}
+                        >
+                          <SVGIcon
+                            className="flex w-3"
+                            svgString={option.svg}
+                          />
+                          <p className="text-sm">{option.name}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="h-7 px-4 relative rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
                   Jadu
-                </p>
-                <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                </div>
+                <div className="h-7 px-4 relative rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
                   Lead
-                </p>
-                <p className="h-7 px-4 rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
+                </div>
+                <div className="h-7 px-4 relative rounded lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300">
                   Target Date
-                </p>
+                </div>
               </div>
 
               <div className="my-5">
                 <p>Resources</p>
               </div>
 
-              <div>
+              <div className="">
                 <p>{project.content}</p>
               </div>
             </div>

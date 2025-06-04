@@ -490,4 +490,53 @@ export const RAW_ICONS = {
   Todo: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#6c6c6c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="#6c6c6c"/></svg>`,
   User: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="#C9C9CC" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="#C9C9CC"><path d="M2.5 12c0-4.478 0-6.718 1.391-8.109S7.521 2.5 12 2.5c4.478 0 6.718 0 8.109 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.718 0-8.109-1.391S2.5 16.479 2.5 12"/><path d="M7.5 17c2.332-2.442 6.643-2.557 9 0m-2.005-7.5c0 1.38-1.12 2.5-2.503 2.5a2.5 2.5 0 0 1-2.504-2.5c0-1.38 1.12-2.5 2.504-2.5a2.5 2.5 0 0 1 2.503 2.5"/></g></svg>`,
   AssignedUser: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="#6c6c6c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="#6c6c6c"><path d="M12 2c5.524 0 10 4.478 10 10s-4.476 10-10 10m-3-.5a11 11 0 0 1-3.277-1.754m0-15.492A11.3 11.3 0 0 1 9 2.5m-7 7.746a9.6 9.6 0 0 1 1.296-3.305M2 13.754a9.6 9.6 0 0 0 1.296 3.305"/><path d="M8 16.5c2.073-2.198 5.905-2.301 8 0m-1.782-6.75c0 1.243-.996 2.25-2.226 2.25s-2.225-1.007-2.225-2.25s.996-2.25 2.226-2.25s2.225 1.007 2.225 2.25"/></g></svg>`,
+  Graph: `<svg width="3621" height="1055" viewBox="0 0 3621 1055" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line y1="1.5" x2="3621" y2="1.5" stroke="#474141" stroke-width="3"/>
+<line y1="131.5" x2="3621" y2="131.5" stroke="#474141" stroke-width="3"/>
+<line y1="264.5" x2="3621" y2="264.5" stroke="#474141" stroke-width="3"/>
+<line y1="394.5" x2="3621" y2="394.5" stroke="#474141" stroke-width="3"/>
+<line y1="1053.5" x2="3621" y2="1053.5" stroke="#474141" stroke-width="3"/>
+<line y1="527.5" x2="3621" y2="527.5" stroke="#474141" stroke-width="3"/>
+<line y1="657.5" x2="3621" y2="657.5" stroke="#474141" stroke-width="3"/>
+<line y1="790.5" x2="3621" y2="790.5" stroke="#474141" stroke-width="3"/>
+<line y1="920.5" x2="3621" y2="920.5" stroke="#474141" stroke-width="3"/>
+<g filter="url(#filter0_d_38_57)">
+<line x1="180.163" y1="186.127" x2="660.163" y2="578.127" stroke="#4AB356" stroke-width="10"/>
+<line x1="653.573" y1="578.359" x2="823.573" y2="418.359" stroke="#4AB356" stroke-width="10"/>
+<line x1="816.625" y1="418.556" x2="892.625" y2="498.556" stroke="#4AB356" stroke-width="10"/>
+<line x1="886.25" y1="497.824" x2="1214.25" y2="281.824" stroke="#4AB356" stroke-width="10"/>
+<line x1="1208.37" y1="282.305" x2="1616.37" y2="654.305" stroke="#4AB356" stroke-width="10"/>
+<line x1="1610.1" y1="654.928" x2="2135.1" y2="280.928" stroke="#4AB356" stroke-width="10"/>
+<line x1="2130.74" y1="281.314" x2="2982.74" y2="598.314" stroke="#4AB356" stroke-width="10"/>
+<line x1="2977.11" y1="598.854" x2="3249.11" y2="262.854" stroke="#4AB356" stroke-width="10"/>
+</g>
+<line x1="216.727" y1="709.404" x2="541.727" y2="174.404" stroke="#7D7E82" stroke-width="10"/>
+<path d="M541 178.5L625 500.5" stroke="#7D7E82" stroke-width="10"/>
+<line x1="620.928" y1="496.087" x2="1091.93" y2="585.087" stroke="#7D7E82" stroke-width="10"/>
+<line x1="1089.51" y1="583.676" x2="1499.51" y2="821.676" stroke="#7D7E82" stroke-width="10"/>
+<line x1="1493.8" y1="822.161" x2="2078.8" y2="334.161" stroke="#7D7E82" stroke-width="10"/>
+<line x1="2074.38" y1="335.196" x2="2636.38" y2="497.196" stroke="#7D7E82" stroke-width="10"/>
+<line x1="2634.78" y1="496.846" x2="3119.78" y2="821.846" stroke="#7D7E82" stroke-width="10"/>
+<line x1="216.748" y1="1035.37" x2="623.748" y2="377.37" stroke="#A28837" stroke-width="10"/>
+<line x1="622.314" y1="373.472" x2="874.314" y2="803.472" stroke="#A28837" stroke-width="10"/>
+<line x1="868.328" y1="803.288" x2="1739.33" y2="494.288" stroke="#A28837" stroke-width="10"/>
+<line x1="1733.51" y1="493.439" x2="1941.51" y2="698.439" stroke="#A28837" stroke-width="10"/>
+<line x1="1934.79" y1="698.168" x2="2206.79" y2="470.168" stroke="#A28837" stroke-width="10"/>
+<line x1="2209.71" y1="475.334" x2="2368.71" y2="925.334" stroke="#A28837" stroke-width="10"/>
+<line x1="2365.79" y1="923.167" x2="3023.79" y2="372.167" stroke="#A28837" stroke-width="10"/>
+<line x1="3019.92" y1="373.001" x2="3152.92" y2="371.001" stroke="#A28837" stroke-width="10"/>
+<defs>
+<filter id="filter0_d_38_57" x="64.1" y="99.3549" width="3225.8" height="626.545" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-38" dy="-8"/>
+<feGaussianBlur stdDeviation="37.45"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.290196 0 0 0 0 0.701961 0 0 0 0 0.337255 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_38_57"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_38_57" result="shape"/>
+</filter>
+</defs>
+</svg>
+`,
 };

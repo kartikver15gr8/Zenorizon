@@ -3,6 +3,7 @@ import SVGIcon from "@/lib/svg-icon";
 import Image from "next/image";
 import timeline from "@/public/assets/illustrations/timeline.png";
 import laptop from "@/public/assets/illustrations/laptop.png";
+import graph from "@/public/assets/illustrations/graphhq.png";
 
 export default function ProductTimeline() {
   return (
@@ -13,7 +14,7 @@ export default function ProductTimeline() {
           <div className="w-3 h-3 md:w-4 md:h-4 rotate-45 rounded shadow-[inset_-3px_-0.1px_7px_2px_rgba(255,255,255,0.4)] border border-[#717171]"></div>
         </div>
         <p className="text-xl md:text-3xl lg:text-4xl xl:text-6xl font-medium pb-3 pt-2 md:pb-5 md:pt-3">
-          Navigate your product timeline
+          Lead your product trajectory
         </p>
         <p className="text-xs md:text-[16px] lg:text-lg text-[#A8A8A8] max-w-3xl w-[70%] lg:w-[45%]">
           Manage your workspaces, projects, assign issues, integrate with GitHub
@@ -21,16 +22,8 @@ export default function ProductTimeline() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:mb-8">
-        <div className=""></div>
-
-        <div className="mt-10 rounded-2xl border border-[#2D2E2E] p-1 md:p-2">
-          <Image
-            className="rounded-[10px] border border-[#515252]"
-            src={laptop}
-            alt=""
-          />
-        </div>
+      <div className="mb-10">
+        <Image className=" opacity-65" src={graph} alt="" />
       </div>
 
       <div className="border-t border-[#2f2f2f] mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">

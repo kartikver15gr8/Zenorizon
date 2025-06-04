@@ -34,3 +34,17 @@ export type User = {
   createdProjects: ProjectBody[];
   Issue: IssueBody[];
 };
+
+export type ProjectStatusType =
+  | "Completed"
+  | "Backlog"
+  | "Working"
+  | "Cancelled"
+  | "Planned";
+
+export type ProjectPriorityType =
+  | "No Priority"
+  | "Urgent"
+  | "High"
+  | "Medium"
+  | "Low";
