@@ -112,6 +112,31 @@ export default function Footer() {
           </ul>
         </div>
       </div>
+      <div className="border-t-[0.5px] border-[#565555] h-20 flex items-center justify-between font-extralight text-[#827d7d] text-[12px] sm:text-[13px] lg:text-sm">
+        <p className="cursor-pointer">
+          &copy; 2025 Zenorizon Inc, All Rights Reserved
+        </p>
+        <div className="flex items-center gap-x-2 sm:gap-x-4 lg:gap-x-8">
+          <a
+            href=""
+            className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
+          >
+            Terms & Conditions
+          </a>
+          <a
+            href=""
+            className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
+          >
+            Privacy Policy
+          </a>
+          <a
+            href=""
+            className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
+          >
+            About
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
