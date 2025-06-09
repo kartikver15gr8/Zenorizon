@@ -63,7 +63,7 @@ export default function Hero() {
 
   return (
     <div className="">
-      <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 justify-center items-center">
+      <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] flex px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40 justify-center items-center">
         <Image className="absolute opacity-20 z-0" src={grid} alt="" />
         <div className=" flex flex-col items-center md:font-bold ">
           <BlurFade
@@ -125,7 +125,7 @@ const HomeBanner = () => {
     <BlurFade
       delay={1}
       inView
-      className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28"
+      className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40"
     >
       <div className="flex justify-center border border-[#363635] rounded-2xl p-1 md:p-2 bg-[#16161681]">
         <Image

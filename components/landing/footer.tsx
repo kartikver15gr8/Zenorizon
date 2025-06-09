@@ -7,7 +7,7 @@ import { RAW_ICONS } from "@/lib/icons";
 
 export default function Footer() {
   return (
-    <div className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 border-t-[0.5px] border-[#565555]">
+    <div className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40 border-t-[0.5px] border-[#565555]">
       <div className="flex items-center justify-between  border-b-[0.5px] border-[#565555] h-24 md:h-40">
         <div className="flex items-center gap-x-2 lg:gap-x-4">
           <Image
