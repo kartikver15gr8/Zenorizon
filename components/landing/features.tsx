@@ -26,11 +26,11 @@ export default function Features() {
   };
 
   return (
-    <section className="min-h-screen relative flex flex-col justify-center bg-gradient-to-b from-[#0A0A0A] via-[#131516] to-[#0A0A0A] mt-5 px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 gap-y-3 sm:gap-y-4 md:gap-y-5 xl:gap-y-6">
+    <section className="min-h-screen relative flex flex-col justify-center bg-gradient-to-b from-[#0A0A0A] via-[#131516] to-[#0A0A0A] mt-5 px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40 gap-y-3 sm:gap-y-4 md:gap-y-5 xl:gap-y-6">
       <div className="relative ">
-        <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-7xl font-bold">
+        <p className="text-xl md:text-3xl lg:text-4xl xl:text-6xl font-medium pb-3 ">
           Everything you need
-        </h2>
+        </p>
         <p className="text-xs md:text-lg text-[#A8A8A8] max-w-3xl">
           Manage your workspaces, projects, assign issues, integrate with GitHub
           and other apps and a lot more
