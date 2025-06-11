@@ -1,6 +1,8 @@
-import { prisma } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
+import { headers } from "next/headers";
 import { Resend } from "resend";
+import { prisma } from "@/db";
+import { ratelimit } from "@/lib/rate-limit";
 import { WaitlistEmail } from "@/components/waitlist/waitlist-email";
 import * as React from "react";
 
@@ -8,6 +10,20 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
+    const headersList = await headers();
+    const ip =
+      headersList.get("x-forwarded-for") ||
+      headersList.get("x-real-ip") ||
+      "unknown";
+
+    const { success } = await ratelimit.limit(ip);
+    if (!success) {
+      return NextResponse.json(
+        { message: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const { userEmail } = await request.json();
 
     if (!userEmail || typeof userEmail !== "string") {
@@ -38,20 +54,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const dbResponse = await prisma.waitListEmails.create({
-      data: {
-        email: userEmail.toLowerCase(),
-      },
-    });
-
-    if (!dbResponse) {
-      return NextResponse.json(
-        { message: "Failed to add email to waitlist" },
-        { status: 500 }
-      );
-    }
-
-    // Send confirmation email
     const { data, error } = await resend.emails.send({
       from: "Welcome to Zenorizon <onboarding@zenorizon.com>",
       to: userEmail,
@@ -62,7 +64,20 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Error sending email:", error);
       return NextResponse.json(
-        { message: "Added to waitlist, but failed to send confirmation email" },
+        { message: "Failed to send confirmation email" },
+        { status: 500 }
+      );
+    }
+
+    const dbResponse = await prisma.waitListEmails.create({
+      data: {
+        email: userEmail.toLowerCase(),
+      },
+    });
+
+    if (!dbResponse) {
+      return NextResponse.json(
+        { message: "Email sent, but failed to add to waitlist" },
         { status: 500 }
       );
     }
