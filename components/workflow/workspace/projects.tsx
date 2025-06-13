@@ -354,6 +354,7 @@ const CreateProjectWindow = ({
       toast.info("Error occured while creating project");
     } finally {
       setClose(false);
+      window.location.reload(); // This will reload the page
     }
   };
 
