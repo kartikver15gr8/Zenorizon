@@ -2,12 +2,16 @@
 
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
-import { ProjectBody, ProjectPriorityType, ProjectStatusType } from "@/utils/types";
+import {
+  ProjectBody,
+  ProjectPriorityType,
+  ProjectStatusType,
+} from "@/utils/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import ProjectListSkeleton from "./project-skeleton-loader";
 import { WorkflowLayout } from "../workflow-layout";
@@ -18,6 +22,9 @@ import {
 } from "@/utils/project-view-options";
 
 export default function Projects() {
+  const [deleteProjectId, setDeleteProjectId] = useState("");
+  const [deleteWindowOpen, setDeleteWindowOpen] = useState(false);
+
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -103,6 +110,8 @@ export default function Projects() {
                   health={elem.status}
                   priority={elem.priority}
                   projectID={elem.id}
+                  openDeleteWindow={setDeleteWindowOpen}
+                  setProjectIdToDelete={setDeleteProjectId}
                 />
               );
             })}
@@ -111,6 +120,12 @@ export default function Projects() {
 
       {createWindowOpen && (
         <CreateProjectWindow setClose={setCreateWindowOpen} />
+      )}
+      {deleteWindowOpen && (
+        <DeleteWindow
+          closeDeleteWindow={setDeleteWindowOpen}
+          projectID={deleteProjectId}
+        />
       )}
     </>
   );
@@ -123,8 +138,8 @@ const ProjectTopTile = () => {
       <p className="col-span-2">Health</p>
       <p className="col-span-2">Priority</p>
       <p className="col-span-1">Lead</p>
-      <p className="col-span-2">Target Date</p>
-      <p className="col-span-1">Status</p>
+      <p className="col-span-1">Target Date</p>
+      <p className="col-span-2">Status</p>
     </div>
   );
 };
@@ -137,6 +152,8 @@ const ProjectLabel = ({
   targetDate,
   status,
   projectID,
+  openDeleteWindow,
+  setProjectIdToDelete,
 }: {
   title: string;
   health?: string;
@@ -145,6 +162,8 @@ const ProjectLabel = ({
   targetDate?: string;
   status?: string;
   projectID: string;
+  openDeleteWindow: React.Dispatch<React.SetStateAction<boolean>>;
+  setProjectIdToDelete: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [selectedHealthOption, setSelectedHealthOption] = useState(health);
 
@@ -272,8 +291,20 @@ const ProjectLabel = ({
       <div className="col-span-1 h-8 w-8 flex items-center justify-center rounded hover:bg-[#212227] transition-all duration-300">
         <SVGIcon className="flex w-4 " svgString={RAW_ICONS.Account} />
       </div>
-      <p className="col-span-2">{targetDate}</p>
-      <p className="col-span-1">{status}</p>
+      <p className="col-span-1">{targetDate ? targetDate : "NA"}</p>
+
+      <div className="col-span-2 flex items-center h-full  justify-between">
+        <p>{status ? status : "NA"}</p>
+        <button
+          onClick={() => {
+            setProjectIdToDelete(projectID);
+            openDeleteWindow(true);
+          }}
+          className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
+        >
+          <SVGIcon className="flex w-4 xl:w-5" svgString={RAW_ICONS.Delete} />
+        </button>
+      </div>
     </div>
   );
 };
@@ -323,11 +354,13 @@ const CreateProjectWindow = ({
       toast.info("Error occured while creating project");
     } finally {
       setClose(false);
+      window.location.reload(); // This will reload the page
     }
   };
 
   return (
     <div className="absolute bg-[rgba(0,0,0,0.1)] backdrop-blur-lg w-full min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-10 lg:px-14 xl:px-44">
+      {/* Main content */}
       <div className="flex flex-col border border-[#393B42] w-full h-[550px] lg:h-[600px] xl:h-[700px] rounded-xl bg-[#0F1111] px-2 md:px-4 xl:px-5 pt-2 md:pt-4 xl:pt-5">
         <div className=" h-10 flex justify-between items-center gap-x-2">
           <div className="flex items-center">
@@ -453,6 +486,57 @@ const CreateProjectWindow = ({
             className="px-2 border border-[#6D78E7] bg-[#5E6AD2] rounded-md h-9 hover:bg-[#6D78E7] transition-all duration-300"
           >
             Create project
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const DeleteWindow = ({
+  projectID,
+  closeDeleteWindow,
+}: {
+  projectID: string;
+  closeDeleteWindow: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const deleteProject = async () => {
+    try {
+      const response = await axios.delete("/api/workflow/deleteproject", {
+        data: { projectId: projectID },
+        headers: { "Content-Type": "application/json" },
+      });
+      toast.info("successfully deleted");
+    } catch (error) {
+      toast.error("Error while deleting the project");
+    } finally {
+      closeDeleteWindow(false);
+    }
+  };
+
+  return (
+    <div className="absolute bg-[rgba(0,0,0,0.1)] backdrop-blur-lg w-full min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-10 lg:px-14 xl:px-44">
+      {/* Main content */}
+      <div className="flex flex-col justify-between border border-[#393B42] rounded-xl bg-[#0F1111] h-56 w-96 lg:w-[500px] p-4">
+        <div className="">
+          <p className="font-bold text-2xl">Are you sure?</p>
+          <p className="text-[#f2534d]">
+            Deleting this project will automatically delete all the issues
+            related under this project.
+          </p>
+        </div>
+        <div className="flex items-center justify-end gap-x-2 h-10">
+          <button
+            onClick={() => closeDeleteWindow(false)}
+            className="border border-[#8c8e85] bg-[#8c8e8533] h-9 w-20 rounded-lg  hover:bg-[#908d8c5e] hover:text-white transition-all duration-200 "
+          >
+            Cancel
+          </button>
+          <button
+            onClick={deleteProject}
+            className="border border-[#9e3e28] bg-[#421c1370] h-9 w-20 rounded-lg text-[#cb4b2e] hover:bg-[#421c13] hover:text-white transition-all duration-200 "
+          >
+            Delete
           </button>
         </div>
       </div>

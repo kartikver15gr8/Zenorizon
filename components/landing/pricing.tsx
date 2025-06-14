@@ -4,6 +4,7 @@ import Image from "next/image";
 import mist from "@/public/banner/mist.png";
 import { PriceCardContents } from "@/utils/pricing-card-contents";
 import { useRouter } from "next/navigation";
+import MistContainer from "../ui/mistcontainer";
 
 export default function Pricing() {
   return (
@@ -23,14 +24,7 @@ export default function Pricing() {
 
       {/* Pricing container */}
 
-      <div className="mt-5 mb-10 relative border border-[#565555] rounded-3xl  overflow-hidden">
-        <Image
-          src={mist}
-          alt=""
-          fill
-          className="object-cover opacity-20"
-          priority
-        />
+      <MistContainer className="mt-5 mb-10  border border-[#565555] rounded-3xl">
         {/* content */}
         <div className="relative z-10 p-4 lg:p-5 grid grid-cols-1 md:grid-cols-3 h-full gap-x-4 lg:gap-x-5 gap-y-4 md:gap-y-0">
           {PriceCardContents.map((elem, key) => {
@@ -47,7 +41,7 @@ export default function Pricing() {
             );
           })}
         </div>
-      </div>
+      </MistContainer>
     </div>
   );
 }

@@ -25,6 +25,7 @@ export type User = {
   id: string;
   name?: string;
   email: string;
+  username?: string;
   emailVerified: Date;
   image?: string;
   createdAt?: Date;
