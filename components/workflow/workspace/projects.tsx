@@ -528,13 +528,13 @@ const DeleteWindow = ({
         <div className="flex items-center justify-end gap-x-2 h-10">
           <button
             onClick={() => closeDeleteWindow(false)}
-            className="border border-[#8c8e85] bg-[#8c8e8533] h-9 w-20 rounded-lg  hover:bg-[#908d8c5e] hover:text-white transition-all duration-200 "
+            className="border border-[#8c8e85] bg-[#8c8e8533] h-9 w-20 rounded-lg  hover:bg-[#908d8c5e] hover:text-white transition-all duration-200 cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={deleteProject}
-            className="border border-[#9e3e28] bg-[#421c1370] h-9 w-20 rounded-lg text-[#cb4b2e] hover:bg-[#421c13] hover:text-white transition-all duration-200 "
+            className="border border-[#9e3e28] bg-[#421c1370] h-9 w-20 rounded-lg text-[#cb4b2e] hover:bg-[#421c13] hover:text-white transition-all duration-200 cursor-pointer"
           >
             Delete
           </button>

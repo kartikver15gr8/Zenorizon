@@ -167,28 +167,35 @@ export default function Issue() {
         </div>
 
         <IssuesTopTile />
-        <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
-          {filteredIssues && filteredIssues?.length > 0 ? (
-            filteredIssues?.map((elem, key) => {
-              return (
-                <IssueLabel
-                  key={key}
-                  title={elem.title}
-                  projectID={project_id}
-                  projectKey={project?.title}
-                  issueID={elem.id}
-                  priority={elem.priority}
-                  status={elem.status}
-                  updatedAt={elem.updatedAt}
-                />
-              );
-            })
-          ) : (
-            <div className="h-10 flex items-center w-full justify-center">
-              <p className="text-[#939494]">No Issues Found</p>
-            </div>
-          )}
-        </div>
+
+        {isLoading ? (
+          <div className="h-10 flex items-center justify-center">
+            <SVGIcon svgString={RAW_ICONS.Loader} />
+          </div>
+        ) : (
+          <div className="flex-grow overflow-y-auto h-96 scrollbar-hide pt-1 ">
+            {filteredIssues && filteredIssues?.length > 0 ? (
+              filteredIssues?.map((elem, key) => {
+                return (
+                  <IssueLabel
+                    key={key}
+                    title={elem.title}
+                    projectID={project_id}
+                    projectKey={project?.title}
+                    issueID={elem.id}
+                    priority={elem.priority}
+                    status={elem.status}
+                    updatedAt={elem.updatedAt}
+                  />
+                );
+              })
+            ) : (
+              <div className="h-10 flex items-center w-full justify-center">
+                <p className="text-[#939494]">No Issues Found</p>
+              </div>
+            )}
+          </div>
+        )}
       </WorkflowLayout>
 
       {createIssueWindowOpen && (
