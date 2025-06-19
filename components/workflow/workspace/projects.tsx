@@ -20,6 +20,7 @@ import {
   healthOptions,
   priorityOptionsArray,
 } from "@/utils/project-view-options";
+import { customToast } from "@/lib/custom-toast";
 
 export default function Projects() {
   const [deleteProjectId, setDeleteProjectId] = useState("");
@@ -186,13 +187,22 @@ const ProjectLabel = ({
         status: option,
       });
       if (response.status === 200) {
-        toast.info(`Status set to ${option} successfully 🎉`);
+        customToast.info({
+          title: "Status changed!",
+          description: `Status set to ${option} successfully.`,
+        });
       } else {
-        toast.error("Failed to update project status");
+        customToast.error({
+          title: "",
+          description: "Failed to update project.",
+        });
       }
     } catch (error) {
       console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
+      customToast.error({
+        title: "",
+        description: "Failed to update project.",
+      });
     }
   };
 
@@ -205,13 +215,22 @@ const ProjectLabel = ({
         priority: option,
       });
       if (response.status === 200) {
-        toast.info(`Priority set to ${option} successfully 🎉`);
+        customToast.info({
+          title: "Priority changed!",
+          description: `Priority set to ${option} successfully.`,
+        });
       } else {
-        toast.error("Failed to update project status");
+        customToast.error({
+          title: "",
+          description: "Failed to update project.",
+        });
       }
     } catch (error) {
       console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
+      customToast.error({
+        title: "",
+        description: "Failed to update project.",
+      });
     }
   };
 
@@ -351,9 +370,15 @@ const CreateProjectWindow = ({
         status: status,
       });
 
-      toast.info(response.data.message);
+      customToast.info({
+        title: "",
+        description: "Project created succesfully!",
+      });
     } catch (error) {
-      toast.info("Error occured while creating project");
+      customToast.error({
+        title: "",
+        description: `Error occured: ${error}`,
+      });
     } finally {
       setClose(false);
       setIsCreating(false);
@@ -516,9 +541,15 @@ const DeleteWindow = ({
         data: { projectId: projectID },
         headers: { "Content-Type": "application/json" },
       });
-      toast.info("successfully deleted");
+      customToast.info({
+        title: "",
+        description: "Project deleted succesfully!",
+      });
     } catch (error) {
-      toast.error("Error while deleting the project");
+      customToast.error({
+        title: "",
+        description: `Error occured: ${error}`,
+      });
     } finally {
       closeDeleteWindow(false);
       setIsDeleting(false);

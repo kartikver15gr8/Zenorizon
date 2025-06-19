@@ -13,6 +13,7 @@ import {
   LogoutBtn,
 } from "../workflow/sidebar/bottom-options-tile";
 import { RAW_ICONS } from "@/lib/icons";
+import { customToast } from "@/lib/custom-toast";
 
 const optionsArr: {
   title: string;
@@ -121,10 +122,16 @@ export default function Navbar() {
       setSignupLoading(true);
       signOut();
     } catch (error) {
-      toast.error(`Got an error while signing out: ${error}`);
+      customToast.error({
+        title: "Error occured",
+        description: "Got an error while signing up.",
+      });
     } finally {
       setSignupLoading(false);
-      toast.info("Logged out successfully🎉");
+      customToast.success({
+        title: "Welcome back",
+        description: "Logged in successfully!",
+      });
     }
   };
 

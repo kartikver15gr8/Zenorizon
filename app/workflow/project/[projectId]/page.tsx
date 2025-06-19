@@ -16,6 +16,7 @@ import {
   healthOptions,
   priorityOptionsArray,
 } from "@/utils/project-view-options";
+import { customToast } from "@/lib/custom-toast";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -80,13 +81,21 @@ export default function Project({
         status: option,
       });
       if (response.status === 200) {
-        toast.info(`Status set to ${option} successfully 🎉`);
+        customToast.info({
+          title: "Status changed!",
+          description: `Status set to ${option} successfully.`,
+        });
       } else {
-        toast.error("Failed to update project status");
+        customToast.error({
+          title: "Action failed",
+          description: `Failed to update status.`,
+        });
       }
     } catch (error) {
-      console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
+      customToast.error({
+        title: "Action failed",
+        description: `Failed to update status.`,
+      });
     }
   };
 
@@ -99,13 +108,21 @@ export default function Project({
         priority: option,
       });
       if (response.status === 200) {
-        toast.info(`Priority set to ${option} successfully 🎉`);
+        customToast.info({
+          title: "Priority changed!",
+          description: `Priority set to ${option} successfully.`,
+        });
       } else {
-        toast.error("Failed to update project status");
+        customToast.error({
+          title: "Action failed",
+          description: `Failed to update priority.`,
+        });
       }
     } catch (error) {
-      console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
+      customToast.error({
+        title: "Action failed",
+        description: `Failed to update priority.`,
+      });
     }
   };
 

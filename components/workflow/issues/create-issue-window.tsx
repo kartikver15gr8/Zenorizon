@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { renderPrioritySvg, RenderStatusSvg } from "./issue-label";
 import { IssueStatus, PriorityOptionsArray } from "@/utils/issues-view-options";
+import { customToast } from "@/lib/custom-toast";
 
 export const CreateIssueWindow = ({
   setClose,
@@ -37,9 +38,17 @@ export const CreateIssueWindow = ({
         projectId: project_id,
       });
 
-      toast.info(response.data.message);
+      if (response.data) {
+        customToast.success({
+          title: "Success",
+          description: "Issue created successfully",
+        });
+      }
     } catch (error) {
-      toast.info("Error occured while creating project");
+      customToast.error({
+        title: "Action failed",
+        description: "Failed to create issue, try again.",
+      });
     } finally {
       setClose(false);
     }

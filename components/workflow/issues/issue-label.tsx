@@ -1,3 +1,4 @@
+import { customToast } from "@/lib/custom-toast";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
 import { IssueStatus } from "@/utils/issues-view-options";
@@ -100,13 +101,22 @@ export default function IssueLabel({
         issueStatus: option,
       });
       if (response.status === 200) {
-        toast.info(`Status set to ${option} successfully 🎉`);
+        customToast.info({
+          title: "Status changed!",
+          description: `Status set to ${option} successfully.`,
+        });
       } else {
-        toast.error("Failed to update project status");
+        customToast.error({
+          title: "",
+          description: "Failed to update issue.",
+        });
       }
     } catch (error) {
       console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
+      customToast.error({
+        title: "",
+        description: "Failed to update issue.",
+      });
     }
   };
 
@@ -119,13 +129,22 @@ export default function IssueLabel({
         issuePriority: option,
       });
       if (response.status === 200) {
-        toast.info(`Priority set to ${option} successfully 🎉`);
+        customToast.info({
+          title: "Priority changed!",
+          description: `Priority set to ${option} successfully.`,
+        });
       } else {
-        toast.error("Failed to update project status");
+        customToast.error({
+          title: "",
+          description: "Failed to update issue.",
+        });
       }
     } catch (error) {
       console.error("Error updating project:", error);
-      toast.error("Failed to update project status");
+      customToast.error({
+        title: "",
+        description: "Failed to update issue.",
+      });
     }
   };
 

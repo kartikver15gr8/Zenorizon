@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import { toast } from "sonner";
+import { customToast } from "./custom-toast";
 
 const prisma = new PrismaClient();
 
@@ -43,7 +44,10 @@ export const authOptions: NextAuthOptions = {
   events: {
     createUser: async ({ user }) => {
       // Whenever a new user signup
-      toast.info(`New user created: ${user.email}`);
+      customToast.info({
+        title: "New user created",
+        description: `user created with mail: ${user.email}!`,
+      });
     },
   },
 };

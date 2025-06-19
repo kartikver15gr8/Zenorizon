@@ -1,3 +1,4 @@
+import { customToast } from "@/lib/custom-toast";
 import { toast } from "sonner";
 
 export const PriceCardContents: {
@@ -40,7 +41,10 @@ export const PriceCardContents: {
       },
     ],
     onClickHandler: () => {
-      toast.info("Kindly sign in and you're good to go 🎉");
+      customToast.info({
+        title: "Sign in Kindly",
+        description: `You can access the free tier once you sign in.`,
+      });
     },
   },
   {
@@ -71,7 +75,10 @@ export const PriceCardContents: {
       },
     ],
     onClickHandler: () => {
-      toast.info("Pro tier will be available soon!");
+      customToast.info({
+        title: "",
+        description: `Pro tier will be available soon.`,
+      });
     },
   },
   {
@@ -102,7 +109,10 @@ export const PriceCardContents: {
       },
     ],
     onClickHandler: () => {
-      toast.info("Business tier will be available soon!");
+      customToast.info({
+        title: "",
+        description: `Business tier will be available soon.`,
+      });
     },
   },
 ];

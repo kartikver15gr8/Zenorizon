@@ -13,6 +13,7 @@ import { IssueViewOptArray } from "@/utils/issues-view-options";
 import { CreateIssueWindow } from "@/components/workflow/issues/create-issue-window";
 import IssuesTopTile from "@/components/workflow/issues/issues-top-tile";
 import { WorkflowLayout } from "@/components/workflow/workflow-layout";
+import { customToast } from "@/lib/custom-toast";
 
 const activeTab =
   "flex h-7 items-center gap-x-1 cursor-pointer border border-[#2E3035] px-2 rounded bg-[#1C1D21] hover:bg-[#1C1D21] transition-all duration-300";
@@ -69,7 +70,6 @@ export default function Issue() {
         });
 
         setProject(response.data);
-        // toast.info("Product fetched successfully!");
       } catch (error) {
         console.log(error);
       } finally {
@@ -91,9 +91,15 @@ export default function Issue() {
         projectId: project_id,
       });
 
-      toast.info(response.data.message);
+      customToast.success({
+        title: "Issue created",
+        description: `Issue created succesfully!.`,
+      });
     } catch (error) {
-      toast.info("Error occured while creating project");
+      customToast.error({
+        title: "Action failed",
+        description: `Error while creating issue.`,
+      });
     }
   };
 

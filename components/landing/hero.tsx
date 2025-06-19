@@ -12,6 +12,7 @@ import homebannerImg from "@/public/banner/homebannertwo.png";
 import bg from "@/public/assets/bg/bg.svg";
 import grid from "@/public/assets/bg/grid.svg";
 import spinner from "@/public/assets/loader/spinner.svg";
+import { customToast } from "@/lib/custom-toast";
 
 const emailSchema = z.string().email({ message: "Invalid email address" });
 
@@ -25,7 +26,10 @@ export default function Hero() {
 
       // Basic client-side validation
       if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-        toast.warning("Invalid email format");
+        customToast.warning({
+          title: "",
+          description: `The email body is invalid`,
+        });
         return;
       }
 
@@ -37,15 +41,22 @@ export default function Hero() {
       );
 
       if (response.data) {
-        toast.success(response.data.message);
+        customToast.info({
+          title: "",
+          description: `${response.data.message}`,
+        });
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data?.message || "An error occurred");
-      } else if (error instanceof Error) {
-        toast.error(error.message);
+        customToast.error({
+          title: "",
+          description: error.response?.data?.message || "An error occurred",
+        });
       } else {
-        toast.error("Unknown error occurred");
+        customToast.error({
+          title: "",
+          description: "An error occurred",
+        });
       }
     } finally {
       setEmail("");

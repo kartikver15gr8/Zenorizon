@@ -1,4 +1,5 @@
 "use client";
+import { customToast } from "@/lib/custom-toast";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
 import { signOut } from "next-auth/react";
@@ -117,10 +118,16 @@ export const LogoutBtn = () => {
       setSignoutLoading(true);
       signOut();
     } catch (error) {
-      toast.error(`Got an error while signing out: ${error}`);
+      customToast.error({
+        title: "",
+        description: `Error occured: ${error}`,
+      });
     } finally {
       setSignoutLoading(false);
-      toast.info("Logged out!");
+      customToast.info({
+        title: "Logged out",
+        description: `To access your workspace, log in again.`,
+      });
     }
   };
   return (

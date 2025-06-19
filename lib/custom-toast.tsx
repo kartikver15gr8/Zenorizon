@@ -53,6 +53,20 @@ export const customToast = {
       />
     ));
   },
+  warning: ({
+    title = "Warning",
+    description,
+    icon = <SVGIcon className="flex w-5" svgString={RAW_ICONS.ToastWarning} />,
+  }: ToastOptions) => {
+    toast.custom((t) => (
+      <ToastBody
+        onDismiss={() => toast.dismiss(t)}
+        icon={icon}
+        title={title}
+        description={description}
+      />
+    ));
+  },
 };
 
 const ToastBody = ({
