@@ -1,8 +1,10 @@
 "use client";
 
 import { WorkflowLayout } from "@/components/workflow/workflow-layout";
+import { customToast } from "@/lib/custom-toast";
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
+import { toast } from "sonner";
 
 export default function Workspace() {
   return (
@@ -12,6 +14,10 @@ export default function Workspace() {
           {/* top label content */}
         </div>
       </div>
+      <button className="" onClick={()=>customToast.info({
+  title: 'Button clicked!',
+  description: 'You just clicked the button!',
+})}>click me</button>
     </WorkflowLayout>
   );
 }
