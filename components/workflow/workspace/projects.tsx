@@ -337,8 +337,10 @@ const CreateProjectWindow = ({
   const priorityOptions = ["No Priority", "Urgent", "High", "Medium", "Low"];
 
   const { data: session } = useSession();
+  const [isCreating, setIsCreating] = useState(false);
 
   const createProject = async () => {
+    setIsCreating(true);
     try {
       const response = await axios.post("/api/workflow/createproject", {
         projTitle: projTitle,
@@ -354,7 +356,7 @@ const CreateProjectWindow = ({
       toast.info("Error occured while creating project");
     } finally {
       setClose(false);
-      window.location.reload(); // This will reload the page
+      setIsCreating(false);
     }
   };
 
@@ -483,9 +485,14 @@ const CreateProjectWindow = ({
           </button>
           <button
             onClick={createProject}
-            className="px-2 border border-[#6D78E7] bg-[#5E6AD2] rounded-md h-9 hover:bg-[#6D78E7] transition-all duration-300"
+            disabled={isCreating}
+            className="px-2 border border-[#6D78E7] bg-[#5E6AD2] min-w-16 flex items-center justify-center rounded-md h-9 hover:bg-[#6D78E7] transition-all duration-300"
           >
-            Create project
+            {isCreating ? (
+              <SVGIcon svgString={RAW_ICONS.WhiteLoader} />
+            ) : (
+              "Create"
+            )}
           </button>
         </div>
       </div>
@@ -500,7 +507,10 @@ const DeleteWindow = ({
   projectID: string;
   closeDeleteWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const deleteProject = async () => {
+    setIsDeleting(true);
     try {
       const response = await axios.delete("/api/workflow/deleteproject", {
         data: { projectId: projectID },
@@ -511,6 +521,7 @@ const DeleteWindow = ({
       toast.error("Error while deleting the project");
     } finally {
       closeDeleteWindow(false);
+      setIsDeleting(false);
     }
   };
 
@@ -534,9 +545,14 @@ const DeleteWindow = ({
           </button>
           <button
             onClick={deleteProject}
-            className="border border-[#9e3e28] bg-[#421c1370] h-9 w-20 rounded-lg text-[#cb4b2e] hover:bg-[#421c13] hover:text-white transition-all duration-200 cursor-pointer"
+            disabled={isDeleting}
+            className="border border-[#9e3e28] flex items-center justify-center bg-[#421c1370] h-9 w-20 rounded-lg text-[#cb4b2e] hover:bg-[#421c13] hover:text-white transition-all duration-200 cursor-pointer"
           >
-            Delete
+            {isDeleting ? (
+              <SVGIcon svgString={RAW_ICONS.RedDeleteLoader} />
+            ) : (
+              "Delete"
+            )}
           </button>
         </div>
       </div>
