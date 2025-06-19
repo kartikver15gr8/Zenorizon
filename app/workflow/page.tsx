@@ -14,10 +14,41 @@ export default function Workspace() {
           {/* top label content */}
         </div>
       </div>
-      <button className="" onClick={()=>customToast.info({
-  title: 'Button clicked!',
-  description: 'You just clicked the button!',
-})}>click me</button>
+      <div className="border flex items-center gap-x-4">
+        <button
+          className="border"
+          onClick={() =>
+            customToast.info({
+              title: "Button clicked!",
+              description: "You just clicked the button!",
+            })
+          }
+        >
+          click me
+        </button>
+        <button
+          className="border"
+          onClick={() =>
+            customToast.success({
+              title: "Button clicked!",
+              description: "You just clicked the button!",
+            })
+          }
+        >
+          click me
+        </button>
+        <button
+          className="border"
+          onClick={() =>
+            customToast.error({
+              title: "Button clicked!",
+              description: "You just clicked the button!",
+            })
+          }
+        >
+          click me
+        </button>
+      </div>
     </WorkflowLayout>
   );
 }
