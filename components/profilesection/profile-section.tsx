@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ProfilePulseLoader from "./profile-loader";
+import { customToast } from "@/lib/custom-toast";
 
 type UserInfo = {
   email: string | null;
@@ -28,7 +29,10 @@ export default function ProfileSection() {
       const response = await axios.get("/api/user/getprofile");
       setUserInfo(response.data);
     } catch (error) {
-      toast.info("Error while fetching user info.");
+      customToast.error({
+        title: "",
+        description: "Error while fetching user data",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -51,12 +55,17 @@ export default function ProfileSection() {
         fullname: updatedFullname,
       });
       if (response.data) {
-        toast.info("Updated user info!");
+        customToast.info({
+          description: "Updated user info",
+        });
         setInEditMode(false);
         fetchUserInfo(); // Refresh info
       }
     } catch (error) {
-      toast.info("Failed to update user info!");
+      customToast.error({
+        title: "",
+        description: "Error while updating user.",
+      });
     } finally {
       setUpdatingUserinfo(false);
     }
