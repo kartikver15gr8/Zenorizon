@@ -273,13 +273,14 @@ const ProjectLabel = ({
         </div>
         {showOptionsDropdown == "health" && (
           <div className="z-10 absolute top-10 -left-3 w-32 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300">
-            {healthOptions.map((option) => (
+            {healthOptions.map((option, key) => (
               <div
-                key={option}
-                className="px-4 py-2 hover:bg-[#151818] cursor-pointer text-white"
-                onClick={() => handleHealthOptionClick(option)}
+                key={key}
+                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center rounded-md gap-x-2"
+                onClick={() => handleHealthOptionClick(option.name)}
               >
-                {option}
+                <SVGIcon className="flex w-4" svgString={option.svg} />
+                <p className="text-sm">{option.name}</p>
               </div>
             ))}
           </div>
@@ -297,7 +298,7 @@ const ProjectLabel = ({
             {priorityOptionsArray.map((option, key) => (
               <div
                 key={key}
-                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center  gap-x-2"
+                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center rounded-md gap-x-2"
                 onClick={() => handlePriorityOptionClick(option.name)}
               >
                 <SVGIcon className="flex w-4" svgString={option.svg} />

@@ -1,11 +1,11 @@
 import { RAW_ICONS } from "@/lib/icons";
 
 export const healthOptions = [
-  "Completed",
-  "Working",
-  "Cancelled",
-  "Backlog",
-  "Planned",
+  { name: "Completed", svg: RAW_ICONS.CompletedIssue },
+  { name: "Working", svg: RAW_ICONS.WorkingStatus },
+  { name: "Cancelled", svg: RAW_ICONS.CancelledIssue },
+  { name: "Backlog", svg: RAW_ICONS.BacklogStatus },
+  { name: "Planned", svg: RAW_ICONS.PlannedIssue },
 ];
 
 export const priorityOptionsArray = [
