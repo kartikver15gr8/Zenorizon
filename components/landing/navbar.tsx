@@ -138,7 +138,7 @@ export default function Navbar() {
   return (
     <>
       <div className="top-0 fixed w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-40 z-50">
-        <div className=" h-[55px] border border-[#565555] w-full rounded-xl flex items-center justify-between pl-3 pr-2 bg-[#121212]">
+        <div className=" h-[55px] border border-[#313032] w-full rounded-xl flex items-center justify-between pl-3 pr-2 bg-[#121212]">
           <Link href="/">
             <Image
               className="w-8"
@@ -199,7 +199,7 @@ export default function Navbar() {
                 aria-label="Toggle menu"
                 aria-expanded={profileTabOpen}
                 onClick={() => setProfileTabOpen(!profileTabOpen)}
-                className="flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#959292] rounded-lg bg-[#38373771] cursor-pointer"
+                className="flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#313032] rounded-lg bg-[#38373771] cursor-pointer"
                 type="button"
               >
                 <span

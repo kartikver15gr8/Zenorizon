@@ -36,7 +36,8 @@ export default function Project({
     "status" | "priority" | boolean
   >(false);
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const statusDropdownRef = useRef<HTMLDivElement>(null);
+  const priorityDropdownRef = useRef<HTMLDivElement>(null);
 
   const [project_id, setProjectID] = useState<string | null>(null);
   const [project, setProject] = useState<ProjectBody | null>(null);
@@ -126,27 +127,30 @@ export default function Project({
     }
   };
 
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target as Node)
-  //     ) {
-  //       setShowOptionsDropdown(false);
-  //     }
-  //   }
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showOptionsDropdown === "status" &&
+        statusDropdownRef.current &&
+        !statusDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
 
-  //   if (showOptionsDropdown) {
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //   } else {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   }
+      if (
+        showOptionsDropdown === "priority" &&
+        priorityDropdownRef.current &&
+        !priorityDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
+    };
 
-  //   // Cleanup
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [showOptionsDropdown]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOptionsDropdown]);
 
   return (
     <>
@@ -205,7 +209,7 @@ export default function Project({
 
               <div className="flex gap-x-2 my-5 text-xs md:text-sm ">
                 <div
-                  ref={dropdownRef}
+                  ref={statusDropdownRef}
                   className="h-7  relative rounded-md lg:min-w-20 flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300"
                 >
                   <div
@@ -234,7 +238,7 @@ export default function Project({
                 </div>
 
                 <div
-                  ref={dropdownRef}
+                  ref={priorityDropdownRef}
                   className="h-7 w-7 relative rounded-md  flex items-center justify-center border border-[#5C5D5E] cursor-pointer hover:bg-[#1C1D21] transition-all duration-300"
                 >
                   <div
