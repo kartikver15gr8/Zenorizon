@@ -55,7 +55,8 @@ export default function IssueLabel({
     "status" | "priority" | boolean
   >(false);
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const statusDropdownRef = useRef<HTMLDivElement>(null);
+  const priorityDropdownRef = useRef<HTMLDivElement>(null);
 
   const [selectedPriorityOption, setSelectedPriorityOption] = useState(
     priority ? priority : "No Priority"
@@ -69,27 +70,30 @@ export default function IssueLabel({
     { name: "Low", svg: RAW_ICONS.LowPriority },
   ];
 
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target as Node)
-  //     ) {
-  //       setShowOptionsDropdown(false);
-  //     }
-  //   }
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showOptionsDropdown === "status" &&
+        statusDropdownRef.current &&
+        !statusDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
 
-  //   if (showOptionsDropdown) {
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //   } else {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   }
+      if (
+        showOptionsDropdown === "priority" &&
+        priorityDropdownRef.current &&
+        !priorityDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
+    };
 
-  //   // Cleanup
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [showOptionsDropdown]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOptionsDropdown]);
 
   const handleStatusOptionClick = async (option: string) => {
     setSelectedStatusOption(option);
@@ -164,7 +168,7 @@ export default function IssueLabel({
       >
         {projectKey ? projectKey.slice(0, 3).toUpperCase() : "ZEN-1"}
       </p>
-      <div className="col-span-1 relative " ref={dropdownRef}>
+      <div className="col-span-1 relative " ref={statusDropdownRef}>
         <div
           className="w-fit flex items-center  px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() =>
@@ -190,7 +194,7 @@ export default function IssueLabel({
           </div>
         )}
       </div>
-      <div className="col-span-1 relative " ref={dropdownRef}>
+      <div className="col-span-1 relative " ref={priorityDropdownRef}>
         <div
           className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() =>

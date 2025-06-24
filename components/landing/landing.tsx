@@ -6,7 +6,7 @@ import Pricing from "./pricing";
 
 export default function Landing() {
   return (
-    <div className="pb-10 lg:pb-20 pt-[70px]">
+    <div className="pt-[70px]">
       <Hero />
       <Features />
       <ProductTimeline />

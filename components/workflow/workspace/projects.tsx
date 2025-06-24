@@ -172,14 +172,14 @@ const ProjectLabel = ({
     "health" | "priority" | boolean
   >(false);
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const healthDropdownRef = useRef<HTMLDivElement>(null);
+  const priorityDropdownRef = useRef<HTMLDivElement>(null);
 
   const [selectedPriorityOption, setSelectedPriorityOption] =
     useState(priority);
 
   const handleHealthOptionClick = async (option: string) => {
     setSelectedHealthOption(option);
-
     setShowOptionsDropdown(false);
     try {
       const response = await axios.patch("/api/workflow/updateproject", {
@@ -234,27 +234,30 @@ const ProjectLabel = ({
     }
   };
 
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target as Node)
-  //     ) {
-  //       setShowOptionsDropdown(false);
-  //     }
-  //   }
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showOptionsDropdown === "health" &&
+        healthDropdownRef.current &&
+        !healthDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
 
-  //   if (showOptionsDropdown) {
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //   } else {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   }
+      if (
+        showOptionsDropdown === "priority" &&
+        priorityDropdownRef.current &&
+        !priorityDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowOptionsDropdown(false);
+      }
+    };
 
-  //   // Cleanup
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [showOptionsDropdown]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOptionsDropdown]);
 
   return (
     <div className="rounded-lg grid grid-cols-12 px-4 items-center text-[#97989A] h-16 hover:bg-[#151818] transition-all duration-300 text-[11px] sm:text-[13px] md:text-[15px]">
@@ -264,7 +267,7 @@ const ProjectLabel = ({
       >
         {title}
       </Link>
-      <div className="col-span-2 relative" ref={dropdownRef}>
+      <div className="col-span-2 relative" ref={healthDropdownRef}>
         <div
           className="w-fit flex items-center px-2 h-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() => setShowOptionsDropdown("health")}
@@ -273,19 +276,20 @@ const ProjectLabel = ({
         </div>
         {showOptionsDropdown == "health" && (
           <div className="z-10 absolute top-10 -left-3 w-32 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300">
-            {healthOptions.map((option) => (
+            {healthOptions.map((option, key) => (
               <div
-                key={option}
-                className="px-4 py-2 hover:bg-[#151818] cursor-pointer text-white"
-                onClick={() => handleHealthOptionClick(option)}
+                key={key}
+                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center rounded-md gap-x-2"
+                onClick={() => handleHealthOptionClick(option.name)}
               >
-                {option}
+                <SVGIcon className="flex w-4" svgString={option.svg} />
+                <p className="text-sm">{option.name}</p>
               </div>
             ))}
           </div>
         )}
       </div>
-      <div className="col-span-2 relative" ref={dropdownRef}>
+      <div className="col-span-2 relative" ref={priorityDropdownRef}>
         <div
           className="flex items-center justify-center h-8 w-8 rounded hover:bg-[#212227] transition-all duration-300 cursor-pointer"
           onClick={() => setShowOptionsDropdown("priority")}
@@ -297,7 +301,7 @@ const ProjectLabel = ({
             {priorityOptionsArray.map((option, key) => (
               <div
                 key={key}
-                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center  gap-x-2"
+                className="px-2 py-2 hover:bg-[#151818] cursor-pointer text-white flex items-center rounded-md gap-x-2"
                 onClick={() => handlePriorityOptionClick(option.name)}
               >
                 <SVGIcon className="flex w-4" svgString={option.svg} />

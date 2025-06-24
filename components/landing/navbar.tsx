@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import appIcon from "@/public/assets/icons/appIconTwo.svg";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "@/utils/auth";
-import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import {
   BottomOptionLabel,
@@ -14,6 +13,7 @@ import {
 } from "../workflow/sidebar/bottom-options-tile";
 import { RAW_ICONS } from "@/lib/icons";
 import { customToast } from "@/lib/custom-toast";
+import classNames from "classnames";
 
 const optionsArr: {
   title: string;
@@ -117,6 +117,9 @@ export default function Navbar() {
   // options when user logged in
   const [profileTabOpen, setProfileTabOpen] = useState(false);
 
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   const handleSignout = () => {
     try {
       setSignupLoading(true);
@@ -135,10 +138,29 @@ export default function Navbar() {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+
+      if (currentY > lastScrollY && currentY > 50) {
+        setShowNavbar(false); // Scroll down
+      } else {
+        setShowNavbar(true); // Scroll up
+      }
+
+      setLastScrollY(currentY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
     <>
-      <div className="top-0 fixed w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-40 z-50">
-        <div className=" h-[55px] border border-[#565555] w-full rounded-xl flex items-center justify-between pl-3 pr-2 bg-[#121212]">
+      <div
+        className={`top-0 fixed w-full py-2 flex px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-40 z-50 transition-transform duration-300 ${showNavbar ? "translate-y-0" : "-translate-y-full"}`}
+      >
+        <div className=" h-[55px] border border-[#313032] w-full rounded-xl flex items-center justify-between pl-3 pr-2 bg-[#121212]">
           <Link href="/">
             <Image
               className="w-8"
@@ -199,7 +221,7 @@ export default function Navbar() {
                 aria-label="Toggle menu"
                 aria-expanded={profileTabOpen}
                 onClick={() => setProfileTabOpen(!profileTabOpen)}
-                className="flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#959292] rounded-lg bg-[#38373771] cursor-pointer"
+                className="flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#313032] rounded-lg bg-[#38373771] cursor-pointer"
                 type="button"
               >
                 <span

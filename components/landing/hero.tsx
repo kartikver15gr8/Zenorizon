@@ -138,7 +138,7 @@ const HomeBanner = () => {
       inView
       className="px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40"
     >
-      <div className="flex justify-center border border-[#363635] rounded-2xl p-1 md:p-2 bg-[#16161681]">
+      <div className="flex justify-center border border-[#313032] rounded-2xl p-1 md:p-2 bg-[#16161681]">
         <Image
           className="rounded-[11px] border border-[#515252]"
           src={homebannerImg}
