@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import zenorizonlogo from "@/public/assets/icons/appIconTwo.svg";
 import Link from "next/link";
-import { toast } from "sonner";
 import React, { useEffect } from "react";
 import { signIn, useSession } from "@/utils/auth";
 import { useRouter } from "next/navigation";
@@ -40,7 +38,7 @@ export default function SignupPage() {
         <div className=" w-80 rounded flex  flex-col items-center justify-center">
           <Image
             className="border border-white p-1 h-20 w-20 rounded-3xl mb-10"
-            src={zenorizonlogo}
+            src="appIconTwo.svg"
             alt="Logo"
             width={100}
             height={100}

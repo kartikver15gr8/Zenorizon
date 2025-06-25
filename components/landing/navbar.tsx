@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import appIcon from "@/public/assets/icons/appIconTwo.svg";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "@/utils/auth";
@@ -13,7 +12,7 @@ import {
 } from "../workflow/sidebar/bottom-options-tile";
 import { RAW_ICONS } from "@/lib/icons";
 import { customToast } from "@/lib/custom-toast";
-import classNames from "classnames";
+import SVGIcon from "@/lib/svg-icon";
 
 const optionsArr: {
   title: string;
@@ -164,13 +163,13 @@ export default function Navbar() {
           <Link href="/">
             <Image
               className="w-8"
-              src={appIcon}
+              src="appIconTwo.svg"
               alt=""
               width={200}
               height={200}
             />
           </Link>
-          <div className="hidden md:flex gap-x-5 z-10">
+          <div className="hidden md:flex gap-x-4 lg:gap-x-5 xl:gap-x-6 z-10">
             {navListArr.map((elem, key) => {
               return (
                 <NavListElement
@@ -182,7 +181,19 @@ export default function Navbar() {
               );
             })}
           </div>
-          <div className="hidden md:flex items-center md:relative ">
+          <div className="hidden md:flex items-center md:relative gap-x-[5px]">
+            <Link
+              href={"https://github.com/kartikver15gr8/zenorizon"}
+              target="_blank"
+              className="border border-[#313032] flex items-center gap-x-1 h-9 px-2 rounded-lg bg-black text-[13px] lg:text-[14px] cursor-pointer hover:border-[#69696ec3] transition-all duration-200"
+            >
+              <SVGIcon
+                className="flex w-3 lg:w-4"
+                svgString={RAW_ICONS.GitHubIcon}
+              />
+              <p>Star on GitHub</p>
+              <SVGIcon className="flex w-3 lg:w-4" svgString={RAW_ICONS.Star} />
+            </Link>
             {profileTabOpen && (
               <div
                 className={`absolute top-13 -right-2 w-44 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300 ${
@@ -210,7 +221,7 @@ export default function Navbar() {
               pathname !== "/signup" && (
                 <Link
                   href={"/signup"}
-                  className="border-2 flex items-center px-4 h-9 rounded-md text-black bg-white cursor-pointer border-[#625c5c] hover:bg-[#343638] hover:text-white transition-all duration-300"
+                  className="border-2 flex items-center px-4 h-9 rounded-lg text-black bg-white cursor-pointer border-[#313032] hover:bg-[#1e1e1f] hover:border-[1px] hover:text-white transition-all duration-300"
                 >
                   Sign in
                 </Link>
@@ -247,41 +258,55 @@ export default function Navbar() {
           </div>
 
           {/* Phone Screen Nav Hamburger Tab */}
-          <button
-            aria-label="Toggle menu"
-            aria-expanded={profileTabOpen}
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-            className="md:hidden flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#959292] rounded-lg bg-[#38373771] cursor-pointer"
-            type="button"
-          >
-            <span
-              className={`
+          <div className="md:hidden flex gap-x-[5px]">
+            <Link
+              href={"https://github.com/kartikver15gr8/zenorizon"}
+              target="_blank"
+              className="border border-[#313032] flex items-center gap-x-1 h-9 px-2 rounded-lg bg-black text-[13px] lg:text-[14px] cursor-pointer"
+            >
+              <SVGIcon
+                className="flex w-3 lg:w-4"
+                svgString={RAW_ICONS.GitHubIcon}
+              />
+              <p>Star on GitHub</p>
+              <SVGIcon className="flex w-3 lg:w-4" svgString={RAW_ICONS.Star} />
+            </Link>
+            <button
+              aria-label="Toggle menu"
+              aria-expanded={profileTabOpen}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+              className="flex flex-col justify-center items-center w-9 h-9 focus:outline-none group border border-[#313032] rounded-lg bg-[#38373771] cursor-pointer"
+              type="button"
+            >
+              <span
+                className={`
           block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300
           ${isOpen ? "rotate-45 translate-y-2" : ""}
         `}
-            />
-            <span
-              className={`
+              />
+              <span
+                className={`
           block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300 my-1
           ${isOpen ? "opacity-0" : ""}
         `}
-            />
-            <span
-              className={`
+              />
+              <span
+                className={`
           block h-0.5 w-6 bg-[#959292] rounded transition-all duration-300
           ${isOpen ? "-rotate-45 -translate-y-2" : ""}
         `}
-            />
-          </button>
+              />
+            </button>
+          </div>
         </div>
       </div>
 
       {isOpen && (
         <div className="fixed mt-[70px] rounded px-4 w-full z-50">
           <motion.div
-            className=" z-50 relative w-full border border-[#565555] bg-[#121212] shadow-lg rounded-lg"
+            className=" z-50 relative w-full border border-[#313032] bg-[#121212] shadow-lg rounded-lg"
             initial="closed"
             animate={isOpen ? "open" : "closed"}
             variants={wrapperVariants}
@@ -302,7 +327,7 @@ export default function Navbar() {
               <motion.div variants={itemVariants}>
                 {session?.user.email ? (
                   <div
-                    className="h-16 flex items-center hover:bg-[#3e3d3d] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#565555]"
+                    className="h-16 flex items-center hover:bg-[#3d3d3e80] transition-all duration-500 px-5 py-2 hover:rounded-md "
                     onClick={() => {
                       handleSignout();
                       setIsOpen(!isOpen);
@@ -313,7 +338,7 @@ export default function Navbar() {
                 ) : (
                   <Link
                     href={session?.user.email ? "" : "/signup"}
-                    className="h-16 flex items-center hover:bg-[#3e3d3d] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#565555]"
+                    className="h-16 flex items-center hover:bg-[#3d3d3e80] transition-all duration-500 px-5 py-2 hover:rounded-md "
                     onClick={() => {
                       setIsOpen(!isOpen);
                     }}
@@ -344,14 +369,14 @@ const NavListElement = ({
   return onClickHandler ? (
     <p
       onClick={onClickHandler}
-      className={`${className} px-2 rounded hover:text-[#a8a8a8] transition-all duration-300 cursor-pointer`}
+      className={`${className} text-[14px] lg:text-[16px]  rounded hover:text-[#a8a8a8] transition-all duration-300 cursor-pointer`}
     >
       {title}
     </p>
   ) : (
     <Link
       href={redirectHref}
-      className={`${className} px-2 rounded hover:text-[#a8a8a8] transition-all duration-300 cursor-pointer`}
+      className={`${className} text-[14px] lg:text-[16px]  rounded hover:text-[#a8a8a8] transition-all duration-300 cursor-pointer`}
     >
       {title}
     </Link>
@@ -374,7 +399,7 @@ const NavLink = ({
   <motion.div variants={itemVariants}>
     {onClickHandler ? (
       <div
-        className="h-16 flex items-center hover:bg-[#3e3d3d] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#565555]"
+        className="h-16 flex items-center hover:bg-[#3d3d3e80] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#313032]"
         onClick={() => {
           onClickHandler();
           setIsOpen(!isOpen);
@@ -385,7 +410,7 @@ const NavLink = ({
     ) : (
       <Link
         href={href}
-        className="h-16 flex items-center hover:bg-[#3e3d3d] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#565555]"
+        className="h-16 flex items-center hover:bg-[#3d3d3e80] transition-all duration-500 px-5 py-2 hover:rounded-md border-b border-[#313032]"
         onClick={() => {
           setIsOpen(!isOpen);
         }}

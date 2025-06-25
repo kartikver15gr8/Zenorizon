@@ -2,7 +2,7 @@
 import { RAW_ICONS } from "@/lib/icons";
 import SVGIcon from "@/lib/svg-icon";
 import Image from "next/image";
-import applogotwo from "@/public/assets/icons/appIconTwo.svg";
+import applogotwo from "@/public/appIconTwo.svg";
 import OptionLabel from "./option-label";
 import { BottomOptionsTile } from "./bottom-options-tile";
 import { WorkflowTab } from "./workflow-tab";
