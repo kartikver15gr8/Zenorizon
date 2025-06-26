@@ -16,7 +16,11 @@ export const product = [
 export const resources = [
   { title: "Documentation", redirectHref: "", target: "" },
   { title: "GitHub", redirectHref: "", target: "" },
-  { title: "Privacy Policy", redirectHref: "", target: "" },
-  { title: "Terms and Conditions", redirectHref: "/terms-of-use", target: "" },
+  { title: "Privacy Policy", redirectHref: "/privacy", target: "" },
+  {
+    title: "Terms and Conditions",
+    redirectHref: "/terms",
+    target: "",
+  },
   { title: "Branding", redirectHref: "", target: "" },
 ];

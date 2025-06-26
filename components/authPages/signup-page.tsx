@@ -55,7 +55,7 @@ export default function SignupPage() {
 
           <div className="text-sm mt-5 w-[80%] flex items-center flex-col">
             <p className="text-[#838384]">By signing up, you agree to our</p>
-            <Link href={"/terms-of-use"} className="">
+            <Link href={"/terms"} className="">
               terms and conditions.
             </Link>
           </div>

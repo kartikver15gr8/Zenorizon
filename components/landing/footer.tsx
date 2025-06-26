@@ -118,17 +118,17 @@ export default function Footer() {
         </p>
         <div className="flex items-center gap-x-2 sm:gap-x-4 lg:gap-x-8">
           <Link
-            href="/terms-of-use"
+            href="/terms"
             className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
           >
             Terms & Conditions
           </Link>
-          <a
-            href=""
+          <Link
+            href="/privacy"
             className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
           >
             Privacy Policy
-          </a>
+          </Link>
           <a
             href=""
             className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
