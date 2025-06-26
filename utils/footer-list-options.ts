@@ -17,6 +17,6 @@ export const resources = [
   { title: "Documentation", redirectHref: "", target: "" },
   { title: "GitHub", redirectHref: "", target: "" },
   { title: "Privacy Policy", redirectHref: "", target: "" },
-  { title: "Terms and Conditions", redirectHref: "", target: "" },
+  { title: "Terms and Conditions", redirectHref: "/terms-of-use", target: "" },
   { title: "Branding", redirectHref: "", target: "" },
 ];

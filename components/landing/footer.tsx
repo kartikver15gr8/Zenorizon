@@ -117,12 +117,12 @@ export default function Footer() {
           &copy; 2025 Zenorizon Inc, All Rights Reserved
         </p>
         <div className="flex items-center gap-x-2 sm:gap-x-4 lg:gap-x-8">
-          <a
-            href=""
+          <Link
+            href="/terms-of-use"
             className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
           >
             Terms & Conditions
-          </a>
+          </Link>
           <a
             href=""
             className="w-fit hover:text-[#8d8d91] transition-all duration-200 cursor-pointer"
