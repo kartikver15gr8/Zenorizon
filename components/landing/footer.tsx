@@ -1,5 +1,5 @@
 import Image from "next/image";
-import applogotwo from "@/public/assets/icons/metallogo.png";
+import metallicLogo from "@/public/metallogo.webp";
 import Link from "next/link";
 import { features, product, resources } from "@/utils/footer-list-options";
 import SVGIcon from "@/lib/svg-icon";
@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="flex items-center gap-x-2 lg:gap-x-4">
           <Image
             className="w-5 sm:w-6 md:w-8 lg:w-10 xl:w-12"
-            src={applogotwo}
+            src={metallicLogo}
             alt=""
             height={100}
             width={100}
