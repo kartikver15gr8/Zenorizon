@@ -10,7 +10,7 @@ export default function Pricing() {
   return (
     <div
       id="pricing"
-      className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-40 xl:pb-20"
+      className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-28 2xl:px-40 xl:py-10"
     >
       <div>
         <p className="text-xl md:text-3xl lg:text-4xl xl:text-6xl font-medium pb-3">

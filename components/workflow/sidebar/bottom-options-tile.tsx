@@ -133,7 +133,7 @@ export const LogoutBtn = () => {
   return (
     <div
       onClick={handleSignout}
-      className="rounded-lg flex items-center h-9 px-2 gap-x-2 hover:bg-[#a52f0b28] transition-all duration-300  border border-[#421C13] hover:border-[#A5300B] cursor-pointer"
+      className="rounded-lg flex items-center h-9 px-2 gap-x-2 hover:bg-[#a52f0b28] transition-all duration-300  border border-[#5a2418] bg-[#9c44302b] hover:border-[#A5300B] cursor-pointer"
     >
       <SVGIcon className="flex w-4" svgString={RAW_ICONS.Logout} />
       <p>Log out</p>
