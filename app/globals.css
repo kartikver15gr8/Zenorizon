@@ -60,3 +60,167 @@ body {
     opacity: 0.4;
   }
 }
+
+.editor-content {
+  color: var(--text-color);
+  background-color: var(--editor-background);
+  line-height: 1.6;
+}
+
+/* First child of editor-content must have margin-top = 1rem */
+.editor-content > :first-child {
+  margin-top: 1rem;
+}
+
+.editor-content h1 {
+  font-size: 2.25em;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.editor-content h2 {
+  font-size: 1.75em;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.editor-content h3 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+.editor-content p.is-empty.is-editor-empty {
+  color: var(--text-muted-color);
+}
+
+.editor-content a,
+.editor-content a:hover,
+.editor-content a:active,
+.editor-content a:visited {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+.editor-content a:hover {
+  cursor: pointer;
+}
+
+.editor-content strong {
+  font-weight: 700;
+}
+
+.editor-content em {
+  font-style: italic;
+}
+
+.editor-content u {
+  text-decoration: underline;
+  text-decoration-color: var(--text-color);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.editor-content blockquote {
+  border-left: 3px solid var(--border-color);
+  padding-left: 0.75rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.editor-content hr {
+  border-top: 1px solid var(--border-color);
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.editor-content ul {
+  list-style-type: disc;
+  padding-left: 1.6rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.editor-content ul li,
+.editor-content ol li {
+  padding-left: 0.4rem;
+}
+
+.editor-content ul li::marker,
+.editor-content ol li::marker {
+  color: var(--list-marker-color);
+}
+
+.editor-content ol {
+  list-style-type: decimal;
+  padding-left: 1.6rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.editor-content pre {
+  background-color: var(--code-block-bg-color);
+  color: var(--code-block-text-color);
+  border-radius: 0.3rem;
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+}
+
+.editor-content code.inline-code {
+  background-color: var(--code-block-bg-color);
+  color: var(--code-block-text-color);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.2rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border-color);
+}
+
+.editor-content p {
+  line-height: 1.6;
+}
+
+.editor-content > p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.editor-content ul li p,
+.editor-content ol li p {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.editor-content ul ul,
+.editor-content ul ol,
+.editor-content ol ul,
+.editor-content ol ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.editor-content h1 + p,
+.editor-content h2 + p,
+.editor-content h3 + p {
+  margin-top: 0.25rem;
+}
+
+/* Placeholder */
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
