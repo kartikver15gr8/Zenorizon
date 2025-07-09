@@ -36,7 +36,7 @@ export function SimpleEditorMenuBar({ editor }: SimpleEditorMenuBarProps) {
   if (!editor) return null;
 
   return (
-    <div className=" flex">
+    <div className="text-[#7f7b83] flex">
       <Toggle
         size="sm"
         pressed={editor.isActive("heading", { level: 1 })}

@@ -40,7 +40,7 @@ export function useSimpleTiptapEditor(
         TextStyle,
         CharacterCount,
         Placeholder.configure({
-          placeholder: "Write something beautiful...",
+          placeholder: "Start writing…",
           emptyEditorClass: "is-editor-empty",
           emptyNodeClass: "is-empty",
           showOnlyWhenEditable: true,
