@@ -18,9 +18,14 @@ export function SimpleEditor({ className, editor }: SimpleEditorProps) {
   const characters = editor.storage.characterCount?.characters() ?? 0;
 
   return (
-    <div className={cn("bg-background rounded-lg border shadow-sm", className)}>
+    <div
+      className={cn(
+        "bg-background rounded-lg border border-[#313032] shadow-sm",
+        className
+      )}
+    >
       {/* Menu Bar */}
-      <div className="border-border/40 border-b px-4 py-2">
+      <div className="border-b border-[#313032] px-4 py-2">
         <SimpleEditorMenuBar editor={editor} />
       </div>
 
@@ -28,9 +33,9 @@ export function SimpleEditor({ className, editor }: SimpleEditorProps) {
       <EditorContent editor={editor} className="simple-editor" />
 
       {/* Word Count Footer */}
-      <div className="border-border/40 text-muted-foreground border-t px-4 py-2 text-sm">
+      {/* <div className="text-muted-foreground border-t border-[#313032] px-4 py-2 text-sm">
         {words} words, {characters} characters
-      </div>
+      </div> */}
     </div>
   );
 }

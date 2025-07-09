@@ -24,30 +24,30 @@ export default function SimplePage() {
     offline: true,
   });
 
-  const handleImageUpload = (imageUrl: string) => {
-    setUploadedImage(imageUrl);
-  };
+  // const handleImageUpload = (imageUrl: string) => {
+  //   setUploadedImage(imageUrl);
+  // };
 
-  const handleImageRemove = () => {
-    if (uploadedImage) {
-      URL.revokeObjectURL(uploadedImage);
-      setUploadedImage(null);
-    }
-  };
+  // const handleImageRemove = () => {
+  //   if (uploadedImage) {
+  //     URL.revokeObjectURL(uploadedImage);
+  //     setUploadedImage(null);
+  //   }
+  // };
 
-  const handlePresetChange = (preset: string) => {
-    setSelectedPreset(preset);
-  };
+  // const handlePresetChange = (preset: string) => {
+  //   setSelectedPreset(preset);
+  // };
 
-  const handlePreviewClose = (open: boolean) => {
-    if (!open) {
-      setShowImagePreview(false);
-      if (generatedImageUrl) {
-        URL.revokeObjectURL(generatedImageUrl);
-      }
-      setGeneratedImageUrl(null);
-    }
-  };
+  // const handlePreviewClose = (open: boolean) => {
+  //   if (!open) {
+  //     setShowImagePreview(false);
+  //     if (generatedImageUrl) {
+  //       URL.revokeObjectURL(generatedImageUrl);
+  //     }
+  //     setGeneratedImageUrl(null);
+  //   }
+  // };
 
   // Cleanup on unmount
   useEffect(() => {
