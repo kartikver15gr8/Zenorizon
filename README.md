@@ -152,20 +152,6 @@ pnpm prisma studio    # Open database GUI
 pnpm type-check       # TypeScript checking
 ```
 
-## 🚀 Deployment
-
-### One-Click Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/kartikver15gr8/Zenorizon)
-
-### Manual Deployment
-
-See our [Deployment Guide](DEPLOYMENT.md) for detailed instructions on deploying to:
-
-- **Vercel** (Recommended)
-- **Railway**
-- **AWS**
-- **Docker**
 
 ## 📊 Roadmap
 
@@ -216,14 +202,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **GitHub Issues** - Bug reports and feature requests
 - **Discussions** - Community discussions and Q&A
-- **Email** - [Contact information]
 
----
 
-<div align="center">
-
-**Built with ❤️ by the Zenorizon Team**
-
-[Website](https://zenorizon.com) • [Documentation](SETUP.md) • [API](API.md) • [Contributing](CONTRIBUTING.md)
-
-</div>
