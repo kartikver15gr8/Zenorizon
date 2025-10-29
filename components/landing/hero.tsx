@@ -104,7 +104,7 @@ export default function Hero() {
             <p>Organize issues, projects, and product roadmaps.</p>
           </motion.div>
 
-          <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">
+          {/* <BlurFade inView delay={1} className=" mt-10 flex gap-x-2">
             <div className="border border-[#686464] h-10 md:h-12 w-fit bg-[#121212a6] flex items-center p-1 rounded-full shadow-2xl shadow-[#7b7a7f74]">
               <input
                 onChange={(e) => {
@@ -124,7 +124,7 @@ export default function Hero() {
                 {!isLoading ? "Join waitlist" : <Image src={spinner} alt="" />}
               </button>
             </div>
-          </BlurFade>
+          </BlurFade> */}
         </div>
       </div>
       <HomeBanner />
