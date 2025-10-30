@@ -59,10 +59,10 @@ export default function SignupPage() {
               terms and conditions.
             </Link>
           </div>
-          <div className="text-sm flex gap-x-1 mt-4">
+          {/* <div className="text-sm flex gap-x-1 mt-4">
             <p className="text-[#838384]">Already have an account?</p>
             <Link href={"/login"}>Log in</Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
