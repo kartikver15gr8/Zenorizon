@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "@/utils/auth";
 import { usePathname } from "next/navigation";
@@ -194,16 +194,16 @@ export default function Navbar() {
               <p>Star on GitHub</p>
               <SVGIcon className="flex w-3 lg:w-4" svgString={RAW_ICONS.Star} />
             </Link>
-            {profileTabOpen && (
-              <div
-                className={`absolute top-13 -right-2 w-44 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1 transition-all duration-300 ${
-                  profileTabOpen
-                    ? "opacity-100 scale-100"
-                    : "opacity-0 scale-95 pointer-events-none"
-                }`}
-              >
-                {optionsArr.map((elem, key) => {
-                  return (
+            <AnimatePresence>
+              {profileTabOpen && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -5 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -5 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="absolute top-13 -right-2 w-44 h-fit bg-[rgba(0,0,0,0.1)] backdrop-blur-lg border border-[#414141] rounded-xl shadow-lg p-1"
+                >
+                  {optionsArr.map((elem, key) => (
                     <BottomOptionLabel
                       key={key}
                       svg={elem.svg}
@@ -211,17 +211,17 @@ export default function Navbar() {
                       redirectHref={elem.redirectHref}
                       openToNewPage={elem.openToNewPage}
                     />
-                  );
-                })}
-                <LogoutBtn />
-              </div>
-            )}
+                  ))}
+                  <LogoutBtn />
+                </motion.div>
+              )}
+            </AnimatePresence>
             {!session?.user?.id &&
               pathname !== "/login" &&
               pathname !== "/signup" && (
                 <Link
                   href={"/signup"}
-                  className="border-2 flex items-center px-4 h-9 rounded-lg text-black bg-white cursor-pointer border-[#313032] hover:bg-[#1e1e1f] hover:border-[1px] hover:text-white transition-all duration-300"
+                  className="border-2 flex items-center px-4 h-9 rounded-lg text-black bg-white cursor-pointer border-[#313032] hover:bg-[#1e1e1f] hover:border-[1px] hover:text-white transition-all duration-100"
                 >
                   Sign in
                 </Link>

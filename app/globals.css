@@ -224,3 +224,23 @@ body {
   height: 0;
   pointer-events: none;
 }
+
+.mask-bottom-dark {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.9) 20%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.3) 55%,
+    transparent 70%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.9) 20%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.3) 55%,
+    transparent 70%
+  );
+}

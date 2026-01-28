@@ -26,8 +26,8 @@ export default function Features() {
   };
 
   return (
-    <section className="min-h-screen relative flex flex-col justify-center bg-gradient-to-b from-[#0A0A0A] via-[#131516] to-[#0A0A0A] mt-5 px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40 gap-y-3 sm:gap-y-4 md:gap-y-5 xl:gap-y-6">
-      <div className="relative ">
+    <section className=" relative flex flex-col justify-center bg-gradient-to-b from-[#0A0A0A] via-[#131516] to-[#0A0A0A] px-4 sm:px-6 md:px-10 lg:px-14 xl:px-28 2xl:px-40 gap-y-3 sm:gap-y-4 md:gap-y-5 xl:gap-y-6 pt-10 md:pt-0  pb-20 xl:pb-28">
+      <div className="relative">
         <p className="text-xl md:text-3xl lg:text-4xl xl:text-6xl font-medium pb-3 ">
           Everything you need
         </p>
