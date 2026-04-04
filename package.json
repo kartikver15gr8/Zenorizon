@@ -41,7 +41,8 @@
     "sonner": "^2.0.5",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.25.67"
+    "zod": "^3.25.67",
+    "defu": ">=6.1.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -57,6 +58,7 @@
     "prisma": "6.18.0",
     "tailwindcss": "^4.1.10",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "defu": ">=6.1.5"
   }
 }
