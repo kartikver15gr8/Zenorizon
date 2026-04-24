@@ -191,16 +191,5 @@ Security is a top priority. See our [Security Policy](SECURITY.md) for:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **Next.js Team** - For the amazing framework
-- **Vercel** - For hosting and deployment platform
-- **Prisma Team** - For the excellent ORM
-- **Contributors** - Everyone who has contributed to this project
-
-## 📞 Support
-
-- **GitHub Issues** - Bug reports and feature requests
-- **Discussions** - Community discussions and Q&A
 
 
